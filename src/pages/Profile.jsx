@@ -6,6 +6,10 @@ import {
   CardTask,
   CardUpload,
 } from "../components/Cards";
+import CustomInput from "../components/CustomInput";
+
+
+
 const Profile = () => {
   return (
     <Layout>
@@ -19,6 +23,14 @@ const Profile = () => {
       <div className="mt-7">
         <CardProfile />
       </div>
+      <CustomInput
+      category="Login"
+      id="1"
+      placeholder="hai"/>
+      <CustomInput
+      category="Submit"
+      id="2"
+      placeholder="hallo"/>
     </Layout>
   );
 };

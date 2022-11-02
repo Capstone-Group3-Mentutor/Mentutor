@@ -45,7 +45,8 @@ const index = () => {
         <Route path='/login' element={<Login/>}/>
         <Route path='/login' element={isLoggedIn ? <Navigate to='/home'/> : <Login/>}/>
         <Route path='/home' element={<Home/>}/>
-        <Route path='/profile' element={isLoggedIn ? <Profile/> : <Navigate to='/login'/>}/>
+        <Route path='/profile' element={<Profile/>}/>
+        {/* <Route path='/profile' element={isLoggedIn ? <Profile/> : <Navigate to='/login'/>}/> */}
         <Route path='*' element={<NotFound/>}/>
         </Routes>
       </BrowserRouter>
