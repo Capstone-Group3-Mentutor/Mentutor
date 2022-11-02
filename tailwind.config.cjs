@@ -14,6 +14,8 @@ module.exports = {
         putih: "#E6E6E6",
         abu: "#BBBBBB",
         purple: "#473E8B",
+        purple: "#473E8B",
+        task: "#B7CDFD",
       },
     },
   },
