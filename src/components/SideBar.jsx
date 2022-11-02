@@ -12,13 +12,13 @@ const SideBar = () => {
   const isLoggedIn = useSelector((state) => state.data.isLoggedIn)
 
   return (
-    <div className='flex flex-col w-[50px] md:w-[200px] lg:w-[320px] h-screen bg-sidebar left-0 sticky px-3 md:px-8 lg:px-12 py-5 md:pt-16 md:pb-5 z-10 '>
+    <div className='flex flex-col w-[50px] md:w-[200px] lg:w-[320px] h-screen bg-sidebar left-0 fixed px-3 md:px-8 lg:px-12 py-5 md:pt-16 md:pb-5 z-10 '>
       <Link to='/home'>
         <p className='text-transparent md:text-[26px] lg:text-[48px] font-semibold mb-10 bg-clip-text bg-gradient-to-r from-[#D441B9] to-[#854AEA] hidden md:block lg:block'>Mentutor</p>
         <p className='text-transparent text-[30px] font-semibold mb-10 bg-clip-text bg-gradient-to-r from-[#D441B9] to-[#854AEA] md:hidden'>M</p>
       </Link>
-      <div className='text-putih flex flex-col space-y-5 h-full '>
-        <div className='flex flex-row space-x-0 md:space-x-8 items-center  hover:text-button cursor-pointer'>
+      <div className='text-putih flex flex-col space-y-8 h-full font-light'>
+        <div className='flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer'>
           <AiFillHome size={25} />
           <h3 className='hidden md:block'>Home</h3>
         </div>
