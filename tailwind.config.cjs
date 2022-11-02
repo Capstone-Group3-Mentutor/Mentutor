@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
       poppins: "poppins",
@@ -16,6 +13,7 @@ module.exports = {
         button: "#854AEA",
         putih: "#E6E6E6",
         abu: "#BBBBBB",
+        purple: "#473E8B",
       },
     },
   },
@@ -30,4 +28,4 @@ module.exports = {
     prefix: "",
     darkTheme: "white",
   },
-}
+};
