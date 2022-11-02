@@ -4,6 +4,7 @@ import toys3 from "../assets/toys-3.png";
 import toys4 from "../assets/toys-4.png";
 import { FiPaperclip, FiSend } from "react-icons/fi";
 import { SlOptionsVertical } from "react-icons/sl";
+import CustomButton from "./CustomButton";
 
 const CardTask = () => {
   return (
@@ -28,9 +29,12 @@ const CardTask = () => {
       />
       <div className="flex justify-between mt-4  items-center">
         <p className="text-sm text-button ">Point: 0</p>
-        <button className="w-[6rem] h-[2rem] text-[9px] font-medium rounded text-blue-600 bg-blue-200 ">
-          Submit your task
-        </button>
+
+        <CustomButton
+          label="Submit your task"
+          id="btn-submitTask"
+          color="Biru"
+        />
       </div>
     </div>
   );
@@ -59,12 +63,13 @@ const CardUpload = () => {
         >
           <FiPaperclip />
         </button>
-        <button
+        {/* <button
           id="btn-send"
           className="w-[9rem] h-[2.5rem] text-putih rounded-[5px] font-normal bg-button"
         >
           Send
-        </button>
+        </button> */}
+        <CustomButton id="btn-send" label="Send" color="Primary" />
       </div>
     </div>
   );
