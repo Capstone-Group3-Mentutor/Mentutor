@@ -23,6 +23,7 @@ const HomeMentee = () => {
         </div>
         <div className="flex items-center ">
           <img
+            id="gbr-hero"
             src={toys3}
             alt="avatar"
             className="h-[1.5rem] w-[1.5rem]  md:h-[3rem] md:w-[3rem] rounded-full "
