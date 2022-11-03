@@ -2,9 +2,9 @@ import React from "react";
 
 const CustomButton = ({ id, label, onClick, color }) => {
   const btn_color = {
-    Primary: "bg-button py-2 px-9",
+    Primary: "bg-button py-1 px-5 md:py-2 md:px-9",
     Secondary: "bg-purple ",
-    Biru: "bg-task py-2 px-4 text-blue-600 text-[10px]",
+    Biru: "bg-task py-1 px-3 md:py-2 md:px-4 text-blue-600 text-[8px] md:text-[10px]",
   };
   const colorClassname = btn_color[color || "Primary"];
 
