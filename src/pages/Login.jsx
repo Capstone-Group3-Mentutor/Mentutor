@@ -22,7 +22,7 @@ const Login = () => {
       <div className='hidden md:w-1/2 md:flex md:justify-center items-center bg-gradient-to-b from-[#202442] to-[#332B6A] rounded-r-[25px]'>
         <img id="gbr-login" className='w-[85%] text-center' src={girl}/>
       </div>
-      <div className='w-full md:w-1/2 px-10 lg:px-20 py-28'>
+      <form className='w-full md:w-1/2 px-10 lg:px-28 py-28'>
         <h1 className='font-semibold text-4xl mb-10'>Login to your account</h1>
         <div className='space-y-5  text-sidebar '>
           <div className='flex flex-col'>
@@ -44,11 +44,13 @@ const Login = () => {
             />
           </div>
         </div>
-        <div className="btn w-full pl-3 h-[3.4rem] bg-[#473E8B] rounded-[10px] mt-10 mb-3">
-          <button>Login</button>
+        <div className='w-full'>
+          <div className="btn w-full pl-3 h-[3.4rem] bg-[#473E8B] rounded-[10px] mt-10 mb-3">
+            <button>Login</button>
+          </div>
+          <p className='text-abu font-light text-center w-full'>If you dont have an account, please contact <a className='font-normal text-[#26317C] cursor-pointer'>admin</a></p>
         </div>
-        <p className='text-abu font-light text-center'>If you dont have an account, please contact <a className='font-normal text-[#26317C] cursor-pointer'>admin</a></p>
-      </div>
+      </form>
     </div>
   )
 }
