@@ -7,13 +7,14 @@ import { useEffect, useState, useMemo } from "react";
 import { handleAuth } from "../utils/reducers/reducer";
 
 import Login from "../pages/Login";
-import Home from "../pages/Home";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
 import HomeMentee from "../pages/Mentee/HomeMentee";
 import HomeMentor from "../pages/Mentor/HomeMentor";
 import Task from "../pages/Mentee/Task";
 import InputTask from "../pages/Mentor/InputTask";
+import HomeAdmin from "../pages/Admin/HomeAdmin"
+
 
 axios.defaults.baseURL =
   "https://virtserver.swaggerhub.com/NURFATUROHMAN28/Mentutor/1.0.0";
@@ -52,11 +53,11 @@ const index = () => {
             path="/login"
             element={isLoggedIn ? <Navigate to="/home" /> : <Login />}
           />
-          <Route path="/home" element={<Home />} />
           <Route path="/homementee" element={<HomeMentee />} />
           <Route path="/homementor" element={<HomeMentor />} />
           <Route path="/task" element={<Task />} />
-          <Route path="inputTask" element={<InputTask />} />
+          <Route path="/inputTask" element={<InputTask />} />
+          <Route path="/homeadmin" element={<HomeAdmin />} />
           <Route path="/profile" element={<Profile />} />
           {/* <Route path='/profile' element={isLoggedIn ? <Profile/> : <Navigate to='/login'/>}/> */}
           <Route path="*" element={<NotFound />} />
