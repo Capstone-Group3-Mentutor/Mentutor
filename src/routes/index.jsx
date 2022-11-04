@@ -19,6 +19,7 @@ import ForumMentor from "../pages/Mentor/ForumMentor";
 import InputMember from "../pages/Admin/InputMember";
 import ProfileMentee from "../pages/Mentee/ProfileMentee";
 import ProfileMentor from "../pages/Mentor/ProfileMentor";
+import DetailTask from "../pages/Mentor/DetailTask";
 
 axios.defaults.baseURL =
   "https://virtserver.swaggerhub.com/NURFATUROHMAN28/Mentutor/1.0.0";
