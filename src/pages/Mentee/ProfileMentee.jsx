@@ -4,6 +4,7 @@ import toys1 from "../../assets/toys-1.png";
 import { CardProfile } from "../../components/Cards";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+
 const ProfileMentee = () => {
   return (
     <Layout>
@@ -32,7 +33,7 @@ const ProfileMentee = () => {
               Edit Profile
             </h3>
             <div className="flex flex-row  items-center justify-between">
-              <div className=" flex flex-col justify-center items-center gap-3 space-y-3 bg-black">
+              <div className=" flex flex-col justify-center items-center gap-3 space-y-3git ">
                 <img
                   src={toys1}
                   alt="avatar"
