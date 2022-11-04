@@ -7,13 +7,12 @@ import { useEffect, useState, useMemo } from "react";
 import { handleAuth } from "../utils/reducers/reducer";
 
 import Login from "../pages/Login";
-import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
 import HomeMentee from "../pages/Mentee/HomeMentee";
 import HomeMentor from "../pages/Mentor/HomeMentor";
 import Task from "../pages/Mentee/Task";
 import InputTask from "../pages/Mentor/InputTask";
-import HomeAdmin from "../pages/Admin/HomeAdmin"
+import HomeAdmin from "../pages/Admin/HomeAdmin";
 import InputClass from "../pages/Admin/InputClass";
 import ForumMentee from "../pages/Mentee/ForumMentee";
 import ForumMentor from "../pages/Mentor/ForumMentor";
@@ -55,20 +54,21 @@ const index = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/login" element={<Login />} /> */}
+
           <Route path="/homementee" element={<HomeMentee />} />
-          <Route path="/homementor" element={<HomeMentor />} />
           <Route path="/task" element={<Task />} />
-          <Route path="/detailtask" element={<DetailTask />} />
-          <Route path="/inputTask" element={<InputTask />} />
+          <Route path="/profilementee" element={<ProfileMentee />} />
+          <Route path="/forummentee" element={<ForumMentee />} />
+
+          <Route path="/homementor" element={<HomeMentor />} />
+          <Route path="/inputtask" element={<InputTask />} />
+          <Route path="/forummentor" element={<ForumMentor />} />
+          <Route path="/profilementor" element={<ProfileMentor />} />
+
           <Route path="/homeadmin" element={<HomeAdmin />} />
           <Route path="/inputclass" element={<InputClass />} />
           <Route path="/inputmember" element={<InputMember />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/forummentee" element={<ForumMentee />} />
-          <Route path="/forummentor" element={<ForumMentor />} />
-          <Route path="/profilementee" element={<ProfileMentee />} />
-          <Route path="/profilementor" element={<ProfileMentor />} />
+
           {/* <Route path='/profile' element={isLoggedIn ? <Profile/> : <Navigate to='/login'/>}/> */}
           <Route path="*" element={<NotFound />} />
         </Routes>

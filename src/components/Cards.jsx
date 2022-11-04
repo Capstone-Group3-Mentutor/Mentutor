@@ -31,12 +31,12 @@ const CardTask = () => {
       />
       <div className="flex justify-between mt-4  items-center">
         <p className="text-xs md:text-sm text-button ">Point: 0</p>
-
-        <CustomButton
-          label="Submit your task"
-          id="btn-submitTask"
-          color="Biru"
-        />
+        <label
+          htmlFor="modal-submit-task"
+          className="bg-task rounded-[5px]  py-1 px-3 md:py-2 md:px-4 text-blue-600 text-[8px] md:text-[10px] cursor-pointer"
+        >
+          Submit your task
+        </label>
       </div>
     </div>
   );

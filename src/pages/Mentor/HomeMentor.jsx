@@ -3,6 +3,7 @@ import Layout from "../../components/Layout";
 import { CardTaskMentor } from "../../components/Cards";
 import hero from "../../assets/hero.png";
 import toys3 from "../../assets/toys-3.png";
+import { Link } from "react-router-dom";
 
 const HomeMentor = () => {
   return (
@@ -17,16 +18,21 @@ const HomeMentor = () => {
           </p>
         </div>
         <div className="flex items-center ">
-          <img
-            id="gbr-hero"
-            src={toys3}
-            alt="avatar"
-            className="h-[1.5rem] w-[1.5rem]  md:h-[3rem] md:w-[3rem] rounded-full "
-          />
+          <Link to="/profilementor">
+            <img
+              id="gbr-hero"
+              src={toys3}
+              alt="avatar"
+              className="h-[1.5rem] w-[1.5rem]  md:h-[3rem] md:w-[3rem] rounded-full "
+            />
+          </Link>
+
           <div className="pl-2 md:pl-4 space-y-0">
-            <h1 className="text-putih text-[10px] md:text-base">
-              Yoga S Devanada
-            </h1>
+            <Link to="/profilementor">
+              <h1 className="text-putih text-[10px] md:text-base">
+                Yoga S Devanada
+              </h1>
+            </Link>
             <p className="text-abu font-light text-[8px] md:text-xs">Mentor</p>
           </div>
         </div>
