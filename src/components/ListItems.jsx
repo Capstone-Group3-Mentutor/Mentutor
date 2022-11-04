@@ -1,23 +1,128 @@
 import React from 'react'
 
 import toys3 from '../assets/toys-3.png'
-import {MdOutlineMoreVert, MdExpandMore} from 'react-icons/md'
-import {TiDeleteOutline} from 'react-icons/ti'
+import toys1 from '../assets/toys-1.png'
+import {SlOptionsVertical} from 'react-icons/sl'
+import CustomInput from '../components/CustomInput'
+import CustomButton from '../components/CustomButton'
+
+
 
 const ListMembers = () => {
   return (
-    <div className='flex flex-row text-[7px] items-center md:text-[10px] lg:text-[15px] text-putih px-3 md:px-7 py-1 space-x-2 mb-1'>
+    <div className='flex flex-row text-[5px] items-center md:text-[10px] lg:text-[15px] text-putih px-3 md:px-7 py-1 space-x-2 mb-1'>
       <p className='w-[10%] text-center'>1</p>
-      <div className='flex flex-row space-x-3 items-center w-[30%]'>
+      <div className='flex flex-row space-x-3 items-center justify-center w-[30%]'>
         <img src={toys3} className="h-[1.5rem] w-[1.5rem] md:h-[3rem] md:w-[3rem] rounded-full " />
         <p>Jamaluddin Kam</p>
       </div>  
       <p className='w-[35%] text-center'>jamaluddin@gmail.com</p>  
       <p className='w-[15%] text-center'>Mentee</p>  
       <p className='w-[25%] text-center'>Front-End</p>  
-      <button id="icon-kebab">
-        <MdOutlineMoreVert/>
-      </button>
+      {/* option */}
+      <div className="dropdown dropdown-end ">
+        <label
+          id="icon-options"
+          tabIndex={0}
+          className="cursor-pointer text-putih"
+        >
+          <SlOptionsVertical size={13} />
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
+        >
+          <label
+            htmlFor="modal-edit-user"
+            className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
+          >
+            Edit
+          </label>
+          <li id="delete-click" className=" text-[#CC5D5D]">
+            <a>Delete</a>
+          </li>
+        </ul>
+      </div>
+      {/* end option */}
+      {/* ---modal--- */}
+      <input type="checkbox" id="modal-edit-user" className="modal-toggle" />
+      <div className="modal  ">
+        <div className="modal-box w-11/12 max-w-3xl bg-card">
+          <label
+            htmlFor="modal-edit-user"
+            className="cursor-pointer btn-sm  absolute right-2 top-2 text-putih border-white"
+          >
+            ✕
+          </label>
+          <form className="flex flex-col md:p-9 lg:p-9 gap-5">
+            <h3 className="font-medium text-lg text-putih mb-2">
+              Edit Profile
+            </h3>
+            <div className="flex flex-row  items-center justify-between">
+              <div className=" flex flex-col justify-center items-center gap-3 space-y-3">
+                <img
+                  src={toys1}
+                  alt="avatar"
+                  className="h-[5rem] w-[5rem] md:h-[12rem] md:w-[12rem] rounded-full "
+                />
+
+                <CustomButton
+                  id="btn-uploadFoto"
+                  label="Upload"
+                  color="Primary"
+                />
+              </div>
+
+              <div className="flex flex-col gap-4 ">
+                <CustomInput
+                  id="input-fullname"
+                  placeholder="your name"
+                  category="Submit"
+                  type="text"
+                />
+                <CustomInput
+                  id="input-email"
+                  placeholder="contoh@gmail.com"
+                  category="Submit"
+                  type="text"
+                />
+                <CustomInput
+                  id="input-password"
+                  placeholder="Password"
+                  category="Submit"
+                  type="password"
+                />
+                <div className="flex flex-row space-x-4">
+                  <div className="flex flex-col space-y-2 ">
+                    <label for="dropdown-class" className="sr-only"></label>
+                    <select id="dropdown-class" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem] p-2">
+                        <option selected>Class</option>
+                        <option id="Mentor">Front-end</option>
+                        <option id="Mentee">Back-end</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col space-y-2 ">
+                    <label for="dropdown-role" className="sr-only"></label>
+                    <select id="dropdown-role" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem] p-2">
+                        <option className='text-abu' selected>Role</option>
+                        <option id="Mentor">Mentor</option>
+                        <option id="Mentee">Mentee</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <CustomButton
+                id="btn-submitAdmin"
+                label="Submit"
+                color="Primary"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+      {/* end modal */}
     </div>
   )
 }
@@ -30,15 +135,72 @@ const ListClass = () => {
       <p className='w-[30%] text-center'>A</p>  
       <p className='w-[30%] text-center'>40</p>  
       <p className='w-[25%] text-center'>Vincent Sars</p>  
-      <div className='w-[17%] text-center flex flex-row justify-center space-x-2'>
-        <p >Active</p>
-        <button id="icon-option">
-          <MdExpandMore size={20} />
-        </button>  
+      <p className='w-[17%] text-center'>Active</p>  
+      {/* option */}
+      <div className="dropdown dropdown-end ">
+        <label
+          id="icon-options"
+          tabIndex={0}
+          className="cursor-pointer text-putih"
+        >
+          <SlOptionsVertical size={13} />
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
+        >
+          <label
+            htmlFor="modal-edit-class"
+            className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
+          >
+            Edit
+          </label>
+          <li id="delete-click" className=" text-[#CC5D5D]">
+            <a>Delete</a>
+          </li>
+        </ul>
       </div>
-      <button id="icon-kebab">
-        <TiDeleteOutline size={20} color="red"/>
-      </button>
+      {/* end option */}
+      <input type="checkbox" id="modal-edit-class" className="modal-toggle" />
+      <div className="modal ">
+        <div className="modal-box w-1/2 bg-card p-14">
+          <div className='flex flex-row justify-between'>
+            <h1 className="text-putih text-lg md:text-3xl font-medium">
+              Edit Class
+            </h1>
+            <label
+              htmlFor="modal-edit-class"
+              className="cursor-pointer btn-sm text-putih border-white"
+            >
+              ✕
+            </label>
+          </div>
+          <form className="flex flex-col">
+            <div className="flex flex-col space-y-2 my-5">
+              <CustomInput
+                id="input-class"
+                placeholder="Class Name"
+                category="Class"
+              />
+              <div className="w-1/2 flex flex-col space-y-2 ">
+                <label for="dropdown-status" className="sr-only"></label>
+                <select id="dropdown-status" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]">
+                    <option selected>Choose A Status</option>
+                    <option id="Active">Active</option>
+                    <option id="Non Active">Non Active</option>
+                </select>
+              </div>
+            </div>
+            <div className="flex justify-start">
+              <CustomButton
+                id="btn-submitEditClass"
+                label="Submit"
+                color="Primary"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
     <hr className='text-abu mx-3 border-abu border-opacity-50' />
     </>
