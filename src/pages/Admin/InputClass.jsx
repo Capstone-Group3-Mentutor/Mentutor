@@ -9,34 +9,23 @@ const InputClass = () => {
     <Layout>
       <div className="md:space-y-2 mb-3">
           <h1 className="text-putih text-lg md:text-3xl font-medium">
-            Input Class
+            Add Class
           </h1>
           <p className="text-abu font-light text-[8px] md:text-sm ">
             Join the class to learn with each others.
           </p>
       </div>
       <form className='w-full h-[10rem] md:h-[13rem] bg-card rounded-[30px] text-xs md:text-lg mb-5 px-3 md:px-7 py-3 '>
-        <div className='flex flex-row space-x-2 md:space-x-8 px-2 '>
-          <div className='flex flex-col space-y-2 w-1/2'>
-            <p1 className="text-putih text-md md:text-lg">Class</p1>
-            <CustomInput
-            id="input-class"
-            category="Class"
-            type="text"
-            placeholder="Class Name"
-            />
-          </div>
-          <div className='flex flex-col space-y-2 w-1/2'>
-            <p1 className="text-putih text-md md:text-lg">Mentor</p1>
-            <CustomInput
-            id="input-mentor"
-            category="Class"
-            type="text"
-            placeholder="Mentor Name"
-            />
-          </div>
+        <div className='flex flex-col space-y-2 w-1/2'>
+          <p1 className="text-putih text-md md:text-lg">Class</p1>
+          <CustomInput
+          id="input-class"
+          category="Class"
+          type="text"
+          placeholder="Class Name"
+          />
         </div>
-        <div className='text-end mt-7'>
+        <div className='text-start mt-7'>
           <CustomButton
           id="btn-addClass"
           color="Primary"
