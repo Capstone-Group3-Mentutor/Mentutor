@@ -1,8 +1,9 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import { CardTask } from "../../components/Cards";
+import { CardTaskMentor } from "../../components/Cards";
 import hero from "../../assets/hero.png";
 import toys3 from "../../assets/toys-3.png";
+
 const HomeMentor = () => {
   return (
     <Layout>
@@ -50,7 +51,7 @@ const HomeMentor = () => {
         <h1 className="text-putih text-lg font-medium mb-6">
           Your Created Task
         </h1>
-        <CardTask />
+        <CardTaskMentor />
       </div>
     </Layout>
   );

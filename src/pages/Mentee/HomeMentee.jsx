@@ -35,7 +35,7 @@ const HomeMentee = () => {
             <h1 className="text-putih text-sm md:text-lg lg:text-2xl font-medium">
               When nothing goes right, go left
             </h1>
-            <p className="text-abu text-[6px] md:text-xs font-light mt-2  lg:mt-5">
+            <p className="text-abu text-[6px] md:text-xs font-light mt-2 lg:mt-5">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
               ipsum dolor sit amet, consectetur adipiscing elit.
             </p>
@@ -46,7 +46,8 @@ const HomeMentee = () => {
         </div>
       </div>
       <div className="mt-[3rem] md:mt-[5rem]">
-        <h1 className="text-putih text-lg font-medium mb-6">Your Task</h1>
+        <h1 className="text-putih text-lg font-medium">Your Task</h1>
+        <h1 className="text-putih text-xs md:text-md mb-6 text-end mr-0 md:mr-0 lg:mr-24 cursor-pointer">View All Task</h1>
         <CardTask />
       </div>
     </Layout>

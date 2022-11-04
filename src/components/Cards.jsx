@@ -4,6 +4,7 @@ import toys3 from "../assets/toys-3.png";
 import toys4 from "../assets/toys-4.png";
 import { FiPaperclip, FiSend } from "react-icons/fi";
 import { SlOptionsVertical } from "react-icons/sl";
+import { BiRightArrowAlt } from "react-icons/bi";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 
@@ -36,6 +37,38 @@ const CardTask = () => {
           id="btn-submitTask"
           color="Biru"
         />
+      </div>
+    </div>
+  );
+};
+
+const CardTaskMentor = () => {
+  return (
+    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px]">
+      <div className="flex justify-between items-center ">
+        <h1 className="text-putih text-sm md:text-2xl font-semibold">
+          Machine learning part 2
+        </h1>
+        <p className="text-button text-[6px] md:text-xs ">Due date 20 May</p>
+      </div>
+      <p className=" text-[10px] md:text-sm text-abu mt-3 font-light">
+        buatlah sesuatu menggunakan data dibawah ini dengan menggunakan metode
+        Naive bayes dan KNN
+      </p>
+      {/* <div className="w-[10rem] h-[2rem] bg-abu mt-4 text-xs flex items-center rounded-sm px-2">
+        untuk file
+      </div> */}
+      <img
+        className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
+        src="https://cdn-image.hipwee.com/wp-content/uploads/2021/05/hipwee-Aesthetic-Paper.jpg"
+        alt="foto-tugas"
+      />
+      <div className="flex justify-between mt-4 items-center">
+        <p className="text-xs md:text-sm text-button ">Point: 0</p>
+        <div className="flex flex-row space-x-1 cursor-pointer hover:underline ">
+          <p className="text-[7px] md:text-sm text-putih ">See the Submitted Task by Mentees</p>
+          <BiRightArrowAlt color="white" size={20}/>
+        </div>
       </div>
     </div>
   );
@@ -183,4 +216,4 @@ const CardProfile = () => {
   );
 };
 
-export { CardTask, CardUpload, CardForum, CardProfile };
+export { CardTask, CardTaskMentor, CardUpload, CardForum, CardProfile };

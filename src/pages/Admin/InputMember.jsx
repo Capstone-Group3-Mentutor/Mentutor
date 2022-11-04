@@ -14,7 +14,7 @@ const InputMember = () => {
             Join the class to learn with each others.
         </p>
       </div>
-      <form className='w-full lg:w-[35rem] h-[35rem] md:h-[35rem] lg:h-[32rem] bg-card rounded-[30px] text-xs md:text-lg px-5 md:px-10 py-2 '>
+      <form className='w-full lg:w-[35rem] h-[35rem] md:h-[35rem] lg:h-[32rem] bg-card rounded-[20px] text-xs md:text-lg px-5 md:px-10 py-2 '>
         <div className='flex flex-col space-y-4'>
           <div className='flex flex-col space-y-2 w-full'>
             <p1 className="text-putih text-md md:text-lg">Name</p1>
