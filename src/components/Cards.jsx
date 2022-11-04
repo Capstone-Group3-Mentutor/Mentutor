@@ -135,13 +135,13 @@ const CardForum = () => {
 };
 const CardProfile = () => {
   return (
-    <div className="flex justify-center items-center sm:flex-auto">
+    <div className="flex flex-col lg:flex-row  justify-center items-center sm:flex-auto">
       <img
         src={toys1}
         alt="avatar"
         className="h-[8rem] w-[8rem] md:h-[12rem] md:w-[12rem] rounded-full mr-9"
       />
-      <div className="w-[18rem] md:w-[40rem] h-auto bg-card  mt-8 py-5 px-8 rounded-[10px]">
+      <div className="w-[18rem] md:w-[30rem] lg:w-[40rem] h-auto bg-card  mt-8 py-5 px-8 rounded-[10px]">
         {/* option atau dot */}
         <div className="flex justify-end items-end">
           <div className="dropdown ">
@@ -156,9 +156,12 @@ const CardProfile = () => {
               tabIndex={0}
               className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
             >
-              <li className="hover:text-button">
-                <a>Edit</a>
-              </li>
+              <label
+                htmlFor="modal-edit-profile"
+                className="hover:text-button p-4 text-sm text-abu"
+              >
+                Edit
+              </label>
             </ul>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { FiArrowRight } from "react-icons/fi";
 const InputTask = () => {
   return (
     <Layout>
-      <div className="px-[3rem]">
+      <div className="lg:px-[3rem]">
         <h1 className="text-putih text-lg lg:text-2xl font-medium mb-1">
           Create Task
         </h1>
@@ -66,8 +66,8 @@ const InputTask = () => {
               <p className="text-button text-[6px] md:text-xs ">
                 Due date 20 May
               </p>
-              {/* ---option--- */}
-              <div className="dropdown ">
+              {/* ---kebab menu--- */}
+              <div className="dropdown dropdown-bottom dropdown-end">
                 <label
                   id="icon-options"
                   tabIndex={0}
@@ -90,7 +90,7 @@ const InputTask = () => {
                   </li>
                 </ul>
               </div>
-              {/*  end option*/}
+              {/*  end kebab menu */}
             </div>
           </div>
 
@@ -100,7 +100,7 @@ const InputTask = () => {
             id="modal-edit-task"
             className="modal-toggle"
           />
-          <div className="modal modal-bottom sm:modal-middle ">
+          <div className="modal ">
             <div className="modal-box bg-card ">
               <label
                 htmlFor="modal-edit-task"
@@ -125,7 +125,7 @@ const InputTask = () => {
                 <div className="flex justify-between items-center">
                   <button
                     id="Upload File"
-                    className="bg-[#38486A] w-[100px] lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu pl-3 "
+                    className="bg-[#38486A] w-[100px] lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-[9px] lg:text-xs text-abu pl-3 "
                   >
                     <HiOutlineDocumentText className="text-xl mr-2" /> Upload
                     File
