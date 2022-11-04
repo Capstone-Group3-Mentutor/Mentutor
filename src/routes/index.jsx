@@ -16,6 +16,8 @@ import InputTask from "../pages/Mentor/InputTask";
 import HomeAdmin from "../pages/Admin/HomeAdmin";
 import ForumMentee from "../pages/Mentee/ForumMentee";
 import ForumMentor from "../pages/Mentor/ForumMentor";
+import ProfileMentee from "../pages/Mentee/ProfileMentee";
+import ProfileMentor from "../pages/Mentor/ProfileMentor";
 
 axios.defaults.baseURL =
   "https://virtserver.swaggerhub.com/NURFATUROHMAN28/Mentutor/1.0.0";
@@ -62,6 +64,8 @@ const index = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/forummentee" element={<ForumMentee />} />
           <Route path="/forummentor" element={<ForumMentor />} />
+          <Route path="/profilementee" element={<ProfileMentee />} />
+          <Route path="/profilementor" element={<ProfileMentor />} />
           {/* <Route path='/profile' element={isLoggedIn ? <Profile/> : <Navigate to='/login'/>}/> */}
           <Route path="*" element={<NotFound />} />
         </Routes>

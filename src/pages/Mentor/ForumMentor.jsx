@@ -1,7 +1,7 @@
 import { CardForum, CardUpload } from "../../components/Cards";
 import React from "react";
 import Layout from "../../components/Layout";
-const ForumMentee = () => {
+const ForumMentor = () => {
   return (
     <Layout>
       <div className="pb-9">
@@ -20,4 +20,4 @@ const ForumMentee = () => {
   );
 };
 
-export default ForumMentee;
+export default ForumMentor;
