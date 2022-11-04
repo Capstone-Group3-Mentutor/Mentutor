@@ -14,6 +14,7 @@ import HomeMentor from "../pages/Mentor/HomeMentor";
 import Task from "../pages/Mentee/Task";
 import InputTask from "../pages/Mentor/InputTask";
 import HomeAdmin from "../pages/Admin/HomeAdmin"
+import InputClass from "../pages/Admin/InputClass";
 
 
 axios.defaults.baseURL =
@@ -58,6 +59,7 @@ const index = () => {
           <Route path="/task" element={<Task />} />
           <Route path="/inputTask" element={<InputTask />} />
           <Route path="/homeadmin" element={<HomeAdmin />} />
+          <Route path="/inputclass" element={<InputClass />} />
           <Route path="/profile" element={<Profile />} />
           {/* <Route path='/profile' element={isLoggedIn ? <Profile/> : <Navigate to='/login'/>}/> */}
           <Route path="*" element={<NotFound />} />
