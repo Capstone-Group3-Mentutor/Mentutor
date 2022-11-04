@@ -52,10 +52,7 @@ const index = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
-          <Route
-            path="/login"
-            element={isLoggedIn ? <Navigate to="/home" /> : <Login />}
-          />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/homementee" element={<HomeMentee />} />
           <Route path="/homementor" element={<HomeMentor />} />
           <Route path="/task" element={<Task />} />
