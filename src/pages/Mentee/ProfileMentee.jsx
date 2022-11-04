@@ -20,7 +20,7 @@ const ProfileMentee = () => {
 
       {/* ---modal--- */}
       <input type="checkbox" id="modal-edit-profile" className="modal-toggle" />
-      <div className="modal  ">
+      <div className="modal">
         <div className="modal-box w-11/12 max-w-3xl bg-card">
           <label
             htmlFor="modal-edit-profile"
@@ -39,14 +39,12 @@ const ProfileMentee = () => {
                   alt="avatar"
                   className="h-[5rem] w-[5rem] md:h-[12rem] md:w-[12rem] rounded-full "
                 />
-
                 <CustomButton
                   id="btn-uploadFoto"
                   label="Upload"
                   color="Primary"
                 />
               </div>
-
               <div className="flex flex-col justify-end items-center gap-4">
                 <CustomInput
                   id="input-fullname"
