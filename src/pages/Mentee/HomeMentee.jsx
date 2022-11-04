@@ -2,12 +2,7 @@ import React from "react";
 
 import hero from "../../assets/hero.png";
 import toys3 from "../../assets/toys-3.png";
-import {
-  CardForum,
-  CardProfile,
-  CardTask,
-  CardUpload,
-} from "../../components/Cards";
+import { CardTask } from "../../components/Cards";
 import Layout from "../../components/Layout";
 const HomeMentee = () => {
   return (

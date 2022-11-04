@@ -100,7 +100,7 @@ const InputTask = () => {
             id="modal-edit-task"
             className="modal-toggle"
           />
-          <div className="modal modal-bottom sm:modal-middle ">
+          <div className="modal modal-bottom sm:modal-middle  ">
             <div className="modal-box bg-card ">
               <label
                 htmlFor="modal-edit-task"

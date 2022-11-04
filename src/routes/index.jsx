@@ -17,6 +17,8 @@ import HomeAdmin from "../pages/Admin/HomeAdmin"
 import InputClass from "../pages/Admin/InputClass";
 import ForumMentee from "../pages/Mentee/ForumMentee";
 import ForumMentor from "../pages/Mentor/ForumMentor";
+import ProfileMentee from "../pages/Mentee/ProfileMentee";
+import ProfileMentor from "../pages/Mentor/ProfileMentor";
 
 
 axios.defaults.baseURL =
@@ -52,10 +54,7 @@ const index = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<Login />} />
-          <Route
-            path="/login"
-            element={isLoggedIn ? <Navigate to="/home" /> : <Login />}
-          />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/homementee" element={<HomeMentee />} />
           <Route path="/homementor" element={<HomeMentor />} />
           <Route path="/task" element={<Task />} />
@@ -65,6 +64,8 @@ const index = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/forummentee" element={<ForumMentee />} />
           <Route path="/forummentor" element={<ForumMentor />} />
+          <Route path="/profilementee" element={<ProfileMentee />} />
+          <Route path="/profilementor" element={<ProfileMentor />} />
           {/* <Route path='/profile' element={isLoggedIn ? <Profile/> : <Navigate to='/login'/>}/> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
