@@ -59,24 +59,12 @@ const index = () => {
       delete axios.defaults.headers.common["Authorization"];
     }
   });
-  // useEffect(() => {
-  //   const getToken = localStorage.getItem("token");
-  //   if (getToken) {
-  //     dispatch(handleAuth(true));
-  //   } else {
-  //     dispatch(handleAuth(false));
-  //   }
-  //   axios.defaults.headers.common["Authorization"] = getToken
-  //     ? `Bearer ${getToken}`
-  //     : "";
-  // }, [isLoggedIn]);
 
   return (
     <TokenContext.Provider value={jwtToken}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
 
           <Route path="/homementee" element={<HomeMentee />} />
           <Route path="/task" element={<Task />} />
