@@ -5,6 +5,7 @@ import { TokenContext } from "../utils/context";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useMemo } from "react";
 import { handleAuth } from "../utils/reducers/reducer";
+import { useCookies } from "react-cookie";
 
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
@@ -21,32 +22,54 @@ import ProfileMentee from "../pages/Mentee/ProfileMentee";
 import ProfileMentor from "../pages/Mentor/ProfileMentor";
 import DetailTask from "../pages/Mentor/DetailTask";
 
-axios.defaults.baseURL =
-  "https://virtserver.swaggerhub.com/NURFATUROHMAN28/Mentutor/1.0.0";
+axios.defaults.baseURL = "https://ecommerce-alta.online/";
 
 const index = () => {
   const isLoggedIn = useSelector((state) => state.data.isLoggedIn);
   const dispatch = useDispatch();
   const [token, setToken] = useState(null);
-  const jwtToken = useMemo(
-    () => ({
-      token,
-      setToken,
-    }),
-    [token]
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const jwtToken = useMemo(() => ({ token, setToken }), [token]);
+  const checkToken = cookie.token;
+
+  // cara refresh token dengan interceptors
+  axios.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (err) {
+      const { data } = err.response;
+      if (
+        data === "Missing or malformed JWT" ||
+        [401, 403].includes(data.code)
+      ) {
+        removeCookie("token");
+      }
+      return Promise.reject(err);
+    }
   );
 
-  useEffect(() => {
-    const getToken = localStorage.getItem("token");
-    if (getToken) {
+  (function () {
+    if (checkToken) {
+      const { token } = cookie;
       dispatch(handleAuth(true));
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       dispatch(handleAuth(false));
+      delete axios.defaults.headers.common["Authorization"];
     }
-    axios.defaults.headers.common["Authorization"] = getToken
-      ? `Bearer ${getToken}`
-      : "";
-  }, [isLoggedIn]);
+  });
+  // useEffect(() => {
+  //   const getToken = localStorage.getItem("token");
+  //   if (getToken) {
+  //     dispatch(handleAuth(true));
+  //   } else {
+  //     dispatch(handleAuth(false));
+  //   }
+  //   axios.defaults.headers.common["Authorization"] = getToken
+  //     ? `Bearer ${getToken}`
+  //     : "";
+  // }, [isLoggedIn]);
 
   return (
     <TokenContext.Provider value={jwtToken}>
