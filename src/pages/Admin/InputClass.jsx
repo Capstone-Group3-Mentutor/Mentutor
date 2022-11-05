@@ -1,10 +1,81 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import { ListClass } from '../../components/ListItems'
+import { apiRequest } from '../../utils/apiRequest'
+import Swal from 'sweetalert2'
 
 const InputClass = () => {
+  
+  const [className, setClassName] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [disabled, setDisabled] = useState(true)
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    if (className) {
+      setDisabled(false)
+    } else {
+      setDisabled(true)
+    }
+  }, [className])
+
+  const registerClass = async (e) => {
+    setLoading(false)
+    e.preventDefault()
+
+    if (className.length == 0) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Data cannot be empty !",
+        showConfirmButton: true,
+      })
+      return
+  }
+ const body = {
+      class : className,
+    }
+    apiRequest("admin/users","post",body)
+    .then((res) => {
+      if (res?.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Register Succes",
+          showConfirmButton: true,
+          })
+      }
+      // navigate("/homeadmin")     
+    })
+    .catch((err) => {
+      if (err.response?.status === 400) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Invalid Input From Client",
+          showConfirmButton: true,
+          })
+      } else if (err.response?.status === 500 ) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Something Error In Server",
+          showConfirmButton: true,
+        })
+      } 
+    })
+    .finally(() => {
+      setLoading(false)
+    }) 
+  } 
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <Layout>
       <div className="md:space-y-2 mb-3">
@@ -15,14 +86,18 @@ const InputClass = () => {
             Join the class to learn with each others.
           </p>
       </div>
-      <form className='w-full h-[10rem] md:h-[13rem] bg-card rounded-[30px] text-xs md:text-lg mb-5 px-3 md:px-7 py-3 '>
+      <form className='w-full h-[10rem] md:h-[13rem] bg-card rounded-[30px] text-xs md:text-lg mb-5 px-3 md:px-7 py-3'
+      onSubmit={(e) => registerClass(e)}
+      >
         <div className='flex flex-col space-y-2 w-1/2'>
-          <p1 className="text-putih text-md md:text-lg">Class</p1>
+          <p className="text-putih text-md md:text-lg">Class</p>
           <CustomInput
           id="input-class"
           category="Class"
           type="text"
           placeholder="Class Name"
+          onChange={(e) => setClassName(e.target.value)}
+          value={className}
           />
         </div>
         <div className='text-start mt-7'>
@@ -30,6 +105,7 @@ const InputClass = () => {
           id="btn-addClass"
           color="Primary"
           label="Add"
+          // loading={loading || disabled}
           />
         </div>
       </form>

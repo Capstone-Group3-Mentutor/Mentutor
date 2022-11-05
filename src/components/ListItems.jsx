@@ -95,19 +95,19 @@ const ListMembers = () => {
                 />
                 <div className="flex flex-row space-x-4">
                   <div className="flex flex-col space-y-2 ">
-                    <label for="dropdown-class" className="sr-only"></label>
+                    <label htmlFor="dropdown-class" className="sr-only"></label>
                     <select id="dropdown-class" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem] p-2">
-                        <option selected>Class</option>
-                        <option id="Mentor">Front-end</option>
-                        <option id="Mentee">Back-end</option>
+                        <option className='text-abu' value="Class">Class</option>
+                        <option value="Front-end-end" id="Mentor">Front-end</option>
+                        <option value="Back-end" id="Mentee">Back-end</option>
                     </select>
                   </div>
                   <div className="flex flex-col space-y-2 ">
                     <label for="dropdown-role" className="sr-only"></label>
                     <select id="dropdown-role" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem] p-2">
-                        <option className='text-abu' selected>Role</option>
-                        <option id="Mentor">Mentor</option>
-                        <option id="Mentee">Mentee</option>
+                        <option className='text-abu' value="Role">Role</option>
+                        <option value="Mentor" id="Mentor">Mentor</option>
+                        <option value="Mentee" id="Mentee">Mentee</option>
                     </select>
                   </div>
                 </div>
@@ -184,11 +184,11 @@ const ListClass = () => {
                 category="Class"
               />
               <div className="w-1/2 flex flex-col space-y-2 ">
-                <label for="dropdown-status" className="sr-only"></label>
+                <label htmlFor="dropdown-status" className="sr-only"></label>
                 <select id="dropdown-status" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]">
-                    <option selected>Choose A Status</option>
-                    <option id="Active">Active</option>
-                    <option id="Non Active">Non Active</option>
+                    <option value="Status">Choose A Status</option>
+                    <option value="Active" id="Active">Active</option>
+                    <option value="Non Active" id="Non Active">Non Active</option>
                 </select>
               </div>
             </div>

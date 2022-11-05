@@ -1,6 +1,6 @@
 import React from "react";
 
-const CustomButton = ({ id, label, onClick, color }) => {
+const CustomButton = ({ id, label, onClick, color, loading }) => {
   const btn_color = {
     Primary: "bg-button py-1 px-5 md:py-2 md:px-9 lg:py-2 lg:px-9",
     Secondary: "bg-purple ",
@@ -16,6 +16,7 @@ const CustomButton = ({ id, label, onClick, color }) => {
       }
       id={id}
       onClick={onClick}
+      disabled={loading}
     >
       {label}
     </button>

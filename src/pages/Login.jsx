@@ -66,11 +66,12 @@ const Login = () => {
     };
     apiRequest("login", "post", body)
       .then((res) => {
-        const { data } = res.data;
+        const data = res.data;
         setCookie("token", res.data.token, { path: "/" });
         dispatch(handleAuth(true));
-        dispatch(handleUser(res.data));
+        dispatch(handleUser(data));
         Swal.fire({
+          id : "succes-login",
           position: "center",
           icon: "success",
           title: "Login Successful !",
@@ -83,13 +84,15 @@ const Login = () => {
       .catch((err) => {
         if (err.response?.status === 400) {
           Swal.fire({
+            id : "invalid-login",
             icon: "error",
             text: "An invalid client request",
           });
         } else if (err.response?.status === 500) {
           Swal.fire({
+            id : "Error-login",
             icon: "error",
-            text: "There is problem on server.",
+            text: "Something Error In Server",
           });
         }
       })
@@ -163,12 +166,12 @@ const Login = () => {
             Login
           </button>
           <p className="text-abu font-light text-center w-full">
-            If you dont have an account, please contact
+            If you dont have an account, please contact&nbsp;
             <a
               href="mailto:mentutor@gmail.com"
               className="font-normal text-[#26317C] cursor-pointer"
             >
-              admin
+               admin
             </a>
           </p>
         </div>

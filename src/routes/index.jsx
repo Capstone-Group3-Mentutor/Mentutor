@@ -87,12 +87,12 @@ const index = () => {
           <Route path="/inputtask" element={<InputTask />} />
           <Route path="/forummentor" element={<ForumMentor />} />
           <Route path="/profilementor" element={<ProfileMentor />} />
+          <Route path="/detailtask/:task_id" element={<DetailTask />} />
 
           <Route path="/homeadmin" element={<HomeAdmin />} />
           <Route path="/inputclass" element={<InputClass />} />
           <Route path="/inputmember" element={<InputMember />} />
 
-          {/* <Route path='/profile' element={isLoggedIn ? <Profile/> : <Navigate to='/login'/>}/> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
