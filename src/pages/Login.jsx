@@ -4,22 +4,21 @@ import { apiRequest } from "../utils/apiRequest";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { handleAuth, handleUser } from "../utils/reducers/reducer";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { useForm } from "react-hook-form";
-// import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
 import Swal from "sweetalert2";
 import girl from "../assets/girl.png";
 import CustomInput from "../components/CustomInput";
 
-// const messageRequired = "data is required";
-// // const schema = yup.object().shape({
-// //   email: yup.string().required(messageRequired),
-// //   password: yup
-// //     .string()
-// //     .required(messageRequired)
-// //     .min(8, "password must be 8 characters")
-// //     .max(30, "password must not exceed 30 characters"),
-// // });
+const schema = yup.object().shape({
+  email: yup.string().required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "password must be 8 characters")
+    .max(30, "password must not exceed 30 characters"),
+});
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -38,19 +37,17 @@ const Login = () => {
     }
   }, [email, password]);
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   reset,
-  // } = useForm({
-  //   resolver: yupResolver(schema),
-  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const handleLogin = async (e) => {
+  const OnhandleLogin = async (data) => {
     setLoading(true);
-    e.preventDefault();
-
     if (email.length == 0 || password.length == 0) {
       Swal.fire({
         position: "center",
@@ -64,33 +61,40 @@ const Login = () => {
       email,
       password,
     };
-    apiRequest("login", "post", body)
+    apiRequest("login", "post", body) //kalo pake data dia gabisa login
       .then((res) => {
-        const data = res.data;
+        const { data } = res.data;
         setCookie("token", res.data.token, { path: "/" });
         dispatch(handleAuth(true));
-        dispatch(handleUser(data));
+        dispatch(handleUser(res.data));
+
         Swal.fire({
-          id : "succes-login",
+          id: "succes-login",
           position: "center",
           icon: "success",
           title: "Login Successful !",
           showConfirmButton: true,
         });
-        navigate("/homeadmin");
-        // console.log({ data });
-        // reset();
+        if (res.data.role === "admin") {
+          navigate("/homeadmin");
+        } else if (res.data.role === "mentor") {
+          navigate("/homementor");
+        } else {
+          navigate("/homementee");
+        }
+
+        reset();
       })
       .catch((err) => {
         if (err.response?.status === 400) {
           Swal.fire({
-            id : "invalid-login",
+            id: "invalid-login",
             icon: "error",
             text: "An invalid client request",
           });
         } else if (err.response?.status === 500) {
           Swal.fire({
-            id : "Error-login",
+            id: "Error-login",
             icon: "error",
             text: "Something Error In Server",
           });
@@ -109,8 +113,7 @@ const Login = () => {
         />
       </div>
       <form
-        // onSubmit={handleSubmit(handleLogin)}
-        onSubmit={(e) => handleLogin(e)}
+        onSubmit={handleSubmit(OnhandleLogin)}
         className="w-full md:w-1/2 px-10 lg:px-28 py-28"
       >
         <h1 className="font-semibold text-4xl mb-10">Login to your account</h1>
@@ -118,60 +121,47 @@ const Login = () => {
           <div className="flex flex-col">
             <p className="font-semibold">Email</p>
             <CustomInput
-              // ref={register}
-              // {...register("email", {
-              //   required: "must be @",
-              // })}
+              register={register}
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               id="input-email"
               name="email"
               category="Login"
               type="email"
-              placeholder="Input Email"
+              placeholder="contoh@gmail.com"
+              error={errors.email?.message}
             />
           </div>
           <div className="flex flex-col mb-10">
             <p className="font-semibold">Password</p>
             <CustomInput
-              // ref={register}
-              // {...register("password", {
-              //   maxLength: {
-              //     value: 30,
-              //     message: "maksimal 30 aja",
-              //   },
-              //   minLength: {
-              //     value: 8,
-              //     message: "minimal 8 ya",
-              //   },
-              // })}
+              register={register}
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               id="input-password"
               name="password"
               category="Login"
               type="password"
-              placeholder="Input Password"
-              // required
+              placeholder="********"
+              error={errors.password?.message}
             />
           </div>
         </div>
         <div className="w-full">
           <button
-            // onSubmit={(e) => handleLogin(e)}
             type="submit"
             id="btn-login"
             className="btn w-full pl-3 h-[3.4rem] bg-[#473E8B] rounded-[10px] mt-10 mb-3"
           >
             Login
           </button>
-          <p className="text-abu font-light text-center w-full">
+          <p className="text-gray-500 text-sm font-light text-center w-full">
             If you dont have an account, please contact&nbsp;
             <a
               href="mailto:mentutor@gmail.com"
-              className="font-normal text-[#26317C] cursor-pointer"
+              className="font-medium text-[#26317C] cursor-pointer"
             >
-               admin
+              admin
             </a>
           </p>
         </div>
