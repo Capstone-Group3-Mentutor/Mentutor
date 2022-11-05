@@ -20,7 +20,7 @@ const CustomInput = ({ id, placeholder, type, value, category, onChange }) => {
         `${widthClassName}`
       }
       type={type}
-      defaultValue={value}
+      value={value}
       id={id}
       onChange={onChange}
       placeholder={placeholder}
