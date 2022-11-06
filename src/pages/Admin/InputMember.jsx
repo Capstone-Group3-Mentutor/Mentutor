@@ -26,8 +26,8 @@ const InputMember = () => {
   }, [fullName, email, role, className, password])
 
   const handleSubmit = async (e) => {
-    setLoading(true)
-    e.preventDevault()
+    // setLoading(false)
+    e.preventDefault()
     
     if (fullName.length == 0 || email.length == 0 || role == "Role" || className == 0 || password.length == 0) {
       Swal.fire({
@@ -126,8 +126,8 @@ const InputMember = () => {
               value={role}
               >
                   <option value="Role">Choose A Role</option>
-                  <option value="Mentor" id="Mentor">Mentor</option>
-                  <option value="Mentee" id="Mentee">Mentee</option>
+                  <option value="mentor" id="Mentor">Mentor</option>
+                  <option value="mentee" id="Mentee">Mentee</option>
               </select>
             </div>
             <div className="w-1/2 flex flex-col space-y-2 ">
@@ -160,7 +160,7 @@ const InputMember = () => {
           id="btn-addClass"
           color="Primary"
           label="Add"
-          loading={disabled || loading}
+          // loading={disabled || loading}
           />
         </div>
       </form>
