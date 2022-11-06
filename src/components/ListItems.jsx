@@ -128,15 +128,14 @@ const ListMembers = () => {
   )
 }
 
-const ListClass = () => {
+const ListClass = ({index, student, name, status}) => {
   return (
     <>
     <div className='flex flex-row text-[7px] items-center md:text-[10px] lg:text-[15px] text-putih px-3 md:px-7 py-0.5 space-x-2 mb-1'>
-      <p className='w-[10%] text-center'>1</p>
-      <p className='w-[30%] text-center'>A</p>  
-      <p className='w-[30%] text-center'>40</p>  
-      <p className='w-[25%] text-center'>Vincent Sars</p>  
-      <p className='w-[17%] text-center'>Active</p>  
+      <p className='w-[10%] text-center'>{index}</p>
+      <p className='w-[30%] text-center'>{name}</p>  
+      <p className='w-[30%] text-center'>{student}</p>   
+      <p className='w-[17%] text-center'>{status}</p>  
       {/* option */}
       <div className="dropdown dropdown-end ">
         <label

@@ -10,20 +10,21 @@ import Swal from 'sweetalert2'
 const InputClass = () => {
   
   const [className, setClassName] = useState("")
+  const [datas, setDatas] = useState([])
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const navigate = useNavigate()
   
   useEffect(() => {
     if (className) {
-      setDisabled(false)
+      setDisabled(true)
     } else {
       setDisabled(true)
     }
   }, [className])
 
   const registerClass = async (e) => {
-    setLoading(false)
+ 
     e.preventDefault()
 
     if (className.length == 0) {
@@ -36,33 +37,34 @@ const InputClass = () => {
       return
   }
  const body = {
-      class : className,
+      class_name : className,
     }
-    apiRequest("admin/users","post",body)
+    apiRequest("admin/classes","post",body)
     .then((res) => {
-      if (res?.status === 201) {
+      const message  = res.data
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Register Succes",
+          title: "Succes Created",
           showConfirmButton: true,
           })
-      }
-      // navigate("/homeadmin")     
+      
+      // navigate("/inputclass")     
     })
     .catch((err) => {
-      if (err.response?.status === 400) {
+      const {message} = err.response.data
+      if (message) {
         Swal.fire({
           position: "center",
           icon: "error",
           title: "Invalid Input From Client",
           showConfirmButton: true,
           })
-      } else if (err.response?.status === 500 ) {
+      } else {
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Something Error In Server",
+          title: "Data Is Already Added",
           showConfirmButton: true,
         })
       } 
@@ -71,6 +73,42 @@ const InputClass = () => {
       setLoading(false)
     }) 
   } 
+
+  useEffect(() => {
+    fetchData()
+  },[])
+
+  const fetchData = async () => {
+    apiRequest("admin/classes","get")
+      .then((res) => {
+        const {message, data} = res.data
+        if (data) {
+          setDatas(data)
+          Swal.fire({
+          position: "center",
+          icon: "success",
+          title: message,
+          showConfirmButton: true,
+          })
+        } 
+      })
+      .catch((err) => {
+        if (err.response?.status === 400) {
+          Swal.fire({
+            icon: "error",
+            text: "An invalid client request",
+          });
+        } else if (err.response?.status === 500) {
+          Swal.fire({
+            icon: "error",
+            text: "There is problem on server.",
+          })
+        }
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
 
   if (loading) {
     return <div>Loading...</div>
@@ -114,23 +152,19 @@ const InputClass = () => {
           <p className='w-[10%] text-center'>No</p>  
           <p className='w-[30%] text-center'>Class Name</p>  
           <p className='w-[30%] text-center'>Number of Mentess</p>  
-          <p className='w-[25%] text-center'>Mentor</p>  
           <p className='w-[20%] text-center'>Status</p>  
           <p className='w-[2%] text-center'></p>  
         </div>
         <hr className='text-abu mx-3 border-abu border-opacity-50' />
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
-        <ListClass/>
+        {datas.map((data) => (
+            <ListClass
+            // key={index}
+            name={data.class_name}
+            student={data.total_student}
+            status={data.status}
+            />
+          ))}
+        
       </div>
     </Layout>
   )
