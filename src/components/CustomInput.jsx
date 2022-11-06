@@ -1,6 +1,16 @@
 import React from "react";
 
-const CustomInput = ({ id, placeholder, type, value, category, onChange }) => {
+const CustomInput = ({
+  id,
+  placeholder,
+  type,
+  value,
+  category,
+  onChange,
+  register,
+  name,
+  error,
+}) => {
   const inputLibrary = {
     Login: "w-full pl-3 h-[3.4rem] bg-white rounded-[10px] text-black",
     Submit: "w-[300px] lg:w-96 md:w-80 pl-3 h-[3.4rem] rounded-[10px] bg-card",
@@ -14,17 +24,27 @@ const CustomInput = ({ id, placeholder, type, value, category, onChange }) => {
   const widthClassName = inputLibrary[category];
 
   return (
-    <input
-      className={
-        "border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light" +
-        `${widthClassName}`
-      }
-      type={type}
-      value={value}
-      id={id}
-      onChange={onChange}
-      placeholder={placeholder}
-    />
+    <>
+      <input
+        className={
+          "border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light" +
+          `${widthClassName}`
+        }
+        type={type}
+        defaultValue={value}
+        id={id}
+        onChange={onChange}
+        placeholder={placeholder}
+        {...(register
+          ? register(name, {
+              onChange: onChange,
+            })
+          : {})}
+      />
+      <p className="break-words mt-1 text-xs font-normal text-red-500">
+        {error}
+      </p>
+    </>
   );
 };
 

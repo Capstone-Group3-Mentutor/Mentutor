@@ -64,8 +64,7 @@ const index = () => {
     <TokenContext.Provider value={jwtToken}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
 
           <Route path="/homementee" element={<HomeMentee />} />
           <Route path="/task" element={<Task />} />
