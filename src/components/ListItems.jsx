@@ -1,5 +1,4 @@
 import React from "react";
-
 import toys3 from "../assets/toys-3.png";
 
 import { SlOptionsVertical } from "react-icons/sl";
@@ -7,88 +6,60 @@ import { AiFillEdit } from "react-icons/ai";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
 
-
-const ListClass = ({index, student, name, status, onSubmit, className, onClick, setStatus, setClassName}) => {
+const ListClass = ({
+  index,
+  student,
+  name,
+  status,
+  onClickDelete,
+  onClickEdit,
+}) => {
   return (
     <>
-    <div className='flex flex-row text-[7px] items-center md:text-[10px] lg:text-[15px] text-putih px-3 md:px-7 py-0.5 space-x-2 mb-1'>
-      <p className='w-[10%] text-center'>{index + 1}</p>
-      <p className='w-[30%] text-center'>{name}</p>  
-      <p className='w-[30%] text-center'>{student}</p>   
-      <p className={`w-[17%] text-center ${status === "active" ? "text-[#23EF11]" : "text-[#E41E1E]"}`}>{status}</p>  
-      {/* option */}
-      <div className="dropdown dropdown-end ">
-        <label
-          id="icon-options"
-          tabIndex={0}
-          className="cursor-pointer text-putih"
+      <div className="flex flex-row text-[7px] items-center md:text-[10px] lg:text-[15px] text-putih px-3 md:px-7 py-0.5 space-x-2 mb-1">
+        <p className="w-[10%] text-center">{index + 1}</p>
+        <p className="w-[30%] text-center">{name}</p>
+        <p className="w-[30%] text-center">{student}</p>
+        <p
+          className={`w-[17%] text-center ${
+            status === "active" ? "text-[#23EF11]" : "text-[#E41E1E]"
+          }`}
         >
-          <SlOptionsVertical size={13} />
-        </label>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
-        >
+          {status}
+        </p>
+        {/* option */}
+        <div className="dropdown dropdown-end ">
           <label
-            htmlFor="modal-edit-class"
-            className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
+            id="icon-options"
+            tabIndex={0}
+            className="cursor-pointer text-putih"
           >
             <SlOptionsVertical size={13} />
           </label>
-          <li id="delete-click" className=" text-[#CC5D5D]" onClick={onClick}>
-            <a>Delete</a>
-          </li>
-        </ul>
-      </div>
-      {/* end option */}
-      <input type="checkbox" id="modal-edit-class" className="modal-toggle" />
-      <div className="modal ">
-        <div className="modal-box w-1/2 bg-card p-14">
-          <div className='flex flex-row justify-between'>
-            <h1 className="text-putih text-lg md:text-3xl font-medium"
-            >
-              Edit Class
-            </h1>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
+          >
             <label
               htmlFor="modal-edit-class"
               className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
+              onClick={onClickEdit}
             >
               Edit
             </label>
-          </div>
-          <form className="flex flex-col"
-          onSubmit={onSubmit}>
-            <div className="flex flex-col space-y-2 my-5">
-              <CustomInput
-                id="input-class"
-                placeholder="Class Name"
-                category="Class"
-                onChange={setClassName}
-                value={className}
-              />
-              <div className="w-1/2 flex flex-col space-y-2 ">
-                <label htmlFor="dropdown-status" className="sr-only"></label>
-                <select id="dropdown-status" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
-                onChange={setStatus}
-                value={status}
-                >
-                    <option value="active" id="active">active</option>
-                    <option value="non active" id="non active">non active</option>
-                </select>
-              </div>
-            </div>
-            <div className="flex justify-start">
-              <CustomButton
-                id="btn-submitEditClass"
-                label="Submit"
-                color="Primary"
-              />
-            </div>
-          </form>
+            <li
+              id="delete-click"
+              className=" text-[#CC5D5D]"
+              onClick={onClickDelete}
+            >
+              <a>Delete</a>
+            </li>
+          </ul>
         </div>
+        {/* end option */}
+
+        <hr className="text-abu mx-3 border-abu border-opacity-50" />
       </div>
-      <hr className="text-abu mx-3 border-abu border-opacity-50" />
-    </div>
     </>
   );
 };
