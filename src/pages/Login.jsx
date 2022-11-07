@@ -86,13 +86,13 @@ const Login = () => {
         reset();
       })
       .catch((err) => {
-        if (err.response?.status === 400) {
+        
           Swal.fire({
             id: "invalid-login",
             icon: "error",
             text: "An invalid client request",
           });
-        } else if (err.response?.status === 500) {
+         if (err.response?.status === 500) {
           Swal.fire({
             id: "Error-login",
             icon: "error",

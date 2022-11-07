@@ -25,39 +25,39 @@ import DetailTask from "../pages/Mentor/DetailTask";
 axios.defaults.baseURL = "https://ecommerce-alta.online/";
 
 const index = () => {
-  const isLoggedIn = useSelector((state) => state.data.isLoggedIn)
-  const dispatch = useDispatch()
-  const [token, setToken] = useState(null)
-  const [cookie, setCookie, removeCookie] = useCookies()
-  const jwtToken = useMemo(() => ({ token, setToken }), [token])
+  // const isLoggedIn = useSelector((state) => state.data.isLoggedIn)
+  const dispatch = useDispatch();
+  const [token, setToken] = useState(null);
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const jwtToken = useMemo(() => ({ token, setToken }), [token]);
   const checkToken = cookie.token;
 
   axios.interceptors.response.use(
     function (response) {
       return response;
     },
-    function (error) {
-      const { data } = error.response
+    function (err) {
+      const { data } = error.response;
       if (
         data === "Missing or malformed JWT" ||
         [401, 403].includes(data.code)
       ) {
-        removeCookie("token")
+        removeCookie("token");
       }
-      return Promise.reject(error)
+      return Promise.reject(err);
     }
-  )
+  );
 
   (function () {
     if (checkToken) {
-      const { token } = cookie
-      dispatch(handleAuth(true))
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
+      const { token } = cookie;
+      dispatch(handleAuth(true));
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
-      dispatch(handleAuth(false))
-      delete axios.defaults.headers.common["Authorization"]
+      dispatch(handleAuth(false));
+      delete axios.defaults.headers.common["Authorization"];
     }
-  })()
+  })();
 
 
   return (

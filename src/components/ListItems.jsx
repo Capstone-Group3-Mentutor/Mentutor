@@ -128,14 +128,14 @@ const ListMembers = () => {
   )
 }
 
-const ListClass = ({index, student, name, status}) => {
+const ListClass = ({index, student, name, status, onSubmit, className, onClick, setStatus, setClassName}) => {
   return (
     <>
     <div className='flex flex-row text-[7px] items-center md:text-[10px] lg:text-[15px] text-putih px-3 md:px-7 py-0.5 space-x-2 mb-1'>
-      <p className='w-[10%] text-center'>{index}</p>
+      <p className='w-[10%] text-center'>{index + 1}</p>
       <p className='w-[30%] text-center'>{name}</p>  
       <p className='w-[30%] text-center'>{student}</p>   
-      <p className='w-[17%] text-center'>{status}</p>  
+      <p className={`w-[17%] text-center ${status === "active" ? "text-[#23EF11]" : "text-[#E41E1E]"}`}>{status}</p>  
       {/* option */}
       <div className="dropdown dropdown-end ">
         <label
@@ -152,10 +152,11 @@ const ListClass = ({index, student, name, status}) => {
           <label
             htmlFor="modal-edit-class"
             className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
+            
           >
             Edit
           </label>
-          <li id="delete-click" className=" text-[#CC5D5D]">
+          <li id="delete-click" className=" text-[#CC5D5D]" onClick={onClick}>
             <a>Delete</a>
           </li>
         </ul>
@@ -165,7 +166,8 @@ const ListClass = ({index, student, name, status}) => {
       <div className="modal ">
         <div className="modal-box w-1/2 bg-card p-14">
           <div className='flex flex-row justify-between'>
-            <h1 className="text-putih text-lg md:text-3xl font-medium">
+            <h1 className="text-putih text-lg md:text-3xl font-medium"
+            >
               Edit Class
             </h1>
             <label
@@ -175,19 +177,24 @@ const ListClass = ({index, student, name, status}) => {
               ✕
             </label>
           </div>
-          <form className="flex flex-col">
+          <form className="flex flex-col"
+          onSubmit={onSubmit}>
             <div className="flex flex-col space-y-2 my-5">
               <CustomInput
                 id="input-class"
                 placeholder="Class Name"
                 category="Class"
+                onChange={setClassName}
+                value={className}
               />
               <div className="w-1/2 flex flex-col space-y-2 ">
                 <label htmlFor="dropdown-status" className="sr-only"></label>
-                <select id="dropdown-status" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]">
-                    <option value="Status">Choose A Status</option>
-                    <option value="Active" id="Active">Active</option>
-                    <option value="Non Active" id="Non Active">Non Active</option>
+                <select id="dropdown-status" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
+                onChange={setStatus}
+                value={status}
+                >
+                    <option value="active" id="active">active</option>
+                    <option value="non active" id="non active">non active</option>
                 </select>
               </div>
             </div>
@@ -196,6 +203,7 @@ const ListClass = ({index, student, name, status}) => {
                 id="btn-submitEditClass"
                 label="Submit"
                 color="Primary"
+                
               />
             </div>
           </form>
