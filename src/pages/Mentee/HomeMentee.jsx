@@ -3,13 +3,13 @@ import React from "react";
 import hero from "../../assets/hero.png";
 import toys3 from "../../assets/toys-3.png";
 import { CardTask } from "../../components/Cards";
-import Layout from "../../components/Layout";
+import { LayoutMentee } from "../../components/Layout";
 import { Link } from "react-router-dom";
 import CustomButton from "../../components/CustomButton";
 import { HiOutlineDocumentText } from "react-icons/hi";
 const HomeMentee = () => {
   return (
-    <Layout>
+    <LayoutMentee>
       <div className="pb-9">
         <div className="flex justify-between ">
           <div className="md:space-y-2">
@@ -107,7 +107,7 @@ const HomeMentee = () => {
           {/* end modal */}
         </div>
       </div>
-    </Layout>
+    </LayoutMentee>
   );
 };
 

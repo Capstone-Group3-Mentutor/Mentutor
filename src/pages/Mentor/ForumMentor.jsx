@@ -1,9 +1,9 @@
 import { CardForum, CardUpload } from "../../components/Cards";
 import React from "react";
-import Layout from "../../components/Layout";
+import { LayoutMentor } from "../../components/Layout";
 const ForumMentor = () => {
   return (
-    <Layout>
+    <LayoutMentor>
       <div className="pb-9">
         <h1 className="text-putih text-lg lg:text-2xl font-medium mb-2">
           Forum Class
@@ -16,7 +16,7 @@ const ForumMentor = () => {
         </div>
         <CardForum />
       </div>
-    </Layout>
+    </LayoutMentor>
   );
 };
 

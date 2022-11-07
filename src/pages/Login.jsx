@@ -61,7 +61,7 @@ const Login = () => {
       email,
       password,
     };
-    apiRequest("login", "post", body) //kalo pake data dia gabisa login
+    apiRequest("login", "post", body)
       .then((res) => {
         const { data } = res.data;
         setCookie("token", res.data.token, { path: "/" });
