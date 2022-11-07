@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import { TokenContext } from "../utils/context";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { handleAuth } from "../utils/reducers/reducer";
 import { useCookies } from "react-cookie";
 
@@ -25,7 +25,7 @@ import DetailTask from "../pages/Mentor/DetailTask";
 axios.defaults.baseURL = "https://ecommerce-alta.online/";
 
 const index = () => {
-  // const isLoggedIn = useSelector((state) => state.data.isLoggedIn)
+  // const isLoggedIn = useSelector((state) => state.data.isLoggedIn);
   const dispatch = useDispatch();
   const [token, setToken] = useState(null);
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -36,7 +36,8 @@ const index = () => {
     function (response) {
       return response;
     },
-    function (err) {
+
+    function (error) {
       const { data } = error.response;
       if (
         data === "Missing or malformed JWT" ||
@@ -44,7 +45,7 @@ const index = () => {
       ) {
         removeCookie("token");
       }
-      return Promise.reject(err);
+      return Promise.reject(error);
     }
   );
 
@@ -58,7 +59,6 @@ const index = () => {
       delete axios.defaults.headers.common["Authorization"];
     }
   })();
-
 
   return (
     <TokenContext.Provider value={jwtToken}>
@@ -78,7 +78,7 @@ const index = () => {
           <Route path="/detailtask/:task_id" element={<DetailTask />} />
 
           <Route path="/homeadmin" element={<HomeAdmin />} />
-          <Route path="/inputclass" element={<InputClass /> } />
+          <Route path="/inputclass" element={<InputClass />} />
           <Route path="/inputmember" element={<InputMember />} />
 
           <Route path="*" element={<NotFound />} />

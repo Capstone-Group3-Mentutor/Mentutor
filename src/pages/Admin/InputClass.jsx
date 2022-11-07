@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import Layout from '../../components/Layout'
+import { LayoutAdmin } from "../../components/Layout";
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import { ListClass } from '../../components/ListItems'
@@ -18,13 +18,14 @@ const InputClass = (props) => {
   const navigate = useNavigate()
   const {id_class} = useParams()
 
+
   useEffect(() => {
     if (className) {
-      setDisabled(true)
+      setDisabled(true);
     } else {
-      setDisabled(true)
+      setDisabled(true);
     }
-  }, [className])
+  }, [className]);
 
   const registerClass = async (e) => {
      e.preventDefault()
@@ -74,8 +75,7 @@ const InputClass = (props) => {
       .then((res) => {
         const results = res.data
           setDatas(results)
-          console.log(results)
-      })
+       })
       .catch((err) => {
         if (err.response?.status === 400) {
           Swal.fire({
@@ -86,13 +86,13 @@ const InputClass = (props) => {
           Swal.fire({
             icon: "error",
             text: "There is problem on server.",
-          })
+          });
         }
       })
       .finally(() => {
-        setLoading(false)
-      })
-  }
+        setLoading(false);
+      });
+  };
 
   const handleClass = async (e) => {
     e.preventDefault()
@@ -161,10 +161,11 @@ const InputClass = (props) => {
     .finally(() => {
       fetchData()
     })  
+
   }
 
   return (
-    <Layout>
+    <LayoutAdmin>
       <div className="md:space-y-2 mb-3">
         <h1 className="text-putih text-lg md:text-3xl font-medium">
           Add Class
@@ -173,10 +174,11 @@ const InputClass = (props) => {
           Join the class to learn with each others.
         </p>
       </div>
+
       <form className='w-full h-[10rem] md:h-[13rem] bg-card rounded-[30px] text-xs md:text-lg mb-5 px-3 md:px-7 py-3'
         onSubmit={(e) => registerClass(e)}
       >
-        <div className='flex flex-col space-y-2 w-1/2'>
+        <div className="flex flex-col space-y-2 w-1/2">
           <p className="text-putih text-md md:text-lg">Class</p>
           <CustomInput
             id="input-class"
@@ -187,7 +189,7 @@ const InputClass = (props) => {
             value={className}
           />
         </div>
-        <div className='text-start mt-7'>
+        <div className="text-start mt-7">
           <CustomButton
             id="btn-addClass"
             color="Primary"
@@ -219,14 +221,13 @@ const InputClass = (props) => {
             setStatus={(e)=> setStatus(e.target.value)}
             setClassName={(e)=> setClassName(e.target.value)}
             onSubmit={(e)=> handleClass(e)}
-
+            
             onClick={() => deleteClass(data?.id_class)}
           />
-        )) )
+        )))
         }
-
       </div>
-    </Layout>
+    </LayoutAdmin>
   )
   
 }

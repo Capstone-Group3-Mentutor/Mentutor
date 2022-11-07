@@ -1,7 +1,7 @@
-import React ,{useEffect, useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import Layout from '../../components/Layout'
+import { LayoutAdmin } from "../../components/Layout";
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import { apiRequest } from '../../utils/apiRequest'
@@ -41,13 +41,14 @@ const InputMember = () => {
   const [disabled, setDisabled] = useState(true)
   const navigate = useNavigate()
 
+
   useEffect(() => {
     if (fullName && email && role && className && password) {
-      setDisabled(false) 
+      setDisabled(false);
     } else {
-      setDisabled(true)
+      setDisabled(true);
     }
-  }, [fullName, email, role, className, password])
+  }, [fullName, email, role, className, password]);
 
   useEffect(() => {
     fetchData()
@@ -88,15 +89,15 @@ const InputMember = () => {
         icon: "error",
         title: "Data cannot be empty !",
         showConfirmButton: true,
-      })
-      return
+      });
+      return;
     }
 
     const body = {
-      name : fullName,
+      name: fullName,
       email,
       role,
-      id_class : className,
+      id_class: className,
       password,
     }
     apiRequest("admin/users","post",body)
@@ -131,21 +132,22 @@ const InputMember = () => {
   }
 
   return (
-    <Layout>
+    <LayoutAdmin>
       <div className="md:space-y-2 mb-3">
         <h1 className="text-putih text-lg md:text-3xl font-medium">
-           Add Member
+          Add Member
         </h1>
-         <p className="text-abu font-light text-[8px] md:text-sm ">
-            Join the class to learn with each others.
+        <p className="text-abu font-light text-[8px] md:text-sm ">
+          Join the class to learn with each others.
         </p>
       </div>
+
       <form 
       className='w-full lg:w-[35rem] h-[35rem] md:h-[35rem] lg:h-[32rem] bg-card rounded-[20px] text-xs md:text-lg px-5 md:px-10 py-2'
       onSubmit={handleSubmit(handleRegister)}
       >
-        <div className='flex flex-col space-y-4'>
-          <div className='flex flex-col space-y-2 w-full'>
+        <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-2 w-full">
             <p className="text-putih text-md md:text-lg">Name</p>
             <CustomInput
             id="input-fullname"
@@ -159,7 +161,7 @@ const InputMember = () => {
             name="fullname"
             />
           </div>
-          <div className='flex flex-col space-y-2 w-full'>
+          <div className="flex flex-col space-y-2 w-full">
             <h1 className="text-putih text-md md:text-lg">Email</h1>
             <CustomInput
             id="input-email"
@@ -177,13 +179,16 @@ const InputMember = () => {
             <div className="w-1/2 flex flex-col space-y-2 ">
               <h1 className="text-putih text-md md:text-lg">Role</h1>
               <label htmlFor="dropdown-role" className="sr-only"></label>
-              <select id="dropdown-role" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
-              onChange={(e) => setRole(e.target.value)}
-              value={role}
+              <select
+                id="dropdown-role"
+                className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
+                onChange={(e) => setRole(e.target.value)}
+                value={role}
               >
                   <option value="Role" disabled>Choose a role</option>
                   <option value="mentor" id="mentor">mentor</option>
                   <option value="mentee" id="mentee">mentee</option>
+
               </select>
             </div>
             <div className="w-1/2 flex flex-col space-y-2 ">
@@ -201,7 +206,7 @@ const InputMember = () => {
               </select>
             </div>
           </div>
-          <div className='flex flex-col space-y-2 w-full'>
+          <div className="flex flex-col space-y-2 w-full">
             <p className="text-putih text-md md:text-lg">Password</p>
             <CustomInput
             id="input-password"
@@ -213,20 +218,21 @@ const InputMember = () => {
             register={register}
             error={errors.password?.message}
             name="password"
+
             />
           </div>
         </div>
-        <div className='text-end mt-5'>
+        <div className="text-end mt-5">
           <CustomButton
-          id="btn-addClass"
-          color="Primary"
-          label="Add"
-          // loading={disabled || loading}
+            id="btn-addClass"
+            color="Primary"
+            label="Add"
+            // loading={disabled || loading}
           />
         </div>
       </form>
-    </Layout>
-  )
-}
+    </LayoutAdmin>
+  );
+};
 
-export default InputMember
+export default InputMember;

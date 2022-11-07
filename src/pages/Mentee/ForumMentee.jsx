@@ -1,9 +1,9 @@
 import { CardForum, CardUpload } from "../../components/Cards";
 import React from "react";
-import Layout from "../../components/Layout";
+import { LayoutMentee } from "../../components/Layout";
 const ForumMentee = () => {
   return (
-    <Layout>
+    <LayoutMentee>
       <div className="pb-9">
         <h1 className="text-putih text-lg lg:text-2xl font-medium mb-2">
           Discuss with your classmate
@@ -17,7 +17,7 @@ const ForumMentee = () => {
 
         <CardForum />
       </div>
-    </Layout>
+    </LayoutMentee>
   );
 };
 

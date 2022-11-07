@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../../components/Layout";
+import { LayoutMentor } from "../../components/Layout";
 import { CardTaskMentor } from "../../components/Cards";
 import hero from "../../assets/hero.png";
 import toys3 from "../../assets/toys-3.png";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const HomeMentor = () => {
   return (
-    <Layout>
+    <LayoutMentor>
       <div className="flex justify-between">
         <div className="md:space-y-2">
           <h1 className="text-putih text-lg md:text-3xl font-medium">
@@ -59,7 +59,7 @@ const HomeMentor = () => {
         </h1>
         <CardTaskMentor />
       </div>
-    </Layout>
+    </LayoutMentor>
   );
 };
 
