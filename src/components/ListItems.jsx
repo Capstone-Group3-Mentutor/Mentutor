@@ -88,6 +88,7 @@ const ListClass = ({index, student, name, status, onSubmit, className, onClick, 
         </div>
       </div>
       <hr className="text-abu mx-3 border-abu border-opacity-50" />
+    </div>
     </>
   );
 };
