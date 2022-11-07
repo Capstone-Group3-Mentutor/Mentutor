@@ -2,20 +2,45 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { LayoutAdmin } from "../../components/Layout";
-import CustomInput from "../../components/CustomInput";
-import CustomButton from "../../components/CustomButton";
-import { apiRequest } from "../../utils/apiRequest";
-import Swal from "sweetalert2";
+import CustomInput from '../../components/CustomInput'
+import CustomButton from '../../components/CustomButton'
+import { apiRequest } from '../../utils/apiRequest'
+import Swal from 'sweetalert2'
+import * as yup from "yup"
+import {useForm} from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+
+const schema = yup.object().shape({
+  email : yup.string()
+    .required("Email is required")
+    .email("Email is invalid")
+    .min(8, "Email must be at least 6 characters")
+    .max(75, "Email must not exceed 30 characters"),
+  fullname : yup.string()
+    .required("Fullname is required")
+    .min(5, "Fullname is too short")
+    .max(50, "Fullname is too long"),
+  password : yup.string()
+    .required("Password is required")
+    .min(8, "Password must be at least 6 characters")
+    .max(30, "Password must not exceed 30 characters"),
+    role : yup.string()
+      .matches("Choose a role","Role is required"),
+    classname : yup.string()
+      .matches("Choose a class","Class is required"),
+});
 
 const InputMember = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("Role");
-  const [className, setClassName] = useState(0);
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(true);
-  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("")
+  const [email, setEmail] = useState("")
+  const [role, setRole] = useState("Role")
+  const [datas, setDatas] = useState([])
+  const [className, setClassName] = useState(0)
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [disabled, setDisabled] = useState(true)
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     if (fullName && email && role && className && password) {
@@ -25,17 +50,40 @@ const InputMember = () => {
     }
   }, [fullName, email, role, className, password]);
 
-  const handleSubmit = async (e) => {
-    // setLoading(false)
-    e.preventDefault();
+  useEffect(() => {
+    fetchData()
+  }, [])
 
-    if (
-      fullName.length == 0 ||
-      email.length == 0 ||
-      role == "Role" ||
-      className == 0 ||
-      password.length == 0
-    ) {
+  const fetchData = async () => {
+    apiRequest("admin/classes","get",{})
+    .then((res) => {
+      const results = res.data
+      setDatas(results)
+    })
+    .catch((err) =>{
+      Swal.fire({
+          icon: "error",
+          text: "Sometings Error in Server",
+        })
+    })
+    .then(()=> {
+      setLoading(false)
+    })
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState : {errors},
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const handleRegister = async (data) => {
+    // e.preventDefault()
+    
+    if (fullName.length == 0 || email.length == 0 || role == "Role" || password.length == 0) {
       Swal.fire({
         position: "center",
         icon: "error",
@@ -51,40 +99,37 @@ const InputMember = () => {
       role,
       id_class: className,
       password,
-    };
-    apiRequest("admin/users", "post", body)
-      .then((res) => {
-        if (res?.status === 201) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Register Succes",
-            showConfirmButton: true,
-          });
-        }
-        navigate("/homeadmin");
-      })
-      .catch((err) => {
-        if (err.response?.status === 400) {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Invalid Input From Client",
-            showConfirmButton: true,
-          });
-        } else if (err.response?.status === 500) {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Something Error In Server",
-            showConfirmButton: true,
-          });
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+    }
+    apiRequest("admin/users","post",body)
+    .then((res) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Register Succes",
+          showConfirmButton: true,
+          })
+       navigate("/homeadmin")    
+    })
+    .catch((err) => {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Invalid Input From Client",
+          showConfirmButton: true,
+          })
+       if (err.response?.status === 500 ) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Something Error In Server",
+          showConfirmButton: true,
+        })
+      } 
+    })
+    .finally(() => {
+      setLoading(false)
+    })
+  }
 
   return (
     <LayoutAdmin>
@@ -96,31 +141,38 @@ const InputMember = () => {
           Join the class to learn with each others.
         </p>
       </div>
-      <form
-        className="w-full lg:w-[35rem] h-[35rem] md:h-[35rem] lg:h-[32rem] bg-card rounded-[20px] text-xs md:text-lg px-5 md:px-10 py-2"
-        onSubmit={(e) => handleSubmit(e)}
+
+      <form 
+      className='w-full lg:w-[35rem] h-[35rem] md:h-[35rem] lg:h-[32rem] bg-card rounded-[20px] text-xs md:text-lg px-5 md:px-10 py-2'
+      onSubmit={handleSubmit(handleRegister)}
       >
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col space-y-2 w-full">
             <p className="text-putih text-md md:text-lg">Name</p>
             <CustomInput
-              id="input-fullname"
-              category="Class"
-              type="text"
-              placeholder="Full name"
-              onChange={(e) => setFullName(e.target.value)}
-              value={fullName}
+            id="input-fullname"
+            category="Class"
+            type="text"
+            placeholder="Full name"
+            onChange={(e) => setFullName(e.target.value)}
+            value={fullName}
+            register={register}
+            error={errors.fullname?.message}
+            name="fullname"
             />
           </div>
           <div className="flex flex-col space-y-2 w-full">
             <h1 className="text-putih text-md md:text-lg">Email</h1>
             <CustomInput
-              id="input-email"
-              category="Class"
-              type="text"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+            id="input-email"
+            category="Class"
+            type="text"
+            placeholder="example@gmail.com"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            register={register}
+            error={errors.email?.message}
+            name="email"
             />
           </div>
           <div className="flex flex-row space-x-4">
@@ -133,45 +185,40 @@ const InputMember = () => {
                 onChange={(e) => setRole(e.target.value)}
                 value={role}
               >
-                <option value="Role">Choose A Role</option>
-                <option value="mentor" id="Mentor">
-                  Mentor
-                </option>
-                <option value="mentee" id="Mentee">
-                  Mentee
-                </option>
+                  <option value="Role" disabled>Choose a role</option>
+                  <option value="mentor" id="mentor">mentor</option>
+                  <option value="mentee" id="mentee">mentee</option>
+
               </select>
             </div>
             <div className="w-1/2 flex flex-col space-y-2 ">
               <p className="text-putih text-md md:text-lg">Class</p>
               <label htmlFor="dropdown-class" className="sr-only"></label>
-              <select
-                id="dropdown-class"
-                className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
-                onChange={(e) => setClassName(e.target.value)}
-                value={className}
+              <select id="dropdown-class" className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
+              onChange={(e) => setClassName(parseFloat(e.target.value))}
               >
-                <option className="text-abu" value={0}>
-                  Choose A Class
-                </option>
-                <option value={1} id="FE">
-                  Front-end
-                </option>
-                <option value={2} id="BE">
-                  Back-end
-                </option>
+                <option value="Class" disabled>Choose a class</option>
+                {datas.map((data, index) => (
+                  <option 
+                  key={data.id_class} 
+                  value={data.id_class}>{data.class_name}</option>
+                ))}
               </select>
             </div>
           </div>
           <div className="flex flex-col space-y-2 w-full">
             <p className="text-putih text-md md:text-lg">Password</p>
             <CustomInput
-              id="input-password"
-              category="Class"
-              type="password"
-              placeholder="***********"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
+            id="input-password"
+            category="Class"
+            type="password"
+            placeholder="***********"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            register={register}
+            error={errors.password?.message}
+            name="password"
+
             />
           </div>
         </div>

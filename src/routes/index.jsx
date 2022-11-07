@@ -36,6 +36,7 @@ const index = () => {
     function (response) {
       return response;
     },
+
     function (error) {
       const { data } = error.response;
       if (
@@ -47,6 +48,7 @@ const index = () => {
       return Promise.reject(error);
     }
   );
+
   (function () {
     if (checkToken) {
       const { token } = cookie;
