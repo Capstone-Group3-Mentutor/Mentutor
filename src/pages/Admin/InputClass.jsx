@@ -7,6 +7,7 @@ import { ListClass } from "../../components/ListItems";
 import { apiRequest } from "../../utils/apiRequest";
 import Swal from "sweetalert2";
 import { WithRouter } from "../../utils/navigation";
+import swal from "sweetalert";
 
 const InputClass = (props) => {
   const [className, setClassName] = useState("");
@@ -130,24 +131,27 @@ const InputClass = (props) => {
   };
 
   const deleteClass = async (id_class) => {
-    apiRequest(`admin/classes/${id_class}`, "delete");
     Swal.fire({
       title: "Are you sure?",
       text: "Are You Sure to Delete Class",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      cancelButtonText: `cancel`,
       confirmButtonText: "Yes, delete!",
     })
       .then((res) => {
-        if (res.isConfirmed)
+        if (res.isConfirmed) {
+          apiRequest(`admin/classes/${id_class}`, "delete");
           Swal.fire({
             text: "Class Succesfully Deleted",
             icon: "success",
             showCancelButton: false,
             confirmButtonColor: "#3085d6",
           });
+        } else if (res.isDismissed == `cancel`) {
+          alert("cancel button clicked");
+        }
       })
       .catch((err) => {
         Swal.fire({

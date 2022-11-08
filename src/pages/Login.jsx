@@ -69,7 +69,6 @@ const Login = () => {
         dispatch(handleUser(res.data));
 
         Swal.fire({
-          id: "succes-login",
           position: "center",
           icon: "success",
           title: "Login Successful !",
@@ -86,15 +85,12 @@ const Login = () => {
         reset();
       })
       .catch((err) => {
-        
+        Swal.fire({
+          icon: "error",
+          text: "Invalid email or password",
+        });
+        if (err.response?.status === 500) {
           Swal.fire({
-            id: "invalid-login",
-            icon: "error",
-            text: "An invalid client request",
-          });
-         if (err.response?.status === 500) {
-          Swal.fire({
-            id: "Error-login",
             icon: "error",
             text: "Something Error In Server",
           });

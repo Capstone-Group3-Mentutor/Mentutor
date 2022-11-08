@@ -27,7 +27,7 @@ const CustomInput = ({
     <>
       <input
         className={
-          "border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light" +
+          "border placeholder:text-gray-500 text-xs text-putih focus:outline-none focus:border-putih border-abu font-light" +
           `${widthClassName}`
         }
         type={type}
