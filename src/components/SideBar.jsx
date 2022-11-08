@@ -11,7 +11,7 @@ import { handleAuth } from "../utils/reducers/reducer";
 import Swal from "sweetalert2";
 
 const SideBar = () => {
-  const [cookies, removeCookie] = useCookies(["token"], ["role"]);
+  const [cookies, , removeCookie] = useCookies();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const roles = cookies.role;
@@ -28,10 +28,11 @@ const SideBar = () => {
       cancelButtonText: "cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        removeCookie(["token"]);
-        removeCookie(["role"]);
+        removeCookie("token");
+        removeCookie("role");
+        removeCookie("id_user");
         dispatch(handleAuth(false));
-        console.log("ok");
+
         Swal.fire({
           title: "Successfully",
           text: "You have successfully logged out!",
@@ -40,7 +41,6 @@ const SideBar = () => {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Ok",
         }).then((result) => {
-          console.log("ok2");
           if (result.value) {
             navigate("/");
           }

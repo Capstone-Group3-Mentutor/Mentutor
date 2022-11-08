@@ -32,7 +32,7 @@ const HomeAdmin = () => {
       })
       .catch((err) => {
         const { data } = err.response;
-        if ([400].includes(data.code)) {
+        if ([401, 403].includes(data.code)) {
           removeCookie("token");
           dispatch(handleAuth(false));
           navigate("/");
@@ -85,21 +85,13 @@ const HomeAdmin = () => {
   const handleEditUser = async (e) => {
     setLoading(true);
     e.preventDefault();
-    if (objSubmit.name.length == 0 || objSubmit.email.length == 0) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Data cannot be empty!",
-        showConfirmButton: true,
-      });
-      return;
-    }
     const body = {
       name: objSubmit.name,
       email: objSubmit.email,
       password: objSubmit.password,
       role: objSubmit.role,
       class_name: objSubmit.class_name,
+      // class_name: objSubmit.id_class,
     };
     apiRequest(`admin/users/${objSubmit.id_user}`, "put", body)
       .then((res) => {
@@ -190,7 +182,8 @@ const HomeAdmin = () => {
                       onClick={() => {
                         setObjSubmit({
                           id_user: item?.id_user,
-                          class_name: item?.class_name,
+                          class_name: item?.id_class,
+                          // class_name: item?.class_name,
                           name: item?.name,
                           password: item?.password,
                           role: item?.role,
@@ -275,7 +268,7 @@ const HomeAdmin = () => {
                         onChange={(e) =>
                           setObjSubmit({
                             ...objSubmit,
-                            class_name: e.target.value,
+                            id_class: e.target.value,
                           })
                         }
                         value={objSubmit.class_name}
@@ -287,7 +280,7 @@ const HomeAdmin = () => {
                         </option>
                         {dataClass?.map((items) => (
                           <option
-                            value={items?.class_name}
+                            value={items?.id_class}
                             key={items?.id_class}
                             id="Mentor"
                           >
