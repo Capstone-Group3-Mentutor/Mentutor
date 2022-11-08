@@ -237,7 +237,7 @@ const InputMember = () => {
         </div>
         <div className="text-end mt-5">
           <CustomButton
-            id="btn-addClass"
+            id="btn-addMember"
             color="Primary"
             label="Add"
             // loading={disabled || loading}
