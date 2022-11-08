@@ -23,7 +23,7 @@ const schema = yup.object().shape({
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["token"]);
+  const [cookies, setCookie] = useCookies(["token"], ["role"]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -65,6 +65,7 @@ const Login = () => {
       .then((res) => {
         const { data } = res.data;
         setCookie("token", res.data.token, { path: "/" });
+        setCookie("role", res.data.role, { path: "/" });
         dispatch(handleAuth(true));
         dispatch(handleUser(res.data));
 
@@ -86,13 +87,12 @@ const Login = () => {
         reset();
       })
       .catch((err) => {
-        
-          Swal.fire({
-            id: "invalid-login",
-            icon: "error",
-            text: "An invalid client request",
-          });
-         if (err.response?.status === 500) {
+        Swal.fire({
+          id: "invalid-login",
+          icon: "error",
+          text: "Data is not registered",
+        });
+        if (err.response?.status === 500) {
           Swal.fire({
             id: "Error-login",
             icon: "error",
@@ -128,7 +128,7 @@ const Login = () => {
               name="email"
               category="Login"
               type="email"
-              placeholder="contoh@gmail.com"
+              placeholder="example@gmail.com"
               error={errors.email?.message}
             />
           </div>
