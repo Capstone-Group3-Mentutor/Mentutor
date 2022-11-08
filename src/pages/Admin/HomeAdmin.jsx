@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { LayoutAdmin } from "../../components/Layout";
+import Layout from "../../components/Layout";
 import { SlOptionsVertical } from "react-icons/sl";
 import { apiRequest } from "../../utils/apiRequest";
 import Swal from "sweetalert2";
@@ -122,7 +122,7 @@ const HomeAdmin = () => {
 
   return (
     <>
-      <LayoutAdmin>
+      <Layout>
         <div className="flex justify-between ">
           <div className="md:space-y-2">
             <h1 className="text-putih text-lg md:text-2xl font-medium">
@@ -310,7 +310,7 @@ const HomeAdmin = () => {
           </div>
         </div>
         {/* end modal */}
-      </LayoutAdmin>
+      </Layout>
     </>
   );
 };

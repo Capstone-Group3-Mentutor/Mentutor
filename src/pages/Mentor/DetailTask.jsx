@@ -1,10 +1,10 @@
 import React from "react";
-import { LayoutMentor } from "../../components/Layout";
+import Layout from "../../components/Layout";
 import { ListTask } from "../../components/ListItems";
 
 const DetailTask = () => {
   return (
-    <LayoutMentor>
+    <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-1">
         Detail Task
       </h1>
@@ -53,7 +53,7 @@ const DetailTask = () => {
         <ListTask />
         <ListTask />
       </div>
-    </LayoutMentor>
+    </Layout>
   );
 };
 

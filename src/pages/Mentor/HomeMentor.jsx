@@ -1,5 +1,5 @@
 import React from "react";
-import { LayoutMentor } from "../../components/Layout";
+import Layout from "../../components/Layout";
 import { CardTaskMentor } from "../../components/Cards";
 import hero from "../../assets/hero.png";
 import toys3 from "../../assets/toys-3.png";
