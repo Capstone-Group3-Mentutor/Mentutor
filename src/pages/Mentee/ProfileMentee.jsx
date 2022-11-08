@@ -1,5 +1,5 @@
 import React from "react";
-import { LayoutMentee } from "../../components/Layout";
+import Layout from "../../components/Layout";
 import toys1 from "../../assets/toys-1.png";
 import { CardProfile } from "../../components/Cards";
 import CustomInput from "../../components/CustomInput";
@@ -7,7 +7,7 @@ import CustomButton from "../../components/CustomButton";
 
 const ProfileMentee = () => {
   return (
-    <LayoutMentee>
+    <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-2">
         Profile
       </h1>
@@ -74,7 +74,7 @@ const ProfileMentee = () => {
         </div>
       </div>
       {/* end modal */}
-    </LayoutMentee>
+    </Layout>
   );
 };
 

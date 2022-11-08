@@ -1,13 +1,13 @@
 import CustomInput from "../../components/CustomInput";
 import React from "react";
-import { LayoutMentor } from "../../components/Layout";
+import Layout from "../../components/Layout";
 import CustomButton from "../../components/CustomButton";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { SlOptionsVertical } from "react-icons/sl";
 import { FiArrowRight } from "react-icons/fi";
 const InputTask = () => {
   return (
-    <LayoutMentor>
+    <Layout>
       <div className="lg:px-[3rem]">
         <h1 className="text-putih text-lg lg:text-2xl font-medium mb-1">
           Create Task
@@ -174,7 +174,7 @@ const InputTask = () => {
           </div>
         </div>
       </div>
-    </LayoutMentor>
+    </Layout>
   );
 };
 

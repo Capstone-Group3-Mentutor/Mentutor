@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LayoutAdmin } from "../../components/Layout";
+import Layout from "../../components/Layout";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import { ListClass } from "../../components/ListItems";
 import { apiRequest } from "../../utils/apiRequest";
 import Swal from "sweetalert2";
-import { WithRouter } from "../../utils/navigation";
 
-const InputClass = (props) => {
+const InputClass = () => {
   const [className, setClassName] = useState("");
-  const [status, setStatus] = useState("active");
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -161,7 +159,7 @@ const InputClass = (props) => {
   };
 
   return (
-    <LayoutAdmin>
+    <Layout>
       <div className="md:space-y-2 mb-3">
         <h1 className="text-putih text-lg md:text-3xl font-medium">
           Add Class
@@ -266,8 +264,8 @@ const InputClass = (props) => {
                   <option value="active" id="active">
                     active
                   </option>
-                  <option value="non active" id="non active">
-                    non active
+                  <option value="non_active" id="non_active">
+                    non_active
                   </option>
                 </select>
               </div>
@@ -282,8 +280,8 @@ const InputClass = (props) => {
           </form>
         </div>
       </div>
-    </LayoutAdmin>
+    </Layout>
   );
 };
 
-export default WithRouter(InputClass);
+export default InputClass;
