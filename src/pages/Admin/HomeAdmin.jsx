@@ -183,7 +183,6 @@ const HomeAdmin = () => {
                           id_user: item?.id_user,
                           class_name: item?.class_name,
                           id_class: item?.id_class,
-
                           name: item?.name,
                           password: item?.password,
                           role: item?.role,

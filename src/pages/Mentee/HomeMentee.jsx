@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+import toys2 from "../../assets/toys-2.png";
 import hero from "../../assets/hero.png";
-import toys3 from "../../assets/toys-3.png";
+
 import { CardTask } from "../../components/Cards";
 import Layout from "../../components/Layout";
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ const HomeMentee = () => {
   const [dataTask, setDataTask] = useState([]);
   const [loading, setLoading] = useState(false);
   const [cookie, setCookie] = useCookies();
+  const [images, setImages] = useState(toys2);
   const id_user = cookie.id_user;
   useEffect(() => {
     fetchUser();
@@ -67,7 +68,7 @@ const HomeMentee = () => {
             <Link to="/profilementee">
               <img
                 id="gbr-hero"
-                src={toys3}
+                src={images}
                 alt="avatar"
                 className="h-[1.5rem] w-[1.5rem]  md:h-[3rem] md:w-[3rem] rounded-full "
               />

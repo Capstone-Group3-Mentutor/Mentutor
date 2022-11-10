@@ -123,37 +123,6 @@ const CardTaskMentor = (props) => {
   );
 };
 
-// const CardUpload = () => {
-//   return (
-//     <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card py-4 px-4  lg:p-10 rounded-[10px]">
-//       <div className="flex space-x-2 md:space-x-9 items-center">
-//         <img
-//           src={toys1}
-//           alt="avatar"
-//           className="h-[3rem] w-[3rem] md:h-[4rem] md:w-[4rem] rounded-full mr-9"
-//         />
-
-//         <CustomInput
-//           id="input-status"
-//           type="text"
-//           placeholder="share something....."
-//           category="Status"
-//         />
-//       </div>
-//       <div className="flex mt-9 justify-between">
-//         <button
-//           id="btn-iconClip"
-//           className="h-8 w-8 md:h-10 md:w-10 bg-button text-putih flex items-center justify-center rounded-[5px]"
-//         >
-//           <FiPaperclip />
-//         </button>
-
-//         <CustomButton id="btn-send" label="Send" color="Primary" />
-//       </div>
-//     </div>
-//   );
-// };
-
 const CardForum = (props) => {
   return (
     <div className="w-[18rem] md:w-[32rem] lg:w-[52rem]  h-auto bg-card p-5 md:p-8 rounded-[10px]">
@@ -216,32 +185,33 @@ const CardForum = (props) => {
     </div>
   );
 };
-const CardProfile = () => {
+const CardProfile = (props) => {
   return (
     <div className="flex flex-col lg:flex-row  justify-center items-center sm:flex-auto">
       <img
-        src={toys1}
+        src={props.images}
         alt="avatar"
         className="h-[8rem] w-[8rem] md:h-[12rem] md:w-[12rem] rounded-full mr-9"
       />
       <div className="w-[18rem] md:w-[30rem] lg:w-[40rem] h-auto bg-card  mt-8 py-5 px-8 rounded-[10px]">
-        {/* option atau dot */}
         <div className="flex justify-between">
           <div className="text-lg text-button font-medium space-y-3 ">
             <h3>
-              Name : <span className="text-abu font-light">Lee min ho</span>
+              Name : <span className="text-abu font-light">{props.name}</span>
             </h3>
             <h3>
-              Role : <span className="text-abu font-light pl-2">Mentee</span>
+              Role :
+              <span className="text-abu font-light pl-2">{props.role}</span>
             </h3>
             <h3>
               Class :
-              <span className="text-abu font-light pl-1">Machine Learning</span>
+              <span className="text-abu font-light pl-1">{props.class}</span>
             </h3>
           </div>
           <label
             htmlFor="modal-edit-profile"
             className="h-8 w-8 md:h-10 md:w-10 bg-card shadow-md text-putih flex items-center justify-center rounded-[5px]"
+            onClick={props.onClickEdit}
           >
             <AiFillEdit />
           </label>

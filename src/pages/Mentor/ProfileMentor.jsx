@@ -1,64 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import toys1 from "../../assets/toys-1.png";
-import { CardProfile } from "../../components/Cards";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
-import { useState } from "react";
-import { useCookies } from "react-cookie";
-import { useEffect } from "react";
-import { apiRequest } from "../../utils/apiRequest";
 import Swal from "sweetalert2";
+import { BsImageFill } from "react-icons/bs";
+
+import { useCookies } from "react-cookie";
+import { CardProfile } from "../../components/Cards";
+import { apiRequest } from "../../utils/apiRequest";
 
 const ProfileMentor = () => {
-  // const [dataUser, setDataUser] = useState([]);
+  const [dataProfile, setDataProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState({});
   const [cookie, setCookie] = useCookies();
+  const [images, setImages] = useState(toys1);
   const id_user = cookie.id_user;
 
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
-  // const fetchUser = () => {
-  //   setLoading(true);
-  //   apiRequest(`admin/users/${id_user}`, "get")
-  //     .then((res) => {
-  //       setDataUser(res.data);
-  //       // console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       alert(err.toString());
-  //     })
-  //     .finally(() => setLoading(false));
-  // };
+  useEffect(() => {
+    fetchUser();
+  }, []);
+  const fetchUser = () => {
+    setLoading(true);
+    apiRequest(`admin/users/${id_user}`, "get")
+      .then((res) => {
+        setDataProfile(res.data);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  };
 
-  // const handleEditUser = async (e) => {
-  //   setLoading(true);
-  //   e.preventDefault();
-  //   const body = {
-  //     name: objSubmit.name,
-  //     email: objSubmit.email,
-  //     password: objSubmit.password,
-  //   };
-  //   apiRequest("users", "put", body)
-  //     .then((res) => {
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Succes Update",
-  //         showConfirmButton: true,
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       Swal.fire({
-  //         position: "center",
-  //         icon: "error",
-  //         title: "Failed Updated",
-  //         showConfirmButton: true,
-  //       });
-  //     })
-  //     .finally(() => fetchUser());
-  // };
+  const handleEditUser = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    for (const key in objSubmit) {
+      formData.append(key, objSubmit[key]);
+    }
+    apiRequest("users", "put", objSubmit, "multipart/form-data")
+      .then((res) => {
+        const { message } = res;
+        Swal.fire({
+          icon: "success",
+          title: message,
+          showConfirmButton: true,
+        });
+      })
+      .catch((err) => {
+        const data = err.response;
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Failed Updated",
+          text: data.message,
+          showConfirmButton: true,
+        });
+      })
+      .finally(() => fetchUser());
+  };
+  const handleChange = (value, key) => {
+    let temp = { ...objSubmit };
+    temp[key] = value;
+    setObjSubmit(temp);
+  };
+
   return (
     <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-2">
@@ -68,8 +75,19 @@ const ProfileMentor = () => {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </p>
       <div className="mt-[3rem]">
-        {/* {loading ? <p>loading</p> : dataUser?.map(item)} */}
-        <CardProfile />
+        <CardProfile
+          name={dataProfile.name}
+          class={dataProfile.class_name}
+          role={dataProfile.role}
+          images={images}
+          onClickEdit={() => {
+            setObjSubmit({
+              name: dataProfile.name,
+              email: dataProfile.email,
+              password: dataProfile.password,
+            });
+          }}
+        />
       </div>
 
       {/* ---modal--- */}
@@ -78,27 +96,41 @@ const ProfileMentor = () => {
         <div className="modal-box w-11/12 max-w-3xl bg-card">
           <label
             htmlFor="modal-edit-profile"
-            className="cursor-pointer btn-sm  absolute right-2 top-2 text-putih border-white"
+            className="cursor-pointer btn-sm absolute right-2 top-2 text-putih border-white"
           >
             ✕
           </label>
-          <form className="flex flex-col md:p-9 lg:p-9 gap-5">
+          <form
+            onSubmit={(e) => handleEditUser(e)}
+            className="flex flex-col md:p-9 lg:p-9 gap-5"
+          >
             <h3 className="font-medium text-lg text-putih mb-2">
               Edit Profile
             </h3>
             <div className="flex flex-row  items-center justify-between">
               <div className=" flex flex-col justify-center items-center gap-3 space-y-3">
                 <img
-                  src={toys1}
+                  src={images}
                   alt="avatar"
                   className="h-[5rem] w-[5rem] md:h-[12rem] md:w-[12rem] rounded-full "
                 />
-
-                <CustomButton
-                  id="btn-uploadFoto"
-                  label="Upload"
-                  color="Primary"
-                />
+                <label
+                  id="btn-upload-gbr"
+                  className="cursor-pointer flex h-[2.3rem] w-[8rem] text-putih text-sm bg-button  items-center justify-center rounded-[5px]"
+                  for="btn-gbr"
+                >
+                  <BsImageFill className="text-putih pr-2 text-xl" /> Upload
+                  <input
+                    onChange={(e) => {
+                      setImages(URL.createObjectURL(e.target.files[0]));
+                      handleChange(e.target.files[0], "images");
+                    }}
+                    accept="image/png,image/jpg"
+                    type="file"
+                    id="btn-gbr"
+                    className="text-card placeholder:none hidden "
+                  />
+                </label>
               </div>
 
               <div className="flex flex-col justify-end items-center gap-4">
@@ -106,16 +138,31 @@ const ProfileMentor = () => {
                   id="input-fullname"
                   placeholder="your name"
                   category="Submit"
+                  type="text"
+                  value={objSubmit.name}
+                  onChange={(e) =>
+                    setObjSubmit({ ...objSubmit, name: e.target.value })
+                  }
                 />
                 <CustomInput
                   id="input-email"
                   placeholder="contoh@gmail.com"
                   category="Submit"
+                  type="email"
+                  value={objSubmit.email}
+                  onChange={(e) =>
+                    setObjSubmit({ ...objSubmit, email: e.target.value })
+                  }
                 />
                 <CustomInput
                   id="input-password"
                   placeholder="Password"
                   category="Submit"
+                  type="password"
+                  value={objSubmit.password}
+                  onChange={(e) =>
+                    setObjSubmit({ ...objSubmit, password: e.target.value })
+                  }
                 />
               </div>
             </div>
