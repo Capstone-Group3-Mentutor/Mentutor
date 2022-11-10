@@ -316,7 +316,7 @@ const InputTask = (props) => {
             <a
               href={item.file}
               id="file-name"
-              className=" hover:underline h-[2rem] text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-abu my-3"
+              className="hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-abu my-3"
             >
               {item.file.substring(item.file.lastIndexOf(".") + 1) == "pdf" ? (
                 <img src={PDF} className="w-6 h-6" />
@@ -333,7 +333,7 @@ const InputTask = (props) => {
           )}
           {item.images ? (
             <img
-              className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
+              className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-2 text-gray-400 rounded-sm object-cover"
               src={item.images}
             />
           ) : (

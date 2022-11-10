@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import hero from "../../assets/hero.png";
 import toys3 from "../../assets/toys-3.png";
@@ -7,14 +7,57 @@ import Layout from "../../components/Layout";
 import { Link } from "react-router-dom";
 import CustomButton from "../../components/CustomButton";
 import { HiOutlineDocumentText } from "react-icons/hi";
+import { apiRequest } from "../../utils/apiRequest";
+import { useCookies } from "react-cookie";
 const HomeMentee = () => {
+  const [datas, setDatas] = useState({});
+  const [dataTask, setDataTask] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [cookie, setCookie] = useCookies();
+  const id_user = cookie.id_user;
+  useEffect(() => {
+    fetchUser();
+    fetchTaskMentor();
+  }, []);
+
+  const fetchUser = async () => {
+    setLoading(true);
+    apiRequest(`admin/users/${id_user}`, "get")
+      .then((res) => {
+        setDatas(res.data);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const fetchTaskMentor = () => {
+    setLoading(true);
+    apiRequest("mentees/tasks", "get")
+      .then((res) => {
+        setDataTask(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        const { data } = err.response;
+        Swal.fire({
+          title: "Failed",
+          text: data.message,
+          showCancelButton: false,
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+  const fullname = `${datas.name}`;
+  const first = fullname.split(" ")[0];
   return (
     <Layout>
       <div className="pb-9">
-        <div className="flex justify-between ">
+        <div key={datas.id_user} className="flex justify-between ">
           <div className="md:space-y-2">
             <h1 className="text-putih text-lg md:text-3xl font-medium">
-              Hello <span>Lee !</span>
+              Hello <span>{first}</span>
             </h1>
             <p className="text-abu font-light text-[8px] md:text-sm">
               Welcome back, you are doing great.
@@ -35,7 +78,7 @@ const HomeMentee = () => {
                   id="name-profile"
                   className="text-putih text-[10px] md:text-base"
                 >
-                  Lee min ho
+                  {datas.name}
                 </h1>
               </Link>
 
@@ -68,8 +111,20 @@ const HomeMentee = () => {
               <p id="view-task">View All Task</p>
             </Link>
           </div>
-          <CardTask />
-
+          <div className="space-y-6">
+            {dataTask?.slice(0, 2).map((item) => (
+              <CardTask
+                id_task={item.id_task}
+                file={item.file}
+                images={item.images}
+                score={item.score}
+                status={item.status}
+                due_date={item.due_date}
+                title={item.title}
+                description={item.description}
+              />
+            ))}
+          </div>
           {/* modal submit */}
           <input
             type="checkbox"
