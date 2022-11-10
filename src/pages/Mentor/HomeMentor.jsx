@@ -7,12 +7,14 @@ import { Link } from "react-router-dom";
 import { apiRequest } from "../../utils/apiRequest";
 import { useCookies } from "react-cookie";
 import { WithRouter } from "../../utils/navigation";
+import toys1 from "../../assets/toys-1.png";
 import Swal from "sweetalert2";
 const HomeMentor = () => {
   const [datas, setDatas] = useState({});
   const [dataTask, setDataTask] = useState([]);
   const [loading, setLoading] = useState(false);
   const [cookie, setCookie] = useCookies();
+  const [images, setImages] = useState(toys1);
   const id_user = cookie.id_user;
   useEffect(() => {
     fetchUser();
@@ -70,7 +72,7 @@ const HomeMentor = () => {
             <Link to="/profilementor">
               <img
                 id="gbr-profile"
-                src={toys3}
+                src={images}
                 alt="avatar"
                 className="h-[1.5rem] w-[1.5rem]  md:h-[3rem] md:w-[3rem] rounded-full "
               />
