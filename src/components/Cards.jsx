@@ -8,33 +8,56 @@ import { AiFillEdit } from "react-icons/ai";
 import { BiRightArrowAlt } from "react-icons/bi";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
+import PDF from "../assets/PDF.svg";
+import EXCEL from "../assets/EXCEL.svg";
 
-const CardTask = () => {
+const CardTask = (props) => {
   return (
-    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px]">
+    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px] mb-8">
       <div className="flex justify-between items-center ">
         <h1 className="text-putih text-sm md:text-2xl font-semibold">
-          Machine learning part 2
+          {props.title}
         </h1>
-        <p className="text-button text-[6px] md:text-xs ">Due date 20 May</p>
+        <p className="text-button text-[6px] md:text-xs ">
+          Due date {props.due_date}
+        </p>
       </div>
       <p className=" text-[10px] md:text-sm text-abu mt-3 font-light">
-        buatlah sesuatu menggunakan data dibawah ini dengan menggunakan metode
-        Naive bayes dan KNN
+        {props.description}
       </p>
-      {/* <div className="w-[10rem] h-[2rem] bg-abu mt-4 text-xs flex items-center rounded-sm px-2">
-        untuk file
-      </div> */}
-      <img
-        className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
-        src="https://cdn-image.hipwee.com/wp-content/uploads/2021/05/hipwee-Aesthetic-Paper.jpg"
-        alt="foto-tugas"
-      />
+      {props.file ? (
+        <a
+          href={props.file}
+          id="file-name"
+          className=" hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-gray-400 my-3"
+        >
+          {props.file.substring(props.file.lastIndexOf(".") + 1) == "pdf" ? (
+            <img src={PDF} className="w-6 h-6" />
+          ) : props.file.substring(props.file.lastIndexOf(".") + 1) ==
+            "xlsx" ? (
+            <img src={EXCEL} className="w-6 h-6" />
+          ) : (
+            ""
+          )}
+          <p>{props.file.substring(props.file.lastIndexOf("/") + 1)}</p>
+        </a>
+      ) : (
+        ""
+      )}
+      {props.images ? (
+        <img
+          className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-2 rounded-sm object-cover"
+          src={props.images}
+        />
+      ) : (
+        ""
+      )}
       <div className="flex justify-between mt-4  items-center">
-        <p className="text-xs md:text-sm text-button ">Point: 0</p>
+        <p className="text-xs md:text-sm text-button ">Point: {props.score}</p>
         <label
           htmlFor="modal-submit-task"
           className="bg-task rounded-[5px]  py-1 px-3 md:py-2 md:px-4 text-blue-600 text-[8px] md:text-[10px] cursor-pointer"
+          onClick={props.onClickSubmit}
         >
           Submit your task
         </label>

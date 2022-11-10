@@ -1,15 +1,96 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import { CardTask } from "../../components/Cards";
 import CustomButton from "../../components/CustomButton";
 import { HiOutlineDocumentText } from "react-icons/hi";
+import { apiRequest } from "../../utils/apiRequest";
+import Swal from "sweetalert2";
+import CustomInput from "../../components/CustomInput";
+
 const Task = () => {
+  const [myTasks, setMyTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState("");
+  const [file, setFile] = useState("");
+  const [id_task, setIdTask] = useState(0);
+
+  useEffect(() => {
+    getMyTask();
+  }, []);
+
+  const getMyTask = async () => {
+    apiRequest("mentees/tasks", "get")
+      .then((res) => {
+        const results = res.data;
+        setMyTasks(results);
+        console.log(results);
+      })
+      .catch((err) => {
+        const { data } = err.response;
+        Swal.fire({
+          icon: "error",
+          text: data.message,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const submitTask = async (e) => {
+    e.preventDefault();
+    const body = {
+      title,
+      file,
+    };
+
+    apiRequest(
+      `mentees/submission/${id_task}`,
+      "post",
+      body,
+      "multipart/form-data"
+    )
+      .then((res) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Task Created",
+          showConfirmButton: true,
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Invalid Input From Client",
+          showConfirmButton: true,
+        });
+      })
+      .finally(() => {
+        getMyTask();
+      });
+  };
+
   return (
     <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-6">
         Your Task
       </h1>
-      <CardTask />
+      {myTasks?.map((item) => (
+        <CardTask
+          key={item?.id_task}
+          title={item?.title}
+          description={item?.description}
+          images={item?.images}
+          file={item?.file}
+          score={item?.score}
+          due_date={item?.due_date}
+          onClickSubmit={() => {
+            setIdTask(item?.id_task);
+          }}
+        />
+      ))}
+
       <input type="checkbox" id="modal-submit-task" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box  bg-card">
@@ -19,22 +100,39 @@ const Task = () => {
           >
             ✕
           </label>
-          <form className="flex flex-col md:p-9 lg:p-9 ">
-            <h3 className="font-medium text-lg text-putih mb-1">
+          <form onSubmit={submitTask} className="flex flex-col md:p-9 lg:p-9 ">
+            <h3 className="font-medium text-lg text-putih mb-3">
               Submit your task
             </h3>
-            <div className="w-[15rem] h-[3rem] bg-abu mt-4 text-xs flex items-center rounded-sm px-2">
-              untuk file
-            </div>
-            <div className="flex justify-between mt-[2rem]">
-              <span id="Upload-file" className="cursor-pointer text-putih">
-                <HiOutlineDocumentText className="text-2xl" />
-              </span>
-              <CustomButton
-                id="btn-submitMentee"
-                label="Submit"
-                color="Primary"
+            <CustomInput
+              id="input-title"
+              placeholder="Title"
+              category="Submit"
+              onChange={(e) => setTitle(e.target.value)}
+              defaultValue={title}
+            />
+            <div className="flex flex-col space-y-2 my-2">
+              <input
+                hidden
+                id="upload-btn"
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+                defaultValue={file}
               />
+              <label
+                className="bg-[#38486A] w-40 lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu p-3 cursor-pointer"
+                htmlFor="upload-btn"
+              >
+                <HiOutlineDocumentText className="text-xl mr-2" />
+                Choose a File
+              </label>
+              <div className="text-right">
+                <CustomButton
+                  id="btn-submitTask"
+                  label="Submit"
+                  color="Primary"
+                />
+              </div>
             </div>
           </form>
         </div>
