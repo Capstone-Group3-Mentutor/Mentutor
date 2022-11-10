@@ -9,34 +9,34 @@ import { useCookies } from "react-cookie";
 import { WithRouter } from "../../utils/navigation";
 import Swal from "sweetalert2";
 const HomeMentor = () => {
-  // const [datas, setDatas] = useState([]);
+  const [datas, setDatas] = useState({});
   const [dataTask, setDataTask] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [cookie, setCookie] = useCookies();
-  // const id_user = cookie.id_user;
+  const [cookie, setCookie] = useCookies();
+  const id_user = cookie.id_user;
   useEffect(() => {
-    // fetchUser();
+    fetchUser();
     fetchTaskMentor();
   }, []);
 
-  // const fetchUser = async () => {
-  //   setLoading(true);
-  //   apiRequest(`admin/users/${id_user}`, "get")
-  //     .then((res) => {
-  //       setDatas(res.data);
-  //       console.log(res.data);
-  //     })
-  //     .catch((err) => {
-  //       alert(err.toString());
-  //     })
-  //     .finally(() => setLoading(false));
-  // };
+  const fetchUser = async () => {
+    setLoading(true);
+    apiRequest(`admin/users/${id_user}`, "get")
+      .then((res) => {
+        setDatas(res.data);
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => setLoading(false));
+  };
 
   const fetchTaskMentor = () => {
     setLoading(true);
     apiRequest("mentors/tasks", "get")
       .then((res) => {
         setDataTask(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         const { data } = err.response;
@@ -48,14 +48,19 @@ const HomeMentor = () => {
       })
       .finally(() => setLoading(false));
   };
-
+  const fullname = `${datas.name}`;
+  const first = fullname.split(" ")[0];
+  // function sorting(a, b) {
+  //   return b.dataTask.id_task - a.dataTask.id_task;
+  // }
+  // const sorting = dataTask.sort((a, b) => b - a);
   return (
     <Layout>
       <div className="pb-9">
         <div className="flex justify-between">
           <div className="md:space-y-2">
             <h1 className="text-putih text-lg md:text-3xl font-medium">
-              Hello <span>Fauzan</span>
+              Hello <span>{first}</span>
             </h1>
             <p className="text-abu font-light text-[8px] md:text-sm">
               Welcome back, you are doing great.
@@ -76,7 +81,7 @@ const HomeMentor = () => {
                   id="profile-name"
                   className="text-putih text-[10px] md:text-base"
                 >
-                  Fauzan Kharisma
+                  {datas.name}
                 </h1>
               </Link>
               <p className="text-abu font-light text-[8px] md:text-xs">
@@ -111,6 +116,7 @@ const HomeMentor = () => {
               <p id="view-task">View All Task</p>
             </Link>
           </div>
+
           <div className="space-y-6">
             {loading ? (
               <p>loading..</p>
@@ -119,6 +125,7 @@ const HomeMentor = () => {
                 .slice(0, 2)
                 .map((item) => (
                   <CardTaskMentor
+                    id_task={item.id_task}
                     title={item.title}
                     description={item.description}
                     images={item.images}
