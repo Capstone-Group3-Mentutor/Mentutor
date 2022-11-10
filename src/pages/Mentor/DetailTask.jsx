@@ -111,7 +111,7 @@ const DetailTask = (props) => {
               ) == "xlsx" ? (
               <img src={EXCEL} className="w-6 h-6" />
             ) : (
-              ""
+              "e"
             )}
             {detailTask.file.substring(detailTask.file.lastIndexOf("/") + 1)}
           </a>

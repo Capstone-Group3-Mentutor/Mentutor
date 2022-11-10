@@ -22,6 +22,7 @@ const InputTask = (props) => {
   const [images, setImages] = useState("");
   const [file, setFile] = useState("");
   const [due_date, setDue_date] = useState("");
+  const [id_task, setIdTask] = useState(0);
   const [objSubmit, setObjSubmit] = useState("");
   const navigate = useNavigate();
 
@@ -51,16 +52,15 @@ const InputTask = (props) => {
     e.preventDefault();
 
     const body = {
-      title: objSubmit.title,
-      description: objSubmit.description,
-      images: objSubmit.images,
-      file: objSubmit.file,
-      score: objSubmit.score,
-      due_date: objSubmit.due_date,
-      id_task: objSubmit.id_task,
+      title,
+      description,
+      images,
+      file,
+      due_date,
+      id_task,
     };
 
-    apiRequest(`mentors/tasks/${objSubmit.id_task}`, "put", body)
+    apiRequest(`mentors/tasks/${id_task}`, "put", body, "multipart/form-data")
       .then((res) => {
         Swal.fire({
           position: "center",
@@ -169,10 +169,8 @@ const InputTask = (props) => {
                 placeholder="task title"
                 category="Status"
                 onChange={(e) => {
-                  setTitle(e.target.value);
                   handleChange(e.target.value, "title");
                 }}
-                value={title}
               />
             </div>
             <div className="space-y-2 mt-6">
@@ -182,10 +180,8 @@ const InputTask = (props) => {
                 placeholder="task description"
                 category="Status"
                 onChange={(e) => {
-                  setDescription(e.target.value);
                   handleChange(e.target.value, "description");
                 }}
-                value={description}
               />
             </div>
             <div className="flex flex-col lg:flex-row space-x-6">
@@ -196,10 +192,8 @@ const InputTask = (props) => {
                   placeholder="date"
                   category="Class"
                   onChange={(e) => {
-                    setDue_date(e.target.value);
                     handleChange(e.target.value, "due_date");
                   }}
-                  value={due_date}
                 />
               </div>
               <div className="lg:space-y-2 mt-6">
@@ -209,7 +203,6 @@ const InputTask = (props) => {
                   id="uploadfile-btn"
                   type="file"
                   onChange={(e) => {
-                    setFile(URL.createObjectURL(e.target.files[0]));
                     handleChange(e.target.files[0], "file");
                   }}
                 />
@@ -287,12 +280,12 @@ const InputTask = (props) => {
                     htmlFor="modal-edit-task"
                     className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
                     onClick={() => {
-                      setObjSubmit({
-                        id_task: item.id_task,
-                        title: item.title,
-                        description: item.description,
-                        due_date: item.due_date,
-                      });
+                      setIdTask(item.id_task);
+                      setTitle(item.title);
+                      setDescription(item.description);
+                      setDue_date(item.due_date);
+                      setFile(item.file);
+                      setImages(item.images);
                     }}
                   >
                     Edit
@@ -362,7 +355,10 @@ const InputTask = (props) => {
           >
             ✕
           </label>
-          <form className="flex flex-col p-9 gap-3" onSubmit={handleEditTasks}>
+          <form
+            className="flex flex-col p-9 gap-3"
+            onSubmit={(e) => handleEditTasks(e)}
+          >
             <h3 className="font-medium text-lg text-putih mb-2">
               Edit Your Task
             </h3>
@@ -370,37 +366,32 @@ const InputTask = (props) => {
               id="input-title"
               placeholder="Title"
               category="Submit"
-              onChange={(e) =>
-                setObjSubmit({ ...objSubmit, title: e.target.value })
-              }
-              value={objSubmit.title}
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
             />
             <CustomInput
               id="input-description"
               placeholder="Description"
               category="Submit"
-              onChange={(e) =>
-                setObjSubmit({ ...objSubmit, description: e.target.value })
-              }
-              value={objSubmit.description}
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
             />
             <CustomInput
               id="input-due_date"
               placeholder="Due_date"
               category="Submit"
-              onChange={(e) =>
-                setObjSubmit({ ...objSubmit, due_date: e.target.value })
-              }
-              value={objSubmit.due_date}
+              onChange={(e) => setDue_date(e.target.value)}
+              value={due_date}
             />
             <div className="flex justify-between items-center">
               <input
                 hidden
                 id="upload-btn"
                 type="file"
-                onChange={(e) =>
-                  setFile(URL.createObjectURL(e.target.files[0]))
-                }
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }}
+                defaultValue={file}
               />
               <label
                 className="bg-[#38486A]  w-40 lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu p-3 cursor-pointer"
@@ -409,6 +400,22 @@ const InputTask = (props) => {
                 <HiOutlineDocumentText className="text-xl mr-2" />
                 Choose a File
               </label>
+              {/* <input
+                hidden
+                id="upload-btn"
+                type="file"
+                onChange={(e) => {
+                  setImages(URL.createObjectURL(e.target.files[0]));
+                  handleChange(e.target.files[0], "images");
+                }}
+              />
+              <label
+                className="bg-[#38486A]  w-40 lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu p-3 cursor-pointer"
+                htmlFor="upload-btn"
+              >
+                <HiOutlineDocumentText className="text-xl mr-2" />
+                Choose an Image
+              </label> */}
               <div>
                 <CustomButton
                   id="btn-submitTask"

@@ -10,9 +10,10 @@ import CustomInput from "./CustomInput";
 import PDF from "../assets/PDF.svg";
 import EXCEL from "../assets/EXCEL.svg";
 import { useNavigate } from "react-router-dom";
+
 const CardTask = (props) => {
   return (
-    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px]">
+    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px] mb-8">
       <div className="flex justify-between items-center ">
         <h1 className="text-putih text-sm md:text-2xl font-semibold">
           {props.title}
@@ -56,6 +57,7 @@ const CardTask = (props) => {
         <label
           htmlFor="modal-submit-task"
           className="bg-task rounded-[5px]  py-1 px-3 md:py-2 md:px-4 text-blue-600 text-[8px] md:text-[10px] cursor-pointer"
+          onClick={props.onClickSubmit}
         >
           Submit your task
         </label>
