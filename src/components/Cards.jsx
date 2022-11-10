@@ -3,13 +3,13 @@ import toys1 from "../assets/toys-1.png";
 import toys3 from "../assets/toys-3.png";
 import toys4 from "../assets/toys-4.png";
 import { FiPaperclip, FiSend } from "react-icons/fi";
-// import { SlOptionsVertical } from "react-icons/sl";
 import { AiFillEdit } from "react-icons/ai";
 import { BiRightArrowAlt } from "react-icons/bi";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
 import PDF from "../assets/PDF.svg";
 import EXCEL from "../assets/EXCEL.svg";
+import { useNavigate } from "react-router-dom";
 
 const CardTask = (props) => {
   return (
@@ -67,6 +67,7 @@ const CardTask = (props) => {
 };
 
 const CardTaskMentor = (props) => {
+  const navigate = useNavigate();
   return (
     <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px]">
       <div className="flex justify-between items-center ">
@@ -77,25 +78,44 @@ const CardTaskMentor = (props) => {
           Due date {props.due_date}
         </p>
       </div>
-      <p className=" text-[10px] md:text-sm text-abu mt-3 font-light">
+      <p className=" text-[10px] md:text-sm text-abu mt-5 font-light">
         {props.description}
       </p>
-      {props.file !== null ? (
-        <div className="w-[10rem] h-[2rem] bg-abu mt-4 text-xs flex items-center rounded-sm px-2">
-          {props.file}
-        </div>
-      ) : (
-        <img
-          className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
-          src={props.images}
-          alt="foto-tugas"
-        />
-      )}
 
-      <div className="flex justify-between mt-4 items-center">
+      {props.file ? (
+        <a
+          href={props.file}
+          id="file-name"
+          className=" hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-gray-400 my-3"
+        >
+          {props.file.substring(props.file.lastIndexOf(".") + 1) == "pdf" ? (
+            <img src={PDF} className="w-6 h-6" />
+          ) : props.file.substring(props.file.lastIndexOf(".") + 1) ==
+            "xlsx" ? (
+            <img src={EXCEL} className="w-6 h-6" />
+          ) : (
+            ""
+          )}
+          <p>{props.file.substring(props.file.lastIndexOf("/") + 1)}</p>
+        </a>
+      ) : (
+        ""
+      )}
+      {props.images ? (
+        <img
+          className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-2 rounded-sm object-cover"
+          src={props.images}
+        />
+      ) : (
+        ""
+      )}
+      <div className="flex justify-between mt-7 items-center">
         <p className="text-xs md:text-sm text-button ">Point: 0</p>
         <div className="flex flex-row space-x-1 cursor-pointer hover:underline ">
-          <p className="text-[7px] md:text-sm text-putih ">
+          <p
+            onClick={() => navigate(`/detailtask/${props.id_task}`)}
+            className="text-[7px] md:text-sm text-putih "
+          >
             See the Submitted Task by Mentees
           </p>
           <BiRightArrowAlt color="white" size={20} />
@@ -104,37 +124,6 @@ const CardTaskMentor = (props) => {
     </div>
   );
 };
-
-// const CardUpload = () => {
-//   return (
-//     <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card py-4 px-4  lg:p-10 rounded-[10px]">
-//       <div className="flex space-x-2 md:space-x-9 items-center">
-//         <img
-//           src={toys1}
-//           alt="avatar"
-//           className="h-[3rem] w-[3rem] md:h-[4rem] md:w-[4rem] rounded-full mr-9"
-//         />
-
-//         <CustomInput
-//           id="input-status"
-//           type="text"
-//           placeholder="share something....."
-//           category="Status"
-//         />
-//       </div>
-//       <div className="flex mt-9 justify-between">
-//         <button
-//           id="btn-iconClip"
-//           className="h-8 w-8 md:h-10 md:w-10 bg-button text-putih flex items-center justify-center rounded-[5px]"
-//         >
-//           <FiPaperclip />
-//         </button>
-
-//         <CustomButton id="btn-send" label="Send" color="Primary" />
-//       </div>
-//     </div>
-//   );
-// };
 
 const CardForum = (props) => {
   return (
@@ -198,32 +187,33 @@ const CardForum = (props) => {
     </div>
   );
 };
-const CardProfile = () => {
+const CardProfile = (props) => {
   return (
     <div className="flex flex-col lg:flex-row  justify-center items-center sm:flex-auto">
       <img
-        src={toys1}
+        src={props.images}
         alt="avatar"
         className="h-[8rem] w-[8rem] md:h-[12rem] md:w-[12rem] rounded-full mr-9"
       />
       <div className="w-[18rem] md:w-[30rem] lg:w-[40rem] h-auto bg-card  mt-8 py-5 px-8 rounded-[10px]">
-        {/* option atau dot */}
         <div className="flex justify-between">
           <div className="text-lg text-button font-medium space-y-3 ">
             <h3>
-              Name : <span className="text-abu font-light">Lee min ho</span>
+              Name : <span className="text-abu font-light">{props.name}</span>
             </h3>
             <h3>
-              Role : <span className="text-abu font-light pl-2">Mentee</span>
+              Role :
+              <span className="text-abu font-light pl-2">{props.role}</span>
             </h3>
             <h3>
               Class :
-              <span className="text-abu font-light pl-1">Machine Learning</span>
+              <span className="text-abu font-light pl-1">{props.class}</span>
             </h3>
           </div>
           <label
             htmlFor="modal-edit-profile"
             className="h-8 w-8 md:h-10 md:w-10 bg-card shadow-md text-putih flex items-center justify-center rounded-[5px]"
+            onClick={props.onClickEdit}
           >
             <AiFillEdit />
           </label>

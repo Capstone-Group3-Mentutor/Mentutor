@@ -206,7 +206,7 @@ const SideBar = () => {
       <div
         id="btn-logout"
         onClick={() => (cookies ? handleLogout() : navigate("/"))}
-        className="text-abu flex flex-row space-x-0 md:space-x-8 items-center hover:text-red-600 cursor-pointer"
+        className="text-abu flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer"
       >
         <BiLogOut size={25} />
         <h3 className="hidden md:block">Logout</h3>

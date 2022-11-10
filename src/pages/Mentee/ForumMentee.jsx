@@ -114,12 +114,15 @@ const ForumMentee = () => {
                 }}
               />
             </div>
-            <img
-              className="w-[4rem] h-[4rem] md:w-[7rem] mt-4 md:h-[7rem] rounded-sm object-cover"
-              src={image}
-              alt="img"
-            />
-            <div className="flex mt-5 justify-between">
+            {image ? (
+              <img
+                className="w-[4rem] h-[4rem] md:w-[7rem] mt-4  md:h-[7rem] rounded-sm object-cover"
+                src={image}
+                alt="img"
+              />
+            ) : null}
+
+            <div className="flex mt-10 justify-between">
               <label
                 id="btn-upload-gbr"
                 className="cursor-pointer flex h-8 w-8 md:h-10 md:w-10 bg-button  items-center justify-center rounded-[5px]"
