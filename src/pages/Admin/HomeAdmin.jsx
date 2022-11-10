@@ -83,23 +83,15 @@ const HomeAdmin = () => {
   };
 
   const handleEditUser = async (e) => {
-    setLoading(true);
+    // setLoading(true);
     e.preventDefault();
-    if (objSubmit.name.length == 0 || objSubmit.email.length == 0) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Data cannot be empty!",
-        showConfirmButton: true,
-      });
-      return;
-    }
     const body = {
       name: objSubmit.name,
       email: objSubmit.email,
       password: objSubmit.password,
       role: objSubmit.role,
       class_name: objSubmit.class_name,
+      id_class: parseFloat(objSubmit.id_class),
     };
     apiRequest(`admin/users/${objSubmit.id_user}`, "put", body)
       .then((res) => {
@@ -191,9 +183,11 @@ const HomeAdmin = () => {
                         setObjSubmit({
                           id_user: item?.id_user,
                           class_name: item?.class_name,
+                          id_class: item?.id_class,
                           name: item?.name,
                           password: item?.password,
                           role: item?.role,
+                          email: item?.email,
                         });
                       }}
                     >
@@ -239,30 +233,30 @@ const HomeAdmin = () => {
                     placeholder="your name"
                     category="Submit"
                     type="text"
-                    value={objSubmit.name}
                     onChange={(e) =>
                       setObjSubmit({ ...objSubmit, name: e.target.value })
                     }
+                    value={objSubmit.name}
                   />
                   <CustomInput
                     id="input-email"
                     placeholder="contoh@gmail.com"
                     category="Submit"
-                    type="email"
-                    value={objSubmit.email}
+                    type="text"
                     onChange={(e) =>
                       setObjSubmit({ ...objSubmit, email: e.target.value })
                     }
+                    value={objSubmit.email}
                   />
                   <CustomInput
                     id="input-password"
                     placeholder="Password"
                     category="Submit"
                     type="password"
-                    value={objSubmit.password}
                     onChange={(e) =>
                       setObjSubmit({ ...objSubmit, password: e.target.value })
                     }
+                    value={objSubmit.password}
                   />
                   <div className="flex flex-row space-x-4">
                     <div className="dropdown flex flex-col space-y-2 ">
@@ -275,10 +269,10 @@ const HomeAdmin = () => {
                         onChange={(e) =>
                           setObjSubmit({
                             ...objSubmit,
-                            class_name: e.target.value,
+                            id_class: e.target.value,
                           })
                         }
-                        value={objSubmit.class_name}
+                        value={objSubmit?.class_name}
                         id="dropdown-class"
                         className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem] p-2"
                       >
@@ -286,11 +280,7 @@ const HomeAdmin = () => {
                           Class
                         </option>
                         {dataClass?.map((items) => (
-                          <option
-                            value={items?.class_name}
-                            key={items?.id_class}
-                            id="Mentor"
-                          >
+                          <option value={items?.id_class} key={items?.id_class}>
                             {items?.class_name}
                           </option>
                         ))}

@@ -11,7 +11,7 @@ import { handleAuth } from "../utils/reducers/reducer";
 import Swal from "sweetalert2";
 
 const SideBar = () => {
-  const [cookies, removeCookie] = useCookies(["token"], ["role"]);
+  const [cookies, , removeCookie] = useCookies(["token"], ["role"]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const roles = cookies.role;
@@ -28,10 +28,9 @@ const SideBar = () => {
       cancelButtonText: "cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        removeCookie(["token"]);
-        removeCookie(["role"]);
+        removeCookie("token");
+        removeCookie("role");
         dispatch(handleAuth(false));
-        console.log("ok");
         Swal.fire({
           title: "Successfully",
           text: "You have successfully logged out!",
@@ -40,13 +39,11 @@ const SideBar = () => {
           confirmButtonColor: "#3085d6",
           confirmButtonText: "Ok",
         }).then((result) => {
-          console.log("ok2");
           if (result.value) {
             navigate("/");
           }
         });
       } else if (result.isDismissed == "cancel") {
-        console.log("cancel");
       }
     });
   };
@@ -65,7 +62,7 @@ const SideBar = () => {
           <Link to="/homeadmin">
             <div
               id="nav-home"
-              className="flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer"
+              className="flex flex-row space-x-0 md:space-x-8 items-center active:text-button hover:text-button cursor-pointer"
             >
               <AiFillHome size={25} />
               <h3 className="hidden md:block">Home</h3>
@@ -77,8 +74,8 @@ const SideBar = () => {
         {roles === "admin" ? (
           <Link to="/inputclass">
             <div
-              id="nav-home"
-              className="flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer"
+              id="nav-input"
+              className="flex flex-row space-x-0 md:space-x-8 items-center active:text-button hover:text-button cursor-pointer"
             >
               <BiTask size={25} />
               <h3 className="hidden md:block">Input Class</h3>
@@ -90,8 +87,8 @@ const SideBar = () => {
         {roles === "admin" ? (
           <Link to="/inputmember">
             <div
-              id="nav-home"
-              className="flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer"
+              id="nav-member"
+              className="flex flex-row space-x-0 md:space-x-8 items-center active:text-button hover:text-button cursor-pointer"
             >
               <IoIosPeople size={25} />
               <h3 className="hidden md:block">Input Member</h3>
@@ -103,8 +100,8 @@ const SideBar = () => {
         {roles === "mentor" ? (
           <Link to="/homementor">
             <div
-              id="home"
-              className="flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer"
+              id="nav-homemntor"
+              className="flex flex-row space-x-0 md:space-x-8 items-center active:text-button hover:text-button cursor-pointer"
             >
               <AiFillHome size={25} />
               <h3 className="hidden md:block">Home</h3>
@@ -116,11 +113,11 @@ const SideBar = () => {
         {roles === "mentor" ? (
           <Link to="/inputtask">
             <div
-              id="nav-task"
-              className="flex flex-row space-x-0 md:space-x-8 items-center  hover:text-button cursor-pointer"
+              id="nav-inputtask"
+              className="flex flex-row space-x-0 md:space-x-8 items-center active:text-button  hover:text-button cursor-pointer"
             >
               <BiTask size={25} />
-              <h3 className="hidden md:block">Create Task</h3>
+              <h3 className="hidden md:block">Task</h3>
             </div>
           </Link>
         ) : (
@@ -129,8 +126,8 @@ const SideBar = () => {
         {roles === "mentor" ? (
           <Link to="/forummentor">
             <div
-              id="nav-forum"
-              className="flex flex-row space-x-0 md:space-x-8 items-center  hover:text-button cursor-pointer"
+              id="nav-forummentor"
+              className="flex flex-row space-x-0 md:space-x-8 items-center active:text-button hover:text-button cursor-pointer"
             >
               <IoIosPeople size={25} />
               <h3 className="hidden md:block">Forum</h3>
@@ -143,7 +140,7 @@ const SideBar = () => {
           <Link to="/profilementor">
             <div
               id="nav-profile"
-              className="flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer"
+              className="flex flex-row space-x-0 md:space-x-8 items-center active:text-button hover:text-button cursor-pointer"
             >
               <CgProfile size={25} />
               <h3 className="hidden md:block">Profile</h3>
@@ -154,7 +151,10 @@ const SideBar = () => {
         )}
         {roles === "mentee" ? (
           <Link to="/homementee">
-            <div className="flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer">
+            <div
+              id="nav-homementee"
+              className="flex flex-row space-x-0 md:space-x-8 items-center  active:text-button hover:text-button cursor-pointer"
+            >
               <AiFillHome size={25} />
               <h3 className="hidden md:block">Home</h3>
             </div>
@@ -165,8 +165,8 @@ const SideBar = () => {
         {roles === "mentee" ? (
           <Link to="/task">
             <div
-              id="nav-task"
-              className="flex flex-row space-x-0 md:space-x-8 items-center  hover:text-button cursor-pointer"
+              id="nav-taskmentee"
+              className="flex flex-row space-x-0 md:space-x-8 items-center  active:text-button  hover:text-button cursor-pointer"
             >
               <BiTask size={25} />
               <h3 className="hidden md:block"> Task</h3>
@@ -178,8 +178,8 @@ const SideBar = () => {
         {roles === "mentee" ? (
           <Link to="/forummentee">
             <div
-              id="nav-forum"
-              className="flex flex-row space-x-0 md:space-x-8 items-center  hover:text-button cursor-pointer"
+              id="nav-forummentee"
+              className="flex flex-row space-x-0 md:space-x-8 items-center  active:text-button  hover:text-button cursor-pointer"
             >
               <IoIosPeople size={25} />
               <h3 className="hidden md:block">Forum</h3>
@@ -192,7 +192,7 @@ const SideBar = () => {
           <Link to="/profilementee">
             <div
               id="nav-profile"
-              className="flex flex-row space-x-0 md:space-x-8 items-center hover:text-button cursor-pointer"
+              className="flex flex-row space-x-0 md:space-x-8 items-center  active:text-button hover:text-button cursor-pointer"
             >
               <CgProfile size={25} />
               <h3 className="hidden md:block">Profile</h3>
@@ -203,8 +203,9 @@ const SideBar = () => {
         )}
       </div>
       <div
+        id="btn-logout"
         onClick={() => (cookies ? handleLogout() : navigate("/"))}
-        className="text-abu flex flex-row space-x-0 md:space-x-8 items-center cursor-pointer"
+        className="text-abu flex flex-row space-x-0 md:space-x-8 items-center hover:text-red-600 cursor-pointer"
       >
         <BiLogOut size={25} />
         <h3 className="hidden md:block">Logout</h3>

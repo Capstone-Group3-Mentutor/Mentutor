@@ -130,7 +130,7 @@ const InputClass = () => {
   const deleteClass = async (id_class) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Are You Sure to Delete Class",
+      text: "Do You Want to Delete This Class?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",

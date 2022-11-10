@@ -1,11 +1,12 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import { TokenContext } from "../utils/context";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState, useMemo } from "react";
 import { handleAuth } from "../utils/reducers/reducer";
 import { useCookies } from "react-cookie";
+// import { useNavigate } from "react-router-dom";
 
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
@@ -25,7 +26,7 @@ import DetailTask from "../pages/Mentor/DetailTask";
 axios.defaults.baseURL = "https://ecommerce-alta.online/";
 
 const index = (props) => {
-  // const isLoggedIn = useSelector((state) => state.data.isLoggedIn);
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const [token, setToken] = useState(null);
   const [cookie, setCookie, removeCookie] = useCookies();
@@ -43,7 +44,6 @@ const index = (props) => {
 
     function (error) {
       const { data } = error.response;
-      console.log(data);
       if (data === "Missing or malformed JWT" || [400].includes(data.code)) {
         removeCookie("token");
       }
@@ -71,13 +71,21 @@ const index = (props) => {
           <Route
             path="/homementee"
             element={
-              checkToken && checkRole === "mentee" ? <HomeMentee /> : <Login />
+              checkToken && checkRole === "mentee" ? (
+                <HomeMentee />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route
             path="/task"
             element={
-              checkToken && checkRole === "mentee" ? <Task /> : <Login />
+              checkToken && checkRole === "mentee" ? (
+                <Task />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route
@@ -86,33 +94,49 @@ const index = (props) => {
               checkToken && checkRole === "mentee" ? (
                 <ProfileMentee />
               ) : (
-                <Login />
+                <Navigate to="/" />
               )
             }
           />
           <Route
             path="/forummentee"
             element={
-              checkToken && checkRole === "mentee" ? <ForumMentee /> : <Login />
+              checkToken && checkRole === "mentee" ? (
+                <ForumMentee />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
 
           <Route
             path="/homementor"
             element={
-              checkToken && checkRole === "mentor" ? <HomeMentor /> : <Login />
+              checkToken && checkRole === "mentor" ? (
+                <HomeMentor />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route
             path="/inputtask"
             element={
-              checkToken && checkRole === "mentor" ? <InputTask /> : <Login />
+              checkToken && checkRole === "mentor" ? (
+                <InputTask />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route
             path="/forummentor"
             element={
-              checkToken && checkRole === "mentor" ? <ForumMentor /> : <Login />
+              checkToken && checkRole === "mentor" ? (
+                <ForumMentor />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route
@@ -121,33 +145,49 @@ const index = (props) => {
               checkToken && checkRole === "mentor" ? (
                 <ProfileMentor />
               ) : (
-                <Login />
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route
+            path="/detailtask/:id_tasks"
+            element={
+              checkToken && checkRole === "mentor" ? (
+                <DetailTask />
+              ) : (
+                <Navigate to="/" />
               )
             }
           />
 
           <Route
-            path="/detailtask/:task_id"
-            element={
-              checkToken && checkRole === "admin" ? <DetailTask /> : <Login />
-            }
-          />
-          <Route
             path="/homeadmin"
             element={
-              checkToken && checkRole === "admin" ? <HomeAdmin /> : <Login />
+              checkToken && checkRole === "admin" ? (
+                <HomeAdmin />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route
             path="/inputclass"
             element={
-              checkToken && checkRole === "admin" ? <InputClass /> : <Login />
+              checkToken && checkRole === "admin" ? (
+                <InputClass />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route
             path="/inputmember"
             element={
-              checkToken && checkRole === "admin" ? <InputMember /> : <Login />
+              checkToken && checkRole === "admin" ? (
+                <InputMember />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
 

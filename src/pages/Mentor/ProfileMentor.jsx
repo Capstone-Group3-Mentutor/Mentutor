@@ -7,7 +7,7 @@ import CustomButton from "../../components/CustomButton";
 
 const ProfileMentor = () => {
   return (
-    <LayoutMentor>
+    <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-2">
         Profile
       </h1>
@@ -76,7 +76,7 @@ const ProfileMentor = () => {
         </div>
       </div>
       {/* end modal */}
-    </LayoutMentor>
+    </Layout>
   );
 };
 
