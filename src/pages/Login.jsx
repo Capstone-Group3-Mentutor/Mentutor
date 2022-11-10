@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiRequest } from "../utils/apiRequest";
 import { useCookies } from "react-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { handleAuth, handleUser } from "../utils/reducers/reducer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -17,7 +17,13 @@ const schema = yup.object().shape({
     .string()
     .required("Password is required")
     .min(8, "password must be 8 characters")
-    .max(30, "password must not exceed 30 characters"),
+    .max(30, "password must not exceed 30 characters")
+    .matches(/^(?=.*[A-Z])/, "password must contain one uppercase")
+    .matches(/^(?=.*[0-9])/, "password must contain one number")
+    .matches(
+      /^(?=.*[!@#\$%\^&\*])/,
+      "password must contain one speceial character"
+    ),
 });
 
 const Login = () => {
@@ -46,7 +52,7 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const OnhandleLogin = async (data) => {
+  const onHandleLogin = async (data) => {
     setLoading(true);
     if (email.length == 0 || password.length == 0) {
       Swal.fire({
@@ -83,7 +89,6 @@ const Login = () => {
         } else {
           navigate("/homementee");
         }
-
         reset();
       })
       .catch((err) => {
@@ -111,7 +116,7 @@ const Login = () => {
         />
       </div>
       <form
-        onSubmit={handleSubmit(OnhandleLogin)}
+        onSubmit={handleSubmit(onHandleLogin)}
         className="w-full md:w-1/2 px-10 lg:px-28 py-28"
       >
         <h1 className="font-semibold text-4xl mb-10">Login to your account</h1>

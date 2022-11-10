@@ -5,6 +5,8 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { AiFillEdit } from "react-icons/ai";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
+import PDF from "../assets/PDF.svg";
+import EXCEL from "../assets/EXCEL.svg";
 
 const ListClass = ({
   index,
@@ -41,6 +43,7 @@ const ListClass = ({
             className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
           >
             <label
+              id="edit-click"
               htmlFor="modal-edit-class"
               className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
               onClick={onClickEdit}
@@ -64,64 +67,38 @@ const ListClass = ({
   );
 };
 
-const ListTask = () => {
+const ListTask = ({ score, name, file, index, onClickEdit }) => {
   return (
     <>
       <div className="flex flex-row text-[7px] items-center md:text-[10px] lg:text-[15px] text-putih px-3 md:px-7 py-2 space-x-2 mb-1">
-        <p className="w-[10%] text-center">1</p>
-        <p className="w-[30%] text-center">Jamaludin Kam</p>
+        <p className="w-[10%] text-center">{index + 1}</p>
+        <p className="w-[30%] text-center">{name}</p>
         <div className="flex flex-row space-x-3 items-center justify-center w-[35%]">
-          <img
-            src={toys3}
-            className="h-[1rem] w-[1rem] md:h-[2rem] md:w-[2rem] "
-          />
-          <p>Jamaluddin Kam</p>
+          <a
+            href={file}
+            id="file-name"
+            className=" hover:underline h-[2rem] text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-abu my-3"
+          >
+            {file.substring(file.lastIndexOf(".") + 1) == "pdf" ? (
+              <img src={PDF} className="w-6 h-6" />
+            ) : file.substring(file.lastIndexOf(".") + 1) == "xlsx" ? (
+              <img src={EXCEL} className="w-6 h-6" />
+            ) : (
+              ""
+            )}
+            {file.substring(file.lastIndexOf("/") + 1)}
+          </a>
         </div>
-        <p className="w-[15%] text-center">70</p>
+        <p className="w-[15%] text-center">{score}</p>
         {/* option */}
         <label
           htmlFor="modal-edit-points"
           className="hover:text-button px-4 text-sm text-abu cursor-pointer"
+          onClick={onClickEdit}
         >
           <AiFillEdit />
         </label>
         {/* end option */}
-        <input
-          type="checkbox"
-          id="modal-edit-points"
-          className="modal-toggle"
-        />
-        <div className="modal ">
-          <div className="modal-box w-1/2 bg-card p-14">
-            <div className="flex flex-row justify-between">
-              <h1 className="text-putih text-lg md:text-3xl font-medium">
-                Edit Points
-              </h1>
-              <label
-                htmlFor="modal-edit-points"
-                className="cursor-pointer btn-sm text-putih border-white"
-              >
-                ✕
-              </label>
-            </div>
-            <form className="flex flex-col">
-              <div className="flex flex-col space-y-2 my-5">
-                <CustomInput
-                  id="input-class"
-                  placeholder="Class Name"
-                  category="Class"
-                />
-              </div>
-              <div className="flex justify-start">
-                <CustomButton
-                  id="btn-submitEditClass"
-                  label="Submit"
-                  color="Primary"
-                />
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
       <hr className="text-abu mx-3 border-abu border-opacity-50" />
     </>

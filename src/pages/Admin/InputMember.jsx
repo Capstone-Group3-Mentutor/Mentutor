@@ -21,12 +21,19 @@ const schema = yup.object().shape({
     .string()
     .required("Fullname is required")
     .min(5, "Fullname is too short")
-    .max(50, "Fullname is too long"),
+    .max(50, "Fullname is too long")
+    .matches(/^(?=.*[A-Z])/, "Fullname must contain one uppercase"),
   password: yup
     .string()
     .required("Password is required")
     .min(8, "Password must be at least 6 characters")
-    .max(30, "Password must not exceed 30 characters"),
+    .max(30, "Password must not exceed 30 characters")
+    .matches(/^(?=.*[A-Z])/, "Password must contain one uppercase")
+    .matches(/^(?=.*[0-9])/, "Password must contain one number")
+    .matches(
+      /^(?=.*[!@#\$%\^&\*])/,
+      "Password must contain one speceial character"
+    ),
   role: yup.string().matches("Choose a role", "Role is required"),
   classname: yup.string().matches("Choose a class", "Class is required"),
 });
@@ -36,7 +43,7 @@ const InputMember = () => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("Role");
   const [datas, setDatas] = useState([]);
-  const [className, setClassName] = useState(0);
+  const [className, setClassName] = useState("Class");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -81,8 +88,6 @@ const InputMember = () => {
   });
 
   const handleRegister = async (data) => {
-    // e.preventDefault()
-
     if (
       fullName.length == 0 ||
       email.length == 0 ||
@@ -208,6 +213,7 @@ const InputMember = () => {
                 id="dropdown-class"
                 className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
                 onChange={(e) => setClassName(parseFloat(e.target.value))}
+                value={className}
               >
                 <option value="Class" disabled>
                   Choose a class
@@ -226,7 +232,7 @@ const InputMember = () => {
               id="input-password"
               category="Class"
               type="password"
-              placeholder="***********"
+              placeholder="********"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               register={register}
