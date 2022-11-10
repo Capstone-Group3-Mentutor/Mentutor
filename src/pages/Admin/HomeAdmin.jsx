@@ -32,12 +32,11 @@ const HomeAdmin = () => {
       })
       .catch((err) => {
         const { data } = err.response;
-        if ([401, 403].includes(data.code)) {
-          removeCookie("token");
-          dispatch(handleAuth(false));
-          navigate("/");
-        }
-        alert(data.message);
+        Swal.fire({
+          title: "Failed",
+          text: data.message,
+          showCancelButton: false,
+        });
       })
       .finally(() => setLoading(false));
   };

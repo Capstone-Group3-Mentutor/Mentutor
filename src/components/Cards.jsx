@@ -3,7 +3,8 @@ import toys1 from "../assets/toys-1.png";
 import toys3 from "../assets/toys-3.png";
 import toys4 from "../assets/toys-4.png";
 import { FiPaperclip, FiSend } from "react-icons/fi";
-import { SlOptionsVertical } from "react-icons/sl";
+// import { SlOptionsVertical } from "react-icons/sl";
+import { AiFillEdit } from "react-icons/ai";
 import { BiRightArrowAlt } from "react-icons/bi";
 import CustomButton from "./CustomButton";
 import CustomInput from "./CustomInput";
@@ -81,38 +82,38 @@ const CardTaskMentor = (props) => {
   );
 };
 
-const CardUpload = () => {
-  return (
-    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card py-4 px-4  lg:p-10 rounded-[10px]">
-      <div className="flex space-x-2 md:space-x-9 items-center">
-        <img
-          src={toys1}
-          alt="avatar"
-          className="h-[3rem] w-[3rem] md:h-[4rem] md:w-[4rem] rounded-full mr-9"
-        />
+// const CardUpload = () => {
+//   return (
+//     <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card py-4 px-4  lg:p-10 rounded-[10px]">
+//       <div className="flex space-x-2 md:space-x-9 items-center">
+//         <img
+//           src={toys1}
+//           alt="avatar"
+//           className="h-[3rem] w-[3rem] md:h-[4rem] md:w-[4rem] rounded-full mr-9"
+//         />
 
-        <CustomInput
-          id="input-status"
-          type="text"
-          placeholder="share something....."
-          category="Status"
-        />
-      </div>
-      <div className="flex mt-9 justify-between">
-        <button
-          id="btn-iconClip"
-          className="h-8 w-8 md:h-10 md:w-10 bg-button text-putih flex items-center justify-center rounded-[5px]"
-        >
-          <FiPaperclip />
-        </button>
+//         <CustomInput
+//           id="input-status"
+//           type="text"
+//           placeholder="share something....."
+//           category="Status"
+//         />
+//       </div>
+//       <div className="flex mt-9 justify-between">
+//         <button
+//           id="btn-iconClip"
+//           className="h-8 w-8 md:h-10 md:w-10 bg-button text-putih flex items-center justify-center rounded-[5px]"
+//         >
+//           <FiPaperclip />
+//         </button>
 
-        <CustomButton id="btn-send" label="Send" color="Primary" />
-      </div>
-    </div>
-  );
-};
+//         <CustomButton id="btn-send" label="Send" color="Primary" />
+//       </div>
+//     </div>
+//   );
+// };
 
-const CardForum = () => {
+const CardForum = (props) => {
   return (
     <div className="w-[18rem] md:w-[32rem] lg:w-[52rem]  h-auto bg-card p-5 md:p-8 rounded-[10px]">
       <div className="flex items-center mb-6">
@@ -122,54 +123,55 @@ const CardForum = () => {
         />
         <div className="pl-6 md:space-y-1">
           <h1 className="text-putih font-medium text-lg md:text-xl">
-            Park Seo Joon
+            {props.names}
           </h1>
           <p className="text-abu font-light text-xs">Mentee</p>
         </div>
       </div>
 
-      <p className="text-abu text-[10px] md:text-sm">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet orci
-        pellentesque facilisis lacus sodales. Volutpat mauris ut maecenas arcu
-        urna.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet orci
-        pellentesque facilisis lacus sodales. Volutpat mauris ut maecenas arcu
-        urna.??? help me plis :”
-      </p>
+      <p className="text-abu text-[10px] md:text-sm">{props.captions}</p>
       <img
-        className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
-        src="https://cdn-image.hipwee.com/wp-content/uploads/2021/05/hipwee-Aesthetic-Paper.jpg"
+        className="cursor-pointer w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
+        src={props.img}
         alt="foto-tugas"
       />
-      <div className="mt-9 flex space-x-6">
+
+      <form onSubmit={props.onSubmitComment} className="mt-9 flex space-x-6">
         <CustomInput
           id="Input-comment"
           type="text"
           category="Comment"
           placeholder="Comment here..."
+          value={props.valueComment}
+          onChange={props.onChangeComment}
         />
         <button
+          onClick={props.onClickComment}
           id="btn-sendComment"
           className="w-[3rem] h-[3rem] md:w-[3.6rem] md:h-[3.6rem] bg-purple rounded-full text-xl md:text-3xl text-abu flex items-center justify-center "
         >
           <FiSend />
         </button>
-      </div>
+      </form>
       {/* -----------comment------------ */}
-      <div className="px-5 md:px-9 mt-8">
-        <div className="flex items-center mb-3">
-          <img
-            src={toys4}
-            className="h-[2.2rem] w-[2.2rem] md:h-[3rem] md:w-[3rem] rounded-full"
-          />
-          <div className="pl-4 space-y-0">
-            <h1 className="text-putih text-base">Lee min ho</h1>
-            <p className="text-abu font-light text-xs">Mentor</p>
+      {props.comment?.map((item) => (
+        <div key={item.id_comment} className="px-5 md:px-9 mt-8">
+          <div className="flex items-center mb-3">
+            <img
+              src={toys4}
+              className="h-[2.2rem] w-[2.2rem] md:h-[3rem] md:w-[3rem] rounded-full"
+            />
+            <div className="pl-4 space-y-0">
+              <h1 className="text-putih text-base">{item.nama}</h1>
+              <p className="text-abu font-light text-xs">{item.role}</p>
+            </div>
           </div>
+          <p className="text-sm font-light text-abu pl-[3rem] md:pl-[4rem]">
+            {item.caption}
+          </p>
         </div>
-        <p className="text-sm font-light text-abu pl-[3rem] md:pl-[4rem]">
-          Mungkin kurang ; aja
-        </p>
-      </div>
+      ))}
+      {/* -----------comment------------ */}
     </div>
   );
 };
@@ -183,44 +185,29 @@ const CardProfile = () => {
       />
       <div className="w-[18rem] md:w-[30rem] lg:w-[40rem] h-auto bg-card  mt-8 py-5 px-8 rounded-[10px]">
         {/* option atau dot */}
-        <div className="flex justify-end items-end">
-          <div className="dropdown ">
-            <label
-              id="icon-options"
-              tabIndex={0}
-              className="cursor-pointer  text-putih"
-            >
-              <SlOptionsVertical />
-            </label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
-            >
-              <label
-                htmlFor="modal-edit-profile"
-                className="hover:text-button p-4 text-sm text-abu"
-              >
-                Edit
-              </label>
-            </ul>
+        <div className="flex justify-between">
+          <div className="text-lg text-button font-medium space-y-3 ">
+            <h3>
+              Name : <span className="text-abu font-light">Lee min ho</span>
+            </h3>
+            <h3>
+              Role : <span className="text-abu font-light pl-2">Mentee</span>
+            </h3>
+            <h3>
+              Class :
+              <span className="text-abu font-light pl-1">Machine Learning</span>
+            </h3>
           </div>
-        </div>
-
-        <div className="text-lg text-button font-medium space-y-3 ">
-          <h3>
-            Name : <span className="text-abu font-light">Lee min ho</span>
-          </h3>
-          <h3>
-            Role : <span className="text-abu font-light pl-2">Mentee</span>
-          </h3>
-          <h3>
-            Class :
-            <span className="text-abu font-light pl-1">Machine Learning</span>
-          </h3>
+          <label
+            htmlFor="modal-edit-profile"
+            className="h-8 w-8 md:h-10 md:w-10 bg-card shadow-md text-putih flex items-center justify-center rounded-[5px]"
+          >
+            <AiFillEdit />
+          </label>
         </div>
       </div>
     </div>
   );
 };
 
-export { CardTask, CardTaskMentor, CardUpload, CardForum, CardProfile };
+export { CardTask, CardTaskMentor, CardForum, CardProfile };

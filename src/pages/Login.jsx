@@ -156,6 +156,7 @@ const Login = () => {
           <p className="text-gray-500 text-sm font-light text-center w-full">
             If you dont have an account, please contact&nbsp;
             <a
+              id="link-admin"
               href="mailto:mentutor@gmail.com"
               className="font-medium text-[#26317C] cursor-pointer"
             >
