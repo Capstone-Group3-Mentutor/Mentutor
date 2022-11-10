@@ -272,11 +272,11 @@ const HomeAdmin = () => {
                             id_class: e.target.value,
                           })
                         }
-                        value={objSubmit?.class_name}
+                        value={objSubmit?.id_class}
                         id="dropdown-class"
                         className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem] p-2"
                       >
-                        <option className="text-abu" value="Class">
+                        <option className="text-abu" disabled>
                           Class
                         </option>
                         {dataClass?.map((items) => (
