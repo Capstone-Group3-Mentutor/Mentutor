@@ -11,7 +11,7 @@ import { handleAuth } from "../utils/reducers/reducer";
 import Swal from "sweetalert2";
 
 const SideBar = () => {
-  const [cookies, , removeCookie] = useCookies(["token"], ["role"]);
+  const [cookies, , removeCookie] = useCookies();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const roles = cookies.role;
@@ -30,6 +30,7 @@ const SideBar = () => {
       if (result.isConfirmed) {
         removeCookie("token");
         removeCookie("role");
+        removeCookie("id_user");
         dispatch(handleAuth(false));
         Swal.fire({
           title: "Successfully",

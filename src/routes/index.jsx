@@ -44,7 +44,10 @@ const index = (props) => {
 
     function (error) {
       const { data } = error.response;
-      if (data === "Missing or malformed JWT" || [400].includes(data.code)) {
+      if (
+        data === "Missing or malformed JWT" ||
+        [401, 403].includes(data.code)
+      ) {
         removeCookie("token");
       }
       return Promise.reject(error);

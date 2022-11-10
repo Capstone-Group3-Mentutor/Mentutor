@@ -72,6 +72,7 @@ const Login = () => {
         const { data } = res.data;
         setCookie("token", res.data.token, { path: "/" });
         setCookie("role", res.data.role, { path: "/" });
+        setCookie("id_user", res.data.id_user, { path: "/" });
         dispatch(handleAuth(true));
         dispatch(handleUser(res.data));
 
@@ -160,7 +161,7 @@ const Login = () => {
           <p className="text-gray-500 text-sm font-light text-center w-full">
             If you dont have an account, please contact&nbsp;
             <a
-              id="btn-admin"
+              id="link-admin"
               href="mailto:mentutor@gmail.com"
               className="font-medium text-[#26317C] cursor-pointer"
             >

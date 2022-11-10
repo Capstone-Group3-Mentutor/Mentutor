@@ -4,8 +4,61 @@ import toys1 from "../../assets/toys-1.png";
 import { CardProfile } from "../../components/Cards";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import { useState } from "react";
+import { useCookies } from "react-cookie";
+import { useEffect } from "react";
+import { apiRequest } from "../../utils/apiRequest";
+import Swal from "sweetalert2";
 
 const ProfileMentor = () => {
+  // const [dataUser, setDataUser] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [objSubmit, setObjSubmit] = useState({});
+  const [cookie, setCookie] = useCookies();
+  const id_user = cookie.id_user;
+
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
+  // const fetchUser = () => {
+  //   setLoading(true);
+  //   apiRequest(`admin/users/${id_user}`, "get")
+  //     .then((res) => {
+  //       setDataUser(res.data);
+  //       // console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       alert(err.toString());
+  //     })
+  //     .finally(() => setLoading(false));
+  // };
+
+  // const handleEditUser = async (e) => {
+  //   setLoading(true);
+  //   e.preventDefault();
+  //   const body = {
+  //     name: objSubmit.name,
+  //     email: objSubmit.email,
+  //     password: objSubmit.password,
+  //   };
+  //   apiRequest("users", "put", body)
+  //     .then((res) => {
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Succes Update",
+  //         showConfirmButton: true,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       Swal.fire({
+  //         position: "center",
+  //         icon: "error",
+  //         title: "Failed Updated",
+  //         showConfirmButton: true,
+  //       });
+  //     })
+  //     .finally(() => fetchUser());
+  // };
   return (
     <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-2">
@@ -15,6 +68,7 @@ const ProfileMentor = () => {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </p>
       <div className="mt-[3rem]">
+        {/* {loading ? <p>loading</p> : dataUser?.map(item)} */}
         <CardProfile />
       </div>
 

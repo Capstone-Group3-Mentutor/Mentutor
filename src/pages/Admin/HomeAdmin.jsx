@@ -32,12 +32,11 @@ const HomeAdmin = () => {
       })
       .catch((err) => {
         const { data } = err.response;
-        if ([400].includes(data.code)) {
-          removeCookie("token");
-          dispatch(handleAuth(false));
-          navigate("/");
-        }
-        alert(data.message);
+        Swal.fire({
+          title: "Failed",
+          text: data.message,
+          showCancelButton: false,
+        });
       })
       .finally(() => setLoading(false));
   };
@@ -184,6 +183,7 @@ const HomeAdmin = () => {
                           id_user: item?.id_user,
                           class_name: item?.class_name,
                           id_class: item?.id_class,
+
                           name: item?.name,
                           password: item?.password,
                           role: item?.role,
