@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 import { apiRequest } from "../../utils/apiRequest";
 import { useCookies } from "react-cookie";
 import { WithRouter } from "../../utils/navigation";
-
+import Swal from "sweetalert2";
 const HomeMentor = () => {
-  // const [data, setData] = useState({});
+  // const [datas, setDatas] = useState([]);
   const [dataTask, setDataTask] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [cookie, setCookie] = useCookies();
-  const id_user = cookie.id_user;
+  // const [cookie, setCookie] = useCookies();
+  // const id_user = cookie.id_user;
   useEffect(() => {
     // fetchUser();
     fetchTaskMentor();
@@ -23,7 +23,7 @@ const HomeMentor = () => {
   //   setLoading(true);
   //   apiRequest(`admin/users/${id_user}`, "get")
   //     .then((res) => {
-  //       setData(res.data);
+  //       setDatas(res.data);
   //       console.log(res.data);
   //     })
   //     .catch((err) => {
@@ -40,12 +40,11 @@ const HomeMentor = () => {
       })
       .catch((err) => {
         const { data } = err.response;
-        if ([401, 403].includes(data.code)) {
-          removeCookie("token");
-          dispatch(handleAuth(false));
-          navigate("/");
-        }
-        alert(data.message);
+        Swal.fire({
+          title: "Failed",
+          text: data.message,
+          showCancelButton: false,
+        });
       })
       .finally(() => setLoading(false));
   };
@@ -65,7 +64,7 @@ const HomeMentor = () => {
           <div className="flex items-center ">
             <Link to="/profilementor">
               <img
-                id="gbr-hero"
+                id="gbr-profile"
                 src={toys3}
                 alt="avatar"
                 className="h-[1.5rem] w-[1.5rem]  md:h-[3rem] md:w-[3rem] rounded-full "
@@ -73,7 +72,10 @@ const HomeMentor = () => {
             </Link>
             <div className="pl-2 md:pl-4 space-y-0">
               <Link to="/profilementor">
-                <h1 className="text-putih text-[10px] md:text-base">
+                <h1
+                  id="profile-name"
+                  className="text-putih text-[10px] md:text-base"
+                >
                   Fauzan Kharisma
                 </h1>
               </Link>
@@ -103,7 +105,7 @@ const HomeMentor = () => {
         <div className="mt-[3rem] md:mt-[5rem]">
           <h1 className="text-putih text-lg font-medium mb-6">
             Your Created Task
-          </h1>{" "}
+          </h1>
           <div className="flex justify-end text-putih hover:text-button font-normal cursor-pointer mb-2 text-xs mr-3 ">
             <Link to="/inputtask">
               <p id="view-task">View All Task</p>
