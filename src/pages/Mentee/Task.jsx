@@ -23,7 +23,6 @@ const Task = () => {
       .then((res) => {
         const results = res.data;
         setMyTasks(results);
-        console.log(results);
       })
       .catch((err) => {
         const { data } = err.response;
@@ -76,6 +75,7 @@ const Task = () => {
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-6">
         Your Task
       </h1>
+
       {myTasks
         ?.sort((a, b) => b.id_task - a.id_task)
         .map((item) => (
@@ -92,6 +92,7 @@ const Task = () => {
             }}
           />
         ))}
+
 
       <input type="checkbox" id="modal-submit-task" className="modal-toggle" />
       <div className="modal">
@@ -111,7 +112,6 @@ const Task = () => {
               placeholder="Title"
               category="Submit"
               onChange={(e) => setTitle(e.target.value)}
-              defaultValue={title}
             />
             <div className="flex flex-col space-y-2 my-2">
               <input

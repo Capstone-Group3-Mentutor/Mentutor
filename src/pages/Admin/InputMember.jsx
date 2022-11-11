@@ -115,7 +115,7 @@ const InputMember = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Register Succes",
+          title: "Register Success",
           showConfirmButton: true,
         });
         navigate("/homeadmin");
