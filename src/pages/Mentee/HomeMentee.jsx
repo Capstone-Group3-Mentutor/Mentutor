@@ -38,7 +38,6 @@ const HomeMentee = () => {
     apiRequest("mentees/tasks", "get")
       .then((res) => {
         setDataTask(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         const { data } = err.response;
