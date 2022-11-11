@@ -23,7 +23,6 @@ const Task = () => {
       .then((res) => {
         const results = res.data;
         setMyTasks(results);
-        console.log(results);
       })
       .catch((err) => {
         const { data } = err.response;
@@ -85,6 +84,7 @@ const Task = () => {
           file={item?.file}
           score={item?.score}
           due_date={item?.due_date}
+          status={item?.status}
           onClickSubmit={() => {
             setIdTask(item?.id_task);
           }}
@@ -109,7 +109,6 @@ const Task = () => {
               placeholder="Title"
               category="Submit"
               onChange={(e) => setTitle(e.target.value)}
-              defaultValue={title}
             />
             <div className="flex flex-col space-y-2 my-2">
               <input

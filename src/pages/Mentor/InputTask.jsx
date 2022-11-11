@@ -250,7 +250,7 @@ const InputTask = (props) => {
       {tasks?.map((item) => (
         <form
           className=" w-[18rem] md:w-[32rem] lg:w-[45rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 mt-8 rounded-[10px]"
-          key={item.id_tasks}
+          key={item.id_task}
         >
           <div className="flex justify-between items-center ">
             <h1
