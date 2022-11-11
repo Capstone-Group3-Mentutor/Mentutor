@@ -114,100 +114,101 @@ const HomeAdmin = () => {
   return (
     <>
       <Layout>
-        <div className="flex justify-between ">
-          <div className="md:space-y-2">
-            <h1 className="text-putih text-lg md:text-2xl font-medium">
-              Hello <span>Admin !</span>
-            </h1>
-            <p className="text-abu font-light text-[8px] md:text-sm">
-              Welcome back, you are doing great.
-            </p>
+        <div className="pb-12">
+          <div className="flex justify-between ">
+            <div className="md:space-y-2">
+              <h1 className="text-putih text-lg md:text-2xl font-medium">
+                Hello <span>Admin !</span>
+              </h1>
+              <p className="text-abu font-light text-[8px] md:text-sm">
+                Welcome back, you are doing great.
+              </p>
+            </div>
           </div>
-        </div>
-        <h1 className="text-putih text-lg md:text-3xl font-normal mt-[4rem] mb-[2rem]">
-          List Mentor / Mentee
-        </h1>
-        <div className="w-full h-[30rem] md:h-[27rem] bg-card rounded-[30px] text-xs md:text-lg overflow-auto mb-5">
-          <div className="flex flex-row text-putih px-3 md:px-7 py-2 space-x-2 sticky top-0 z-10 bg-card border-b border-abu mb-4">
-            <p className="w-[10%] text-center">No</p>
-            <p className="w-[30%] text-center">Name</p>
-            <p className="w-[35%] text-center">Email</p>
-            <p className="w-[15%] text-center">Role</p>
-            <p className="w-[25%] text-center">Class</p>
-            <p className="w-[2%] text-center"></p>
-          </div>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            dataUser?.map((item, index) => (
-              <div
-                key={item?.id_user}
-                index={index}
-                className="flex flex-row text-[5px] items-center md:text-[10px] text-xs lg:text-[15px] text-abu px-3 md:px-7 py-1 space-x-2 mb-5"
-              >
-                <p className="w-[10%] text-center">{index + 1}</p>
-                <div className="flex flex-row space-x-3 items-center justify-between w-[30%] ">
-                  {/* <img
+          <h1 className="text-putih text-lg md:text-3xl font-normal mt-[4rem] mb-[2rem]">
+            List Mentor / Mentee
+          </h1>
+          <div className="w-full h-[30rem] md:h-[27rem] bg-card rounded-[30px] text-xs md:text-lg overflow-auto mb-5">
+            <div className="flex flex-row text-putih px-3 md:px-7 py-2 space-x-2 sticky top-0 z-10 bg-card border-b border-abu mb-4">
+              <p className="w-[10%] text-center">No</p>
+              <p className="w-[30%] text-center">Name</p>
+              <p className="w-[35%] text-center">Email</p>
+              <p className="w-[15%] text-center">Role</p>
+              <p className="w-[25%] text-center">Class</p>
+              <p className="w-[2%] text-center"></p>
+            </div>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              dataUser?.map((item, index) => (
+                <div
+                  key={item?.id_user}
+                  index={index}
+                  className="flex flex-row text-[5px] items-center md:text-[10px] text-xs lg:text-[15px] text-abu px-3 md:px-7 py-1 space-x-2 mb-5"
+                >
+                  <p className="w-[10%] text-center">{index + 1}</p>
+                  <div className="flex flex-row space-x-3 items-center justify-between w-[30%] ">
+                    {/* <img
           src={toys3}
           className="h-[1.5rem] w-[1.5rem] md:h-[3rem] md:w-[3rem] rounded-full  "
         /> */}
-                  <p className="text-left">{item?.name}</p>
-                </div>
-                <p className="w-[35%] text-center">{item?.email}</p>
-                <p
-                  className={`w-[15%] text-center ${
-                    item?.role === "mentee" ? "text-button" : "text-[#D441B9]"
-                  }`}
-                >
-                  {item?.role}
-                </p>
-                <p className="w-[25%] text-center">{item?.class_name}</p>
-                {/* option */}
-                <div className="dropdown dropdown-end ">
-                  <label
-                    id="icon-options"
-                    tabIndex={0}
-                    className="cursor-pointer text-putih"
+                    <p className="text-left">{item?.name}</p>
+                  </div>
+                  <p className="w-[35%] text-center">{item?.email}</p>
+                  <p
+                    className={`w-[15%] text-center ${
+                      item?.role === "mentee" ? "text-button" : "text-[#D441B9]"
+                    }`}
                   >
-                    <SlOptionsVertical size={13} />
-                  </label>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
-                  >
+                    {item?.role}
+                  </p>
+                  <p className="w-[25%] text-center">{item?.class_name}</p>
+                  {/* option */}
+                  <div className="dropdown dropdown-end ">
                     <label
-                      htmlFor="modal-edit-user"
-                      className="hover:text-button px-4 pt-2 text-sm text-putih cursor-pointer"
-                      onClick={() => {
-                        setObjSubmit({
-                          id_user: item?.id_user,
-                          class_name: item?.class_name,
-                          id_class: item?.id_class,
-                          name: item?.name,
-                          password: item?.password,
-                          role: item?.role,
-                          email: item?.email,
-                        });
-                      }}
+                      id="icon-options"
+                      tabIndex={0}
+                      className="cursor-pointer text-putih"
                     >
-                      Edit
+                      <SlOptionsVertical size={13} />
                     </label>
-                    <li
-                      id="delete-click"
-                      className=" text-[#CC5D5D]"
-                      onClick={() => handleDelete(item?.id_user)}
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
                     >
-                      <a>Delete</a>
-                    </li>
-                  </ul>
+                      <label
+                        htmlFor="modal-edit-user"
+                        className="hover:text-button px-4 pt-2 text-sm text-putih cursor-pointer"
+                        onClick={() => {
+                          setObjSubmit({
+                            id_user: item?.id_user,
+                            class_name: item?.class_name,
+                            id_class: item?.id_class,
+                            name: item?.name,
+                            password: item?.password,
+                            role: item?.role,
+                            email: item?.email,
+                          });
+                        }}
+                      >
+                        Edit
+                      </label>
+                      <li
+                        id="delete-click"
+                        className=" text-[#CC5D5D]"
+                        onClick={() => handleDelete(item?.id_user)}
+                      >
+                        <a>Delete</a>
+                      </li>
+                    </ul>
+                  </div>
+                  {/* end option */}
                 </div>
-                {/* end option */}
-              </div>
-            ))
-          )}
-          ;
+              ))
+            )}
+            ;
+          </div>
         </div>
-
         {/* ---modal--- */}
         <input type="checkbox" id="modal-edit-user" className="modal-toggle" />
         <div className="modal  ">

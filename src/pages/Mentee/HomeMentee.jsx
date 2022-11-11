@@ -52,6 +52,7 @@ const HomeMentee = () => {
   };
   const fullname = `${datas.name}`;
   const first = fullname.split(" ")[0];
+
   return (
     <Layout>
       <div className="pb-9">
@@ -113,18 +114,21 @@ const HomeMentee = () => {
             </Link>
           </div>
           <div className="space-y-6">
-            {dataTask?.slice(0, 2).map((item) => (
-              <CardTask
-                id_task={item.id_task}
-                file={item.file}
-                images={item.images}
-                score={item.score}
-                status={item.status}
-                due_date={item.due_date}
-                title={item.title}
-                description={item.description}
-              />
-            ))}
+            {dataTask
+              ?.sort((a, b) => b.id_task - a.id_task)
+              .slice(0, 2)
+              .map((item) => (
+                <CardTask
+                  id_task={item.id_task}
+                  file={item.file}
+                  images={item.images}
+                  score={item.score}
+                  status={item.status}
+                  due_date={item.due_date}
+                  title={item.title}
+                  description={item.description}
+                />
+              ))}
           </div>
           {/* modal submit */}
           <input

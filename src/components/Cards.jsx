@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import toys1 from "../assets/toys-1.png";
 import toys3 from "../assets/toys-3.png";
 import toys4 from "../assets/toys-4.png";
@@ -126,6 +126,13 @@ const CardTaskMentor = (props) => {
 };
 
 const CardForum = (props) => {
+  const [visible, setVisible] = useState(2);
+  const toggleShowMore = () => {
+    setVisible((prevValue) => prevValue + 2);
+  };
+  const toggleHideComment = () => {
+    setVisible((prevValue) => prevValue - 2);
+  };
   return (
     <div className="w-[18rem] md:w-[32rem] lg:w-[52rem]  h-auto bg-card p-5 md:p-8 rounded-[10px]">
       <div className="flex items-center mb-6">
@@ -137,17 +144,18 @@ const CardForum = (props) => {
           <h1 className="text-putih font-medium text-lg md:text-xl">
             {props.names}
           </h1>
-          <p className="text-abu font-light text-xs">Mentee</p>
+          <p className="text-gray-400 font-light text-xs">Mentee</p>
         </div>
       </div>
 
       <p className="text-abu text-[10px] md:text-sm">{props.captions}</p>
-      <img
-        className="cursor-pointer w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
-        src={props.img}
-        alt="foto-tugas"
-      />
-
+      {props.img ? (
+        <img
+          className="cursor-pointer w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
+          src={props.img}
+          alt="foto-tugas"
+        />
+      ) : null}
       <form onSubmit={props.onSubmitComment} className="mt-9 flex space-x-6">
         <CustomInput
           id="Input-comment"
@@ -165,8 +173,9 @@ const CardForum = (props) => {
           <FiSend />
         </button>
       </form>
+
       {/* -----------comment------------ */}
-      {props.comment?.map((item) => (
+      {props.comments?.slice(0, visible).map((item) => (
         <div key={item.id_comment} className="px-5 md:px-9 mt-8">
           <div className="flex items-center mb-3">
             <img
@@ -174,8 +183,10 @@ const CardForum = (props) => {
               className="h-[2.2rem] w-[2.2rem] md:h-[3rem] md:w-[3rem] rounded-full"
             />
             <div className="pl-4 space-y-0">
-              <h1 className="text-putih text-base">{item.nama}</h1>
-              <p className="text-abu font-light text-xs">{item.role}</p>
+              <h1 className="text-putih text-base">{item.name}</h1>
+              <p className="text-gray-400 capitalize font-light text-xs">
+                {item.role}
+              </p>
             </div>
           </div>
           <p className="text-sm font-light text-abu pl-[3rem] md:pl-[4rem]">
@@ -183,6 +194,37 @@ const CardForum = (props) => {
           </p>
         </div>
       ))}
+
+      <p
+        onClick={toggleShowMore}
+        className="text-xs font-medium text-button capitalize cursor-pointer"
+      >
+        Load More Comments
+      </p>
+
+      <p
+        onClick={toggleHideComment}
+        className="text-xs font-medium text-button capitalize cursor-pointer"
+      >
+        Hide Comments
+      </p>
+
+      {/* {visible ? (
+        <p
+          onClick={toggleShowMore}
+          className="text-xs font-medium text-button capitalize cursor-pointer"
+        >
+          Load More Comments
+        </p>
+      ) : (
+        <p
+          onClick={toggleHideComment}
+          className="text-xs font-medium text-button capitalize cursor-pointer"
+        >
+          Hide Comments
+        </p>
+      )} */}
+
       {/* -----------comment------------ */}
     </div>
   );
