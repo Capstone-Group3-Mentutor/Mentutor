@@ -210,23 +210,25 @@ const InputClass = () => {
             No Data Class
           </div>
         ) : (
-          datas?.map((data, index) => (
-            <ListClass
-              key={data.id_class}
-              index={index}
-              name={data.class_name}
-              student={data.total_student}
-              status={data.status}
-              onClickEdit={() => {
-                setObjSubmit({
-                  id_class: data.id_class,
-                  class_name: data.class_name,
-                  status: data.status,
-                });
-              }}
-              onClickDelete={() => deleteClass(data?.id_class)}
-            />
-          ))
+          datas
+            ?.sort((a, b) => b.id_class - a.id_class)
+            .map((data, index) => (
+              <ListClass
+                key={data.id_class}
+                index={index}
+                name={data.class_name}
+                student={data.total_student}
+                status={data.status}
+                onClickEdit={() => {
+                  setObjSubmit({
+                    id_class: data.id_class,
+                    class_name: data.class_name,
+                    status: data.status,
+                  });
+                }}
+                onClickDelete={() => deleteClass(data?.id_class)}
+              />
+            ))
         )}
       </div>
       <input type="checkbox" id="modal-edit-class" className="modal-toggle" />

@@ -40,20 +40,9 @@ const DetailTask = (props) => {
 
   const submitScoreTask = async (e) => {
     e.preventDefault();
-
-    if (objSubmit.score.length == 0) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Data cannot be empty !",
-        showConfirmButton: true,
-      });
-      return;
-    }
-
     const body = {
-      id_submission: objSubmit.id_submission,
-      score: objSubmit.score,
+      score: parseInt(objSubmit.score),
+      id_task: parseInt(objSubmit.id_task),
     };
     apiRequest(`mentors/submission/${objSubmit.id_submission}`, "post", body)
       .then((res) => {
@@ -151,6 +140,7 @@ const DetailTask = (props) => {
                 setObjSubmit({
                   id_submission: item.id_submission,
                   score: item.score,
+                  id_task: detailTask.id_task,
                 });
               }}
             />
@@ -178,7 +168,7 @@ const DetailTask = (props) => {
                 placeholder="Score"
                 category="Class"
                 onChange={(e) =>
-                  setObjSubmit({ ...objSubmit, score: e.target.score })
+                  setObjSubmit({ ...objSubmit, score: e.target.value })
                 }
                 value={objSubmit.score}
               />
@@ -186,38 +176,6 @@ const DetailTask = (props) => {
             <div className="flex justify-start">
               <CustomButton
                 id="btn-submitEditScore"
-                label="Submit"
-                color="Primary"
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-      <input type="checkbox" id="modal-edit-points" className="modal-toggle" />
-      <div className="modal ">
-        <div className="modal-box w-1/2 bg-card p-14">
-          <div className="flex flex-row justify-between">
-            <h1 className="text-putih text-lg md:text-3xl font-medium">
-              Edit Points
-            </h1>
-            <label
-              htmlFor="modal-edit-points"
-              className="cursor-pointer btn-sm text-putih border-white"
-            >
-              ✕
-            </label>
-          </div>
-          <form className="flex flex-col">
-            <div className="flex flex-col space-y-2 my-5">
-              <CustomInput
-                id="input-class"
-                placeholder="Class Name"
-                category="Class"
-              />
-            </div>
-            <div className="flex justify-start">
-              <CustomButton
-                id="btn-submitEditClass"
                 label="Submit"
                 color="Primary"
               />
