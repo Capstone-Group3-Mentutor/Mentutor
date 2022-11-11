@@ -23,7 +23,8 @@ const CardTask = (props) => {
     currentDate.getHours() +
     ":" +
     currentDate.getMinutes() +
-    " UTC";
+    " " +
+    "WIB";
 
   return (
     <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px] mb-8">
@@ -34,7 +35,7 @@ const CardTask = (props) => {
         <p className="text-button text-[6px] md:text-xs ">
           Due date{" "}
           <span className="text-red-500">
-            {props.due_date > detailDate ? props.due_date : "Closed"}
+            {props.due_date.replace("UTC", "WIB")}
           </span>
         </p>
       </div>
@@ -69,7 +70,9 @@ const CardTask = (props) => {
         ""
       )}
       <div className="flex justify-between mt-4  items-center">
-        <p className="text-xs md:text-sm text-button ">Point: {props.score}</p>
+        <p className="text-xs md:text-sm text-button ">
+          Point: <span className="text-white">{props.score}</span>
+        </p>
 
         {props.status == "" && props.due_date > detailDate ? (
           <label
@@ -80,9 +83,11 @@ const CardTask = (props) => {
             Submit your task
           </label>
         ) : props.due_date < detailDate ? (
-          ""
+          <label className="bg-[#a7aaa7] rounded-[5px] text-black  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
+            Submit your task
+          </label>
         ) : (
-          <label className="bg-[#23EF11] rounded-[5px] text-black  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
+          <label className="bg-[#4ad43d] rounded-[5px] text-black  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
             Done
           </label>
         )}

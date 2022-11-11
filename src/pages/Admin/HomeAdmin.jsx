@@ -66,7 +66,7 @@ const HomeAdmin = () => {
         if (result.isConfirmed) {
           apiRequest(`admin/users/${id_user}`, "delete");
           Swal.fire({
-            text: "Class Succesfully Deleted",
+            text: "Class Successfully Deleted",
             icon: "success",
             showCancelButton: false,
             confirmButtonColor: "#3085d6",
