@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import Swal from "sweetalert2";
 import { apiRequest } from "../../utils/apiRequest";
 import toys1 from "../../assets/toys-1.png";
+import toys2 from "../../assets/toys-2.png";
 import { BsImageFill } from "react-icons/bs";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
@@ -13,8 +14,10 @@ const ForumMentee = () => {
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState("");
   const [objSubmit, setObjSubmit] = useState({});
-  const [caption, setCaption] = useState("");
+  const [captions, setCaptions] = useState("");
   const [image, setImage] = useState("");
+  const [images, setImages] = useState(toys2);
+
   useEffect(() => {
     fetchForum();
   }, []);
@@ -24,9 +27,10 @@ const ForumMentee = () => {
     apiRequest("forum", "get")
       .then((res) => {
         setDataForum(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
-        const { data } = err.response;
+        const data = err.response;
         Swal.fire({
           title: "Failed",
           text: data.message,
@@ -39,7 +43,7 @@ const ForumMentee = () => {
   const handleComment = (e) => {
     e.preventDefault();
     const body = {
-      comment,
+      caption: comment,
     };
     apiRequest(`forum/${objSubmit.id_status}`, "post", body)
       .then((res) => {
@@ -97,7 +101,7 @@ const ForumMentee = () => {
           >
             <div className="flex space-x-2 md:space-x-9 items-center">
               <img
-                src={toys1}
+                src={images}
                 alt="avatar"
                 className="h-[3rem] w-[3rem] md:h-[4rem] md:w-[4rem] rounded-full mr-9"
               />
@@ -107,9 +111,9 @@ const ForumMentee = () => {
                 type="text"
                 placeholder="share something....."
                 category="Status"
-                value={caption}
+                value={captions}
                 onChange={(e) => {
-                  setCaption(e.target.value);
+                  setCaptions(e.target.value);
                   handleChange(e.target.value, "caption");
                 }}
               />
@@ -157,10 +161,10 @@ const ForumMentee = () => {
                 names={item.name}
                 img={item.images}
                 captions={item.caption}
-                comment={item.comments}
+                comments={item.comments}
                 onSubmitComment={(e) => handleComment(e)}
-                onChangeComment={(e) => setObjSubmit(e.target.value)}
-                valueComment={comment}
+                onChangeComment={(e) => setComment(e.target.value)}
+                valueComment={objSubmit.comment}
                 onClickComment={() => {
                   setObjSubmit({
                     id_status: item?.id_status,

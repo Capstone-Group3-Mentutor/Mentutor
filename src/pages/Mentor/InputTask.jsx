@@ -35,6 +35,7 @@ const InputTask = (props) => {
       .then((res) => {
         const results = res.data;
         setTasks(results);
+        console.log(res.data);
       })
       .catch((err) => {
         const { data } = err.response;

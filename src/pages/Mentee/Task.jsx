@@ -75,21 +75,24 @@ const Task = () => {
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-6">
         Your Task
       </h1>
-      {myTasks?.map((item) => (
-        <CardTask
-          key={item?.id_task}
-          title={item?.title}
-          description={item?.description}
-          images={item?.images}
-          file={item?.file}
-          score={item?.score}
-          due_date={item?.due_date}
-          status={item?.status}
-          onClickSubmit={() => {
-            setIdTask(item?.id_task);
-          }}
-        />
-      ))}
+
+      {myTasks
+        ?.sort((a, b) => b.id_task - a.id_task)
+        .map((item) => (
+          <CardTask
+            key={item?.id_task}
+            title={item?.title}
+            description={item?.description}
+            images={item?.images}
+            file={item?.file}
+            score={item?.score}
+            due_date={item?.due_date}
+            onClickSubmit={() => {
+              setIdTask(item?.id_task);
+            }}
+          />
+        ))}
+
 
       <input type="checkbox" id="modal-submit-task" className="modal-toggle" />
       <div className="modal">
