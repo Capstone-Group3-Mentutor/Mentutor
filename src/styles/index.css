@@ -30,3 +30,11 @@ body {
     #38346f 99.87%
   );
 }
+.gradient-logo {
+  background-color: linear-gradient(
+    270.4deg,
+    #d441b9 4.23%,
+    #a846d4 46.31%,
+    #854aea 97.16%
+  );
+}

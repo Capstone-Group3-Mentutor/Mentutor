@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import toys1 from "../assets/toys-1.png";
+import toys2 from "../assets/toys-2.png";
 import toys3 from "../assets/toys-3.png";
-import toys4 from "../assets/toys-4.png";
 import { FiPaperclip, FiSend } from "react-icons/fi";
 import { AiFillEdit } from "react-icons/ai";
 import { BiRightArrowAlt } from "react-icons/bi";
@@ -27,26 +26,26 @@ const CardTask = (props) => {
     "WIB";
 
   return (
-    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px] mb-8">
-      <div className="flex justify-between items-center ">
-        <h1 className="text-putih text-sm md:text-2xl font-semibold">
+    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto  bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px] mb-8">
+      <div className="flex justify-between items-start  ">
+        <h1 className="text-putih text-xs md:text-2xl font-semibold capitalize break-words w-1/2">
           {props.title}
         </h1>
-        <p className="text-button text-[6px] md:text-xs ">
-          Due date{" "}
+        <p className="text-button text-[5px] md:text-xs break-words flex flex-wrap">
+          Due date
           <span className="text-red-500">
             {props.due_date.replace("UTC", "WIB")}
           </span>
         </p>
       </div>
-      <p className=" text-[10px] md:text-sm text-abu mt-3 font-light">
+      <p className=" text-[10px] md:text-sm text-abu mt-3 font-light break-words">
         {props.description}
       </p>
       {props.file ? (
         <a
           href={props.file}
           id="file-name"
-          className=" hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-gray-400 my-3"
+          className=" hover:underline h-[2rem] w-[15rem] md:w-[18rem] lg:w-[20rem] md:mt-8 text-[6px] lg:text-[10px] md:text-[8px] flex items-center rounded-sm space-x-2 text-gray-400 my-3"
         >
           {props.file.substring(props.file.lastIndexOf(".") + 1) == "pdf" ? (
             <img src={PDF} className="w-6 h-6" />
@@ -164,21 +163,23 @@ const CardForum = (props) => {
     setVisible((prevValue) => prevValue - 2);
   };
   return (
-    <div className="w-[18rem] md:w-[32rem] lg:w-[52rem]  h-auto bg-card p-5 md:p-8 rounded-[10px]">
+    <div className="w-[18rem] md:w-[32rem] lg:w-[52rem]  h-auto bg-card p-5 md:p-9 rounded-[10px]">
       <div className="flex items-center mb-6">
         <img
-          src={toys3}
+          src={toys2}
           className="h-[3rem] w-[3rem] md:h-[4rem] md:w-[4rem] rounded-full"
         />
-        <div className="pl-6 md:space-y-1">
+        <div className="pl-4 md:space-y-1">
           <h1 className="text-putih font-medium text-lg md:text-xl">
             {props.names}
           </h1>
-          <p className="text-gray-400 font-light text-xs">Mentee</p>
+          <p className="text-abu font-normal text-xs">Mentee</p>
         </div>
       </div>
 
-      <p className="text-abu text-[10px] md:text-sm">{props.captions}</p>
+      <p className="text-abu text-[10px] md:text-sm break-words">
+        {props.captions}
+      </p>
       {props.img ? (
         <img
           className="cursor-pointer w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-4 rounded-sm object-cover"
@@ -186,7 +187,7 @@ const CardForum = (props) => {
           alt="foto-tugas"
         />
       ) : null}
-      <form onSubmit={props.onSubmitComment} className="mt-9 flex space-x-6">
+      <form onSubmit={props.onSubmitComment} className="mt-9 flex space-x-3">
         <CustomInput
           id="Input-comment"
           type="text"
@@ -198,7 +199,7 @@ const CardForum = (props) => {
         <button
           onClick={props.onClickComment}
           id="btn-sendComment"
-          className="w-[3rem] h-[3rem] md:w-[3.6rem] md:h-[3.6rem] bg-purple rounded-full text-xl md:text-3xl text-abu flex items-center justify-center "
+          className="w-[3rem] h-[2.8rem] md:w-[3.6rem] md:h-[3.6rem] bg-purple rounded-full text-lg md:text-3xl text-abu flex items-center justify-center "
         >
           <FiSend />
         </button>
@@ -206,55 +207,46 @@ const CardForum = (props) => {
 
       {/* -----------comment------------ */}
       {props.comments?.slice(0, visible).map((item) => (
-        <div key={item.id_comment} className="px-5 md:px-9 mt-8">
+        <div key={item.id_comment} className="px-5 md:px-9 mt-6 mb-5">
           <div className="flex items-center mb-3">
-            <img
-              src={toys4}
-              className="h-[2.2rem] w-[2.2rem] md:h-[3rem] md:w-[3rem] rounded-full"
-            />
+            {item.role === "mentee" ? (
+              <img
+                src={toys2}
+                className="h-[2.2rem] w-[2.2rem] md:h-[2.5rem] md:w-[2.5rem] rounded-full"
+              />
+            ) : (
+              <img
+                src={toys3}
+                className="h-[2.2rem] w-[2.2rem] md:h-[2.5rem] md:w-[2.5rem] rounded-full"
+              />
+            )}
             <div className="pl-4 space-y-0">
               <h1 className="text-putih text-base">{item.name}</h1>
-              <p className="text-gray-400 capitalize font-light text-xs">
+              <p className="text-abu capitalize font-normal text-xs">
                 {item.role}
               </p>
             </div>
           </div>
-          <p className="text-sm font-light text-abu pl-[3rem] md:pl-[4rem]">
+          <p className="text-sm font-light break-words text-gray-400 pl-[2.5rem] md:pl-[3.5rem]">
             {item.caption}
           </p>
+          <hr className="w-[13rem] md:w-[20rem] lg:w-[30rem] border-[#40456E] mt-3" />
         </div>
       ))}
-
-      <p
-        onClick={toggleShowMore}
-        className="text-xs font-medium text-button capitalize cursor-pointer"
-      >
-        Load More Comments
-      </p>
-
-      <p
-        onClick={toggleHideComment}
-        className="text-xs font-medium text-button capitalize cursor-pointer"
-      >
-        Hide Comments
-      </p>
-
-      {/* {visible ? (
+      <div className="flex justify-between w-[13rem] md:w-[20rem] lg:w-[30rem] mt-3 ">
         <p
           onClick={toggleShowMore}
-          className="text-xs font-medium text-button capitalize cursor-pointer"
+          className=" text-xs font-normal text-button capitalize cursor-pointer px-5 md:px-9"
         >
           Load More Comments
         </p>
-      ) : (
         <p
           onClick={toggleHideComment}
-          className="text-xs font-medium text-button capitalize cursor-pointer"
+          className="text-xs font-normal text-gray-500 capitalize cursor-pointer "
         >
-          Hide Comments
+          Hide
         </p>
-      )} */}
-
+      </div>
       {/* -----------comment------------ */}
     </div>
   );
