@@ -14,7 +14,6 @@ const InputClass = () => {
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  const navigate = useNavigate();
   const [objSubmit, setObjSubmit] = useState({});
 
   useEffect(() => {
@@ -112,7 +111,7 @@ const InputClass = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Succes Updated",
+          title: "Success Updated",
           showConfirmButton: true,
         });
       })
@@ -165,74 +164,72 @@ const InputClass = () => {
 
   return (
     <Layout>
-      <div className="md:space-y-2 mb-3">
-        <h1 className="text-putih text-lg md:text-3xl font-medium">
-          Add Class
-        </h1>
-        <p className="text-abu font-light text-[8px] md:text-sm ">
-          Join the class to learn with each others.
-        </p>
-      </div>
+      <div className="pb-9">
+        <div className="md:space-y-1 mb-[3rem]">
+          <h1 className="text-putih text-lg md:text-2xl font-medium">
+            Add Class
+          </h1>
+          <p className="text-abu font-light text-[8px] md:text-sm ">
+            Join the class to learn with each others.
+          </p>
+        </div>
 
-      <form
-        className="w-full h-[10rem] md:h-[13rem] bg-card rounded-[30px] text-xs md:text-lg mb-5 px-3 md:px-7 py-3"
-        onSubmit={(e) => registerClass(e)}
-      >
-        <div className="flex flex-col space-y-2 w-1/2">
-          <p className="text-putih text-md md:text-lg">Class</p>
-          <CustomInput
-            id="input-class"
-            category="Class"
-            type="text"
-            placeholder="Class Name"
-            onChange={(e) => setClassName(e.target.value)}
-            value={className}
-          />
-        </div>
-        <div className="text-start mt-7">
-          <CustomButton
-            id="btn-addClass"
-            color="Primary"
-            label="Add"
-            // loading={loading || disabled}
-          />
-        </div>
-      </form>
-      <div className="w-full h-[26rem] md:h-[18rem] bg-card rounded-[30px] text-xs md:text-lg overflow-auto mb-7">
-        <div className="flex flex-row text-putih px-3 md:px-7 py-2 space-x-2 sticky top-0 z-10 bg-card border-abu border-opacity-50 border-b">
-          <p className="w-[10%] text-center">No</p>
-          <p className="w-[30%] text-center">Class Name</p>
-          <p className="w-[30%] text-center">Number of Mentess</p>
-          <p className="w-[20%] text-center">Status</p>
-          <p className="w-[2%] text-center"></p>
-        </div>
-        <hr className="text-abu mx-3 border-abu border-opacity-50" />
-        {!datas ? (
-          <div className="flex justify-center mt-5 text-putih">
-            No Data Class
+        <form
+          className="w-full h-[10rem] md:h-[13rem] bg-card rounded-xl md:rounded-[20px] text-xs md:text-lg mb-9 px-3 md:px-7 py-3"
+          onSubmit={(e) => registerClass(e)}
+        >
+          <div className="flex flex-col space-y-2 w-1/2">
+            <p className="text-putih text-md md:text-lg">Class</p>
+            <CustomInput
+              id="input-class"
+              category="Class"
+              type="text"
+              placeholder="Class Name"
+              onChange={(e) => setClassName(e.target.value)}
+              value={className}
+            />
           </div>
-        ) : (
-          datas
-            ?.sort((a, b) => b.id_class - a.id_class)
-            .map((data, index) => (
-              <ListClass
-                key={data.id_class}
-                index={index}
-                name={data.class_name}
-                student={data.total_student}
-                status={data.status}
-                onClickEdit={() => {
-                  setObjSubmit({
-                    id_class: data.id_class,
-                    class_name: data.class_name,
-                    status: data.status,
-                  });
-                }}
-                onClickDelete={() => deleteClass(data?.id_class)}
-              />
-            ))
-        )}
+          <div className="text-start md:mt-7 mt-3">
+            <CustomButton id="btn-addClass" color="Primary" label="Add" />
+          </div>
+        </form>
+        <div className="w-full h-[26rem] md:h-[18rem] bg-card rounded-xl md:rounded-[20px] text-xs md:text-lg overflow-auto mb-7">
+          <div className="flex flex-row text-putih md:text-base  px-3 md:px-7 py-2 space-x-2 sticky top-0 z-10 bg-card border-abu border-opacity-50 border-b">
+            <p className="w-[10%] text-center">No</p>
+            <p className="w-[30%] text-center">Class Name</p>
+            <p className="w-[30%] text-center">Number of Mentess</p>
+            <p className="w-[20%] text-center">Status</p>
+            <p className="w-[2%] text-center"></p>
+          </div>
+          <hr className="text-abu mx-3 border-abu border-opacity-50" />
+          {!datas ? (
+            <div className="flex justify-center mt-5 text-putih">
+              No Data Class
+            </div>
+          ) : (
+            datas
+              ?.sort((a, b) => b.id_class - a.id_class)
+              .map((data, index) => (
+                <ListClass
+                  key={data.id_class}
+                  index={index}
+                  name={data.class_name}
+                  student={data.total_student}
+                  status={data.status}
+                  onClickEdit={() => {
+                    setObjSubmit({
+                      id_class: data.id_class,
+                      class_name: data.class_name,
+                      status: data.status,
+                    });
+                  }}
+                  onClickDelete={() => deleteClass(data?.id_class)}
+                />
+              ))
+          )}
+        </div>
       </div>
+      {/* --modal edit class */}
       <input type="checkbox" id="modal-edit-class" className="modal-toggle" />
       <div className="modal ">
         <div className="modal-box w-1/2 bg-card p-14">
@@ -287,6 +284,7 @@ const InputClass = () => {
           </form>
         </div>
       </div>
+      {/* end modal */}
     </Layout>
   );
 };

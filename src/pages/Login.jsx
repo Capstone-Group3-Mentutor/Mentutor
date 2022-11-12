@@ -23,7 +23,7 @@ const schema = yup.object().shape({
     .matches(/^(?=.*[0-9])/, "password must contain one number")
     .matches(
       /^(?=.*[!@#\$%\^&\*])/,
-      "password must contain one speceial character"
+      "password must contain one special character"
     ),
 });
 

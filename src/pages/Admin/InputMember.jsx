@@ -33,7 +33,7 @@ const schema = yup.object().shape({
     .matches(/^(?=.*[0-9])/, "Password must contain one number")
     .matches(
       /^(?=.*[!@#\$%\^&\*])/,
-      "Password must contain one speceial character"
+      "Password must contain one special character"
     ),
   role: yup.string().matches("Choose a role", "Role is required"),
   classname: yup.string().matches("Choose a class", "Class is required"),
@@ -145,113 +145,115 @@ const InputMember = () => {
 
   return (
     <Layout>
-      <div className="md:space-y-2 mb-3">
-        <h1 className="text-putih text-lg md:text-3xl font-medium">
-          Add Member
-        </h1>
-        <p className="text-abu font-light text-[8px] md:text-sm ">
-          Join the class to learn with each others.
-        </p>
-      </div>
+      <div className="pb-9">
+        <div className="md:space-y-1 mb-[3rem]">
+          <h1 className="text-putih text-lg md:text-2xl font-medium">
+            Add Member
+          </h1>
+          <p className="text-abu font-light text-[8px] md:text-sm ">
+            Join the class to learn with each others.
+          </p>
+        </div>
 
-      <form
-        className="w-full lg:w-[35rem] h-[35rem] md:h-[35rem] lg:h-[32rem] bg-card rounded-[20px] text-xs md:text-lg px-5 md:px-10 py-2"
-        onSubmit={handleSubmit(handleRegister)}
-      >
-        <div className="flex flex-col space-y-4">
-          <div className="flex flex-col space-y-2 w-full">
-            <p className="text-putih text-md md:text-lg">Name</p>
-            <CustomInput
-              id="input-fullname"
-              category="Class"
-              type="text"
-              placeholder="Full name"
-              onChange={(e) => setFullName(e.target.value)}
-              value={fullName}
-              register={register}
-              error={errors.fullname?.message}
-              name="fullname"
-            />
-          </div>
-          <div className="flex flex-col space-y-2 w-full">
-            <h1 className="text-putih text-md md:text-lg">Email</h1>
-            <CustomInput
-              id="input-email"
-              category="Class"
-              type="text"
-              placeholder="example@gmail.com"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              register={register}
-              error={errors.email?.message}
-              name="email"
-            />
-          </div>
-          <div className="flex flex-row space-x-4">
-            <div className="w-1/2 flex flex-col space-y-2 ">
-              <h1 className="text-putih text-md md:text-lg">Role</h1>
-              <label htmlFor="dropdown-role" className="sr-only"></label>
-              <select
-                id="dropdown-role"
-                className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
-                onChange={(e) => setRole(e.target.value)}
-                value={role}
-              >
-                <option value="Role" disabled>
-                  Choose a role
-                </option>
-                <option value="mentor" id="mentor">
-                  mentor
-                </option>
-                <option value="mentee" id="mentee">
-                  mentee
-                </option>
-              </select>
+        <form
+          className="w-full lg:w-[35rem] h-[30rem] md:h-[35rem] lg:h-[35rem] bg-card rounded-[20px] text-xs md:text-lg p-5 md:p-10 "
+          onSubmit={handleSubmit(handleRegister)}
+        >
+          <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-2 w-full">
+              <p className="text-putih text-md md:text-lg">Name</p>
+              <CustomInput
+                id="input-fullname"
+                category="Class"
+                type="text"
+                placeholder="Full name"
+                onChange={(e) => setFullName(e.target.value)}
+                value={fullName}
+                register={register}
+                error={errors.fullname?.message}
+                name="fullname"
+              />
             </div>
-            <div className="w-1/2 flex flex-col space-y-2 ">
-              <p className="text-putih text-md md:text-lg">Class</p>
-              <label htmlFor="dropdown-class" className="sr-only"></label>
-              <select
-                id="dropdown-class"
-                className="border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
-                onChange={(e) => setClassName(parseFloat(e.target.value))}
-                value={className}
-              >
-                <option value="Class" disabled>
-                  Choose a class
-                </option>
-                {datas.map((data, index) => (
-                  <option key={data.id_class} value={data.id_class}>
-                    {data.class_name}
+            <div className="flex flex-col space-y-2 w-full">
+              <h1 className="text-putih text-md md:text-lg">Email</h1>
+              <CustomInput
+                id="input-email"
+                category="Class"
+                type="text"
+                placeholder="example@gmail.com"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                register={register}
+                error={errors.email?.message}
+                name="email"
+              />
+            </div>
+            <div className="flex flex-row space-x-4">
+              <div className="w-1/2 flex flex-col space-y-2 ">
+                <h1 className="text-putih text-md md:text-lg">Role</h1>
+                <label htmlFor="dropdown-role" className="sr-only"></label>
+                <select
+                  id="dropdown-role"
+                  className="capitalize border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
+                  onChange={(e) => setRole(e.target.value)}
+                  value={role}
+                >
+                  <option value="Role" disabled>
+                    Choose a role
                   </option>
-                ))}
-              </select>
+                  <option value="mentor" id="mentor">
+                    mentor
+                  </option>
+                  <option value="mentee" id="mentee">
+                    mentee
+                  </option>
+                </select>
+              </div>
+              <div className="w-1/2 flex flex-col space-y-2 ">
+                <p className="text-putih text-md md:text-lg">Class</p>
+                <label htmlFor="dropdown-class" className="sr-only"></label>
+                <select
+                  id="dropdown-class"
+                  className="border capitalize placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
+                  onChange={(e) => setClassName(parseFloat(e.target.value))}
+                  value={className}
+                >
+                  <option value="Class" disabled>
+                    Choose a class
+                  </option>
+                  {datas.map((data, index) => (
+                    <option key={data.id_class} value={data.id_class}>
+                      {data.class_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="flex flex-col space-y-2 w-full">
+              <p className="text-putih text-md md:text-lg">Password</p>
+              <CustomInput
+                id="input-password"
+                category="Class"
+                type="password"
+                placeholder="********"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                register={register}
+                error={errors.password?.message}
+                name="password"
+              />
             </div>
           </div>
-          <div className="flex flex-col space-y-2 w-full">
-            <p className="text-putih text-md md:text-lg">Password</p>
-            <CustomInput
-              id="input-password"
-              category="Class"
-              type="password"
-              placeholder="********"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              register={register}
-              error={errors.password?.message}
-              name="password"
+          <div className="text-end mt-5">
+            <CustomButton
+              id="btn-addMember"
+              color="Primary"
+              label="Add"
+              // loading={disabled || loading}
             />
           </div>
-        </div>
-        <div className="text-end mt-5">
-          <CustomButton
-            id="btn-addMember"
-            color="Primary"
-            label="Add"
-            // loading={disabled || loading}
-          />
-        </div>
-      </form>
+        </form>
+      </div>
     </Layout>
   );
 };

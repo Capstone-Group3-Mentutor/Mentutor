@@ -31,11 +31,10 @@ const ForumMentor = () => {
       })
       .finally(() => setLoading(false));
   };
-
   const handleComment = (e) => {
     e.preventDefault();
     const body = {
-      comment,
+      caption: comment,
     };
     apiRequest(`forum/${objSubmit.id_status}`, "post", body)
       .then((res) => {
@@ -65,10 +64,10 @@ const ForumMentor = () => {
                 names={item.name}
                 img={item.images}
                 captions={item.caption}
-                comment={item.comments}
+                comments={item.comments}
                 onSubmitComment={(e) => handleComment(e)}
-                onChangeComment={(e) => setObjSubmit(e.target.value)}
-                valueComment={comment}
+                onChangeComment={(e) => setComment(e.target.value)}
+                valueComment={objSubmit.comment}
                 onClickComment={() => {
                   setObjSubmit({
                     id_status: item?.id_status,

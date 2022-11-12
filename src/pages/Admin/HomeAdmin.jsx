@@ -18,9 +18,7 @@ const HomeAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [dataClass, setDataClass] = useState([]);
   const [objSubmit, setObjSubmit] = useState({});
-  const [cookie, removeCookie] = useCookies();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   useEffect(() => {
     fetchUser();
     fetchClass();
@@ -84,7 +82,6 @@ const HomeAdmin = () => {
   };
 
   const handleEditUser = async (e) => {
-    // setLoading(true);
     e.preventDefault();
     const body = {
       name: objSubmit.name,
@@ -98,7 +95,7 @@ const HomeAdmin = () => {
       .then((res) => {
         Swal.fire({
           icon: "success",
-          title: "Succes Update",
+          title: "Success Update",
           showConfirmButton: true,
         });
       })
@@ -118,8 +115,8 @@ const HomeAdmin = () => {
       <Layout>
         <div className="pb-12">
           <div className="flex justify-between ">
-            <div className="md:space-y-2">
-              <h1 className="text-putih text-lg md:text-2xl font-medium">
+            <div className="md:space-y-1">
+              <h1 className="text-putih text-lg md:text-xl font-medium">
                 Hello <span>Admin !</span>
               </h1>
               <p className="text-abu font-light text-[8px] md:text-sm">
@@ -127,10 +124,10 @@ const HomeAdmin = () => {
               </p>
             </div>
           </div>
-          <h1 className="text-putih text-lg md:text-3xl font-normal mt-[4rem] mb-[2rem]">
-            List Mentor / Mentee
+          <h1 className="text-putih text-lg md:text-2xl font-normal mt-[3rem] mb-[1.4rem]">
+            List Mentor & Mentee
           </h1>
-          <div className="w-full h-[30rem] md:h-[27rem] bg-card rounded-[30px] text-xs md:text-lg overflow-auto mb-5">
+          <div className="w-full h-[30rem] md:h-[21rem] bg-card rounded-xl md:rounded-[20px]  text-xs md:text-base overflow-auto mb-5">
             <div className="flex flex-row text-putih px-3 md:px-7 py-2 space-x-2 sticky top-0 z-10 bg-card border-b border-abu mb-4">
               <p className="w-[10%] text-center">No</p>
               <p className="w-[30%] text-center">Name</p>
@@ -146,25 +143,25 @@ const HomeAdmin = () => {
                 <div
                   key={item?.id_user}
                   index={index}
-                  className="flex flex-row text-[5px] items-center md:text-[10px] text-xs lg:text-[15px] text-abu px-3 md:px-7 py-1 space-x-2 mb-5"
+                  className="flex flex-row text-[8px] items-center md:text-[10px] lg:text-[15px] text-abu px-3 md:px-7 py-1 space-x-2 mb-5"
                 >
-                  <p className="w-[10%] text-center">{index + 1}</p>
+                  <p className="w-[10%] text-center text-putih">{index + 1}</p>
                   <div className="flex flex-row space-x-3 items-center justify-between w-[30%] ">
-                    {/* <img
-          src={toys3}
-          className="h-[1.5rem] w-[1.5rem] md:h-[3rem] md:w-[3rem] rounded-full  "
-        /> */}
-                    <p className="text-left">{item?.name}</p>
+                    <p className="text-left capitalize">{item?.name}</p>
                   </div>
-                  <p className="w-[35%] text-center">{item?.email}</p>
+                  <p className="w-[35%] text-center break-words">
+                    {item?.email}
+                  </p>
                   <p
-                    className={`w-[15%] text-center ${
+                    className={`w-[15%] text-center capitalize ${
                       item?.role === "mentee" ? "text-button" : "text-[#D441B9]"
                     }`}
                   >
                     {item?.role}
                   </p>
-                  <p className="w-[25%] text-center">{item?.class_name}</p>
+                  <p className="w-[25%] text-center break-words capitalize">
+                    {item?.class_name}
+                  </p>
                   {/* option */}
                   <div className="dropdown dropdown-end ">
                     <label
@@ -197,7 +194,7 @@ const HomeAdmin = () => {
                       </label>
                       <li
                         id="delete-click"
-                        className=" text-[#CC5D5D]"
+                        className=" text-merah"
                         onClick={() => handleDelete(item?.id_user)}
                       >
                         <a>Delete</a>
