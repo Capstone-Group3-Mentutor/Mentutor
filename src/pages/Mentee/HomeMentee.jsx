@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import toys2 from "../../assets/toys-2.png";
 import hero from "../../assets/hero.png";
-
 import { CardTask } from "../../components/Cards";
 import Layout from "../../components/Layout";
 import { Link } from "react-router-dom";
@@ -9,13 +8,21 @@ import CustomButton from "../../components/CustomButton";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { apiRequest } from "../../utils/apiRequest";
 import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { handleAuth } from "../../utils/reducers/reducer";
+import Swal from "sweetalert2";
+
 const HomeMentee = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [datas, setDatas] = useState({});
   const [dataTask, setDataTask] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [cookie, setCookie] = useCookies();
+  const [cookie, setCookie, removeCookie] = useCookies();
   const [images, setImages] = useState(toys2);
   const id_user = cookie.id_user;
+
   useEffect(() => {
     fetchUser();
     fetchTaskMentor();
@@ -27,8 +34,19 @@ const HomeMentee = () => {
       .then((res) => {
         setDatas(res.data);
       })
-      .catch((err) => {
-        alert(err.toString());
+      .catch(() => {
+        Swal.fire({
+          icon: "error",
+          title: "Failed",
+          text: "Please re-login",
+          confirmButtonText: "Ok",
+        }).catch((err) => {
+          if (err.isConfirmed) {
+            removeCookie("token");
+            dispatch(handleAuth(false));
+            navigate("/");
+          }
+        });
       })
       .finally(() => setLoading(false));
   };
@@ -40,28 +58,31 @@ const HomeMentee = () => {
         setDataTask(res.data);
       })
       .catch((err) => {
-        const { data } = err.response;
         Swal.fire({
           title: "Failed",
-          text: data.message,
+          text: "Please re-login",
           showCancelButton: false,
         });
       })
       .finally(() => setLoading(false));
   };
+
   const fullname = `${datas.name}`;
   const first = fullname.split(" ")[0];
 
   return (
     <Layout>
-      <div className="pb-9">
-        <div key={datas.id_user} className="flex justify-between ">
+      <div className="pb-9 flex flex-col items-center">
+        <div
+          key={datas.id_user}
+          className="flex justify-between w-[18rem]  md:w-[32rem] ] lg:w-[52rem]"
+        >
           <div className="md:space-y-2">
             <h1 className="text-putih text-lg md:text-3xl font-medium">
-              Hello <span>{first}</span>
+              Hello <span>{first} !</span>
             </h1>
             <p className="text-abu font-light text-[8px] md:text-sm">
-              Welcome back, you are doing great.
+              Let's learn something new today!
             </p>
           </div>
           <div className="flex items-center ">
@@ -83,7 +104,7 @@ const HomeMentee = () => {
                 </h1>
               </Link>
 
-              <p className="text-abu font-light text-[8px] md:text-xs">
+              <p className="text-abu font-normal text-[8px] md:text-xs">
                 Mentee
               </p>
             </div>
@@ -92,12 +113,12 @@ const HomeMentee = () => {
         <div className="w-[18rem] h-[8rem] md:w-[32rem] md:h-[12rem] lg:w-[52rem] lg:h-[15rem] gradient-home rounded-2xl md:rounded-[30px] mt-[4rem] ">
           <div className=" flex">
             <div className=" pl-5 pt-5 md:pl-9 md:pt-9">
-              <h1 className="text-putih text-sm md:text-lg lg:text-2xl font-medium">
+              <h1 className="text-white text-sm md:text-lg lg:text-2xl font-medium">
                 When nothing goes right, go left
               </h1>
-              <p className="text-abu text-[6px] md:text-xs font-light mt-2  lg:mt-5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
-                ipsum dolor sit amet, consectetur adipiscing elit.
+              <p className="text-gray-300 text-[6px] md:text-sm font-light mt-2 lg:mt-5">
+                Build your skill with courses and degrees online from anywhere
+                with professional instructors
               </p>
             </div>
             <div className="relative bottom-9">
@@ -106,8 +127,11 @@ const HomeMentee = () => {
           </div>
         </div>
         <div className="mt-[3rem] md:mt-[5rem]">
-          <h1 className="text-putih text-lg font-medium mb-6">Your Task</h1>
-          <div className="flex justify-end text-putih hover:text-button font-normal cursor-pointer mb-2 text-xs mr-3 ">
+          <h1 className="text-putih text-base md:text-xl font-medium mb-6">
+            Your Task
+          </h1>
+
+          <div className="flex w-[18rem]  md:w-[32rem] ] lg:w-[52rem] justify-end text-putih hover:text-button font-normal cursor-pointer mb-2 text-[10px] md:text-xs mr-3 ">
             <Link to="/task">
               <p id="view-task">View All Task</p>
             </Link>

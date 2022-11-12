@@ -72,28 +72,32 @@ const Task = () => {
 
   return (
     <Layout>
-      <h1 className="text-putih text-lg lg:text-2xl font-medium mb-6">
-        Your Task
-      </h1>
+      <div className="pb-9">
+        <h1 className="text-putih text-lg lg:text-2xl font-medium ">
+          Your Task
+        </h1>
+        <p className="text-abu text-xs font-light mb-8">
+          Don't forget to submit your assignment!
+        </p>
 
-      {myTasks
-        ?.sort((a, b) => b.id_task - a.id_task)
-        .map((item) => (
-          <CardTask
-            key={item?.id_task}
-            title={item?.title}
-            description={item?.description}
-            images={item?.images}
-            file={item?.file}
-            score={item?.score}
-            due_date={item?.due_date}
-            onClickSubmit={() => {
-              setIdTask(item?.id_task);
-            }}
-          />
-        ))}
-
-
+        {myTasks
+          ?.sort((a, b) => b.id_task - a.id_task)
+          .map((item) => (
+            <CardTask
+              key={item?.id_task}
+              title={item?.title}
+              description={item?.description}
+              images={item?.images}
+              file={item?.file}
+              score={item?.score}
+              due_date={item?.due_date}
+              onClickSubmit={() => {
+                setIdTask(item?.id_task);
+              }}
+            />
+          ))}
+      </div>
+      {/* modal submit task */}
       <input type="checkbox" id="modal-submit-task" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box  bg-card">

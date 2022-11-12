@@ -18,9 +18,9 @@ const ListClass = ({
 }) => {
   return (
     <>
-      <div className="flex flex-row text-[7px] items-center md:text-[10px] lg:text-[15px] text-putih px-3 md:px-7 py-0.5 space-x-2 mb-1">
-        <p className="w-[10%] text-center">{index + 1}</p>
-        <p className="w-[30%] text-center">{name}</p>
+      <div className="flex flex-row text-[7px] items-center md:text-[10px] lg:text-[15px] text-abu px-3 md:px-7 py-0.5 space-x-2 mb-1">
+        <p className="w-[10%] text-center text-putih">{index + 1}</p>
+        <p className="w-[30%] text-center ">{name}</p>
         <p className="w-[30%] text-center">{student}</p>
         <p
           className={`w-[17%] text-center ${
@@ -52,7 +52,7 @@ const ListClass = ({
             </label>
             <li
               id="delete-click"
-              className=" text-[#CC5D5D]"
+              className=" text-merah"
               onClick={onClickDelete}
             >
               <a>Delete</a>
