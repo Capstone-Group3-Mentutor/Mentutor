@@ -27,7 +27,7 @@ const CardTask = (props) => {
 
   return (
     <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto  bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px] mb-8">
-      <div className="flex justify-between items-center  ">
+      <div className="flex justify-between items-start  ">
         <h1 className="text-putih text-xs md:text-2xl font-semibold capitalize break-words w-1/2">
           {props.title}
         </h1>
