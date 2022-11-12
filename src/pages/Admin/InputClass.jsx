@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../../components/Layout";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
@@ -7,6 +6,16 @@ import { ListClass } from "../../components/ListItems";
 import { apiRequest } from "../../utils/apiRequest";
 import Swal from "sweetalert2";
 import { useTitle } from "../../utils/useTitle";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  class_name: yup
+    .string()
+    .required("class is required")
+    .min(5, "class must be 5 characters"),
+});
 
 const InputClass = () => {
   useTitle("List Members");
@@ -23,6 +32,15 @@ const InputClass = () => {
       setDisabled(true);
     }
   }, [className]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const registerClass = async (e) => {
     e.preventDefault();
@@ -67,6 +85,7 @@ const InputClass = () => {
   }, []);
 
   const fetchData = async () => {
+    setLoading(true);
     apiRequest("admin/classes", "get")
       .then((res) => {
         const results = res.data;
@@ -173,7 +192,6 @@ const InputClass = () => {
             Join the class to learn with each others.
           </p>
         </div>
-
         <form
           className="w-full h-[10rem] md:h-[13rem] bg-card rounded-xl md:rounded-[20px] text-xs md:text-lg mb-9 px-3 md:px-7 py-3"
           onSubmit={(e) => registerClass(e)}
@@ -187,6 +205,7 @@ const InputClass = () => {
               placeholder="Class Name"
               onChange={(e) => setClassName(e.target.value)}
               value={className}
+              error={errors.class?.message}
             />
           </div>
           <div className="text-start md:mt-7 mt-3">
@@ -202,10 +221,8 @@ const InputClass = () => {
             <p className="w-[2%] text-center"></p>
           </div>
           <hr className="text-abu mx-3 border-abu border-opacity-50" />
-          {!datas ? (
-            <div className="flex justify-center mt-5 text-putih">
-              No Data Class
-            </div>
+          {loading ? (
+            <p>Loading...</p>
           ) : (
             datas
               ?.sort((a, b) => b.id_class - a.id_class)
@@ -254,6 +271,7 @@ const InputClass = () => {
                   setObjSubmit({ ...objSubmit, class_name: e.target.value })
                 }
                 value={objSubmit.class_name}
+                error={errors.class_name?.message}
               />
               <div className="w-1/2 flex flex-col space-y-2 ">
                 <label htmlFor="dropdown-status" className="sr-only"></label>

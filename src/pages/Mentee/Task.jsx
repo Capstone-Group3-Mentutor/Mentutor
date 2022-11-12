@@ -90,6 +90,7 @@ const Task = () => {
               title={item?.title}
               description={item?.description}
               images={item?.images}
+              status={item.status}
               file={item?.file}
               score={item?.score}
               due_date={item?.due_date}
@@ -105,6 +106,7 @@ const Task = () => {
       <div className="modal">
         <div className="modal-box  bg-card">
           <label
+            id="btn-close"
             htmlFor="modal-submit-task"
             className="cursor-pointer btn-sm  absolute right-2 top-2 text-putih border-white"
           >
@@ -121,20 +123,18 @@ const Task = () => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <div className="flex flex-col space-y-2 my-2">
+              <label
+                className="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="uploadfile-btn"
+              />
               <input
-                hidden
-                id="upload-btn"
+                className="block p-2.5 text-sm lg:h-[3.4rem] w-full md:w-1/2 lg:w-full h-[2.8rem] bg-card rounded-[10px] border placeholder:text-gray-500 text-putih focus:outline-none focus:border-putih border-abu font-light"
+                id="uploadfile-btn"
                 type="file"
+                accept="application/pdf, application/vnd.ms-excel, application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword "
                 onChange={(e) => setFile(e.target.files[0])}
                 defaultValue={file}
               />
-              <label
-                className="bg-[#38486A] w-40 lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu p-3 cursor-pointer"
-                htmlFor="upload-btn"
-              >
-                <HiOutlineDocumentText className="text-xl mr-2" />
-                Choose a File
-              </label>
               <div className="text-right">
                 <CustomButton
                   id="btn-submitTask"

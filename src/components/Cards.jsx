@@ -14,7 +14,7 @@ const currentDate = new Date();
 let detailDate =
   currentDate.getFullYear() +
   "-" +
-  currentDate.getMonth() +
+  (currentDate.getMonth() < 12 ? currentDate.getMonth() + 1 : 1) +
   "-" +
   currentDate.getDate() +
   " " +
@@ -233,33 +233,36 @@ const CardForum = (props) => {
       </form>
 
       {/* -----------comment------------ */}
-      {props.comments?.slice(0, visible).map((item) => (
-        <div key={item.id_comment} className="px-5 md:px-9 mt-6 mb-5">
-          <div className="flex items-center mb-3">
-            {item.role === "mentee" ? (
-              <img
-                src={toys2}
-                className="h-[2.2rem] w-[2.2rem] md:h-[2.5rem] md:w-[2.5rem] rounded-full"
-              />
-            ) : (
-              <img
-                src={toys3}
-                className="h-[2.2rem] w-[2.2rem] md:h-[2.5rem] md:w-[2.5rem] rounded-full"
-              />
-            )}
-            <div className="pl-4 space-y-0">
-              <h1 className="text-putih text-base">{item.name}</h1>
-              <p className="text-abu capitalize font-normal text-xs">
-                {item.role}
-              </p>
+      {props.comments
+        ?.slice(0, visible)
+        .sort((a, b) => b.id_comment - a.id_comment)
+        .map((item) => (
+          <div key={item.id_comment} className="px-5 md:px-9 mt-6 mb-5">
+            <div className="flex items-center mb-3">
+              {item.role === "mentee" ? (
+                <img
+                  src={toys2}
+                  className="h-[2.2rem] w-[2.2rem] md:h-[2.5rem] md:w-[2.5rem] rounded-full"
+                />
+              ) : (
+                <img
+                  src={toys3}
+                  className="h-[2.2rem] w-[2.2rem] md:h-[2.5rem] md:w-[2.5rem] rounded-full"
+                />
+              )}
+              <div className="pl-4 space-y-0">
+                <h1 className="text-putih text-base">{item.name}</h1>
+                <p className="text-abu capitalize font-normal text-xs">
+                  {item.role}
+                </p>
+              </div>
             </div>
+            <p className="text-sm font-light break-words text-gray-400 pl-[2.5rem] md:pl-[3.5rem]">
+              {item.caption}
+            </p>
+            <hr className="w-[13rem] md:w-[20rem] lg:w-[30rem] border-[#40456E] mt-3" />
           </div>
-          <p className="text-sm font-light break-words text-gray-400 pl-[2.5rem] md:pl-[3.5rem]">
-            {item.caption}
-          </p>
-          <hr className="w-[13rem] md:w-[20rem] lg:w-[30rem] border-[#40456E] mt-3" />
-        </div>
-      ))}
+        ))}
       <div className="flex justify-between w-[13rem] md:w-[20rem] lg:w-[30rem] mt-3 ">
         <p
           onClick={toggleShowMore}
@@ -282,7 +285,7 @@ const CardProfile = (props) => {
   return (
     <div className="flex flex-col lg:flex-row  justify-center items-center sm:flex-auto">
       <img
-        src={toys3}
+        src={toys2}
         alt="avatar"
         className="h-[8rem] w-[8rem] md:h-[12rem] md:w-[12rem] rounded-full mr-9"
       />

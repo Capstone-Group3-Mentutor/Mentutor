@@ -139,71 +139,77 @@ const HomeAdmin = () => {
             {loading ? (
               <p>Loading...</p>
             ) : (
-              dataUser?.map((item, index) => (
-                <div
-                  key={item?.id_user}
-                  index={index}
-                  className="flex flex-row text-[8px] items-center md:text-[10px] lg:text-[15px] text-abu px-3 md:px-7 py-1 space-x-2 mb-5"
-                >
-                  <p className="w-[10%] text-center text-putih">{index + 1}</p>
-                  <div className="flex flex-row space-x-3 items-center justify-between w-[30%] ">
-                    <p className="text-left capitalize">{item?.name}</p>
-                  </div>
-                  <p className="w-[35%] text-center break-words">
-                    {item?.email}
-                  </p>
-                  <p
-                    className={`w-[15%] text-center capitalize ${
-                      item?.role === "mentee" ? "text-button" : "text-[#D441B9]"
-                    }`}
+              dataUser
+                ?.sort((a, b) => b.id_user - a.id_user)
+                .map((item, index) => (
+                  <div
+                    key={item?.id_user}
+                    index={index}
+                    className="flex flex-row text-[8px] items-center md:text-[10px] lg:text-[15px] text-abu px-3 md:px-7 py-1 space-x-2 mb-5"
                   >
-                    {item?.role}
-                  </p>
-                  <p className="w-[25%] text-center break-words capitalize">
-                    {item?.class_name}
-                  </p>
-                  {/* option */}
-                  <div className="dropdown dropdown-end ">
-                    <label
-                      id="icon-options"
-                      tabIndex={0}
-                      className="cursor-pointer text-putih"
+                    <p className="w-[10%] text-center text-putih">
+                      {index + 1}
+                    </p>
+                    <div className="flex flex-row space-x-3 items-center justify-between w-[30%] ">
+                      <p className="text-left capitalize">{item?.name}</p>
+                    </div>
+                    <p className="w-[35%] text-center break-words">
+                      {item?.email}
+                    </p>
+                    <p
+                      className={`w-[15%] text-center capitalize ${
+                        item?.role === "mentee"
+                          ? "text-button"
+                          : "text-[#D441B9]"
+                      }`}
                     >
-                      <SlOptionsVertical size={13} />
-                    </label>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
-                    >
+                      {item?.role}
+                    </p>
+                    <p className="w-[25%] text-center break-words capitalize">
+                      {item?.class_name}
+                    </p>
+                    {/* option */}
+                    <div className="dropdown dropdown-end ">
                       <label
-                        htmlFor="modal-edit-user"
-                        className="hover:text-button px-4 pt-2 text-sm text-putih cursor-pointer"
-                        onClick={() => {
-                          setObjSubmit({
-                            id_user: item?.id_user,
-                            class_name: item?.class_name,
-                            id_class: item?.id_class,
-                            name: item?.name,
-                            password: item?.password,
-                            role: item?.role,
-                            email: item?.email,
-                          });
-                        }}
+                        id="icon-options"
+                        tabIndex={0}
+                        className="cursor-pointer text-putih"
                       >
-                        Edit
+                        <SlOptionsVertical size={13} />
                       </label>
-                      <li
-                        id="delete-click"
-                        className=" text-merah"
-                        onClick={() => handleDelete(item?.id_user)}
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm text-abu"
                       >
-                        <a>Delete</a>
-                      </li>
-                    </ul>
+                        <label
+                          htmlFor="modal-edit-user"
+                          className="hover:text-button px-4 pt-2 text-sm text-putih cursor-pointer"
+                          onClick={() => {
+                            setObjSubmit({
+                              id_user: item?.id_user,
+                              class_name: item?.class_name,
+                              id_class: item?.id_class,
+                              name: item?.name,
+                              password: item?.password,
+                              role: item?.role,
+                              email: item?.email,
+                            });
+                          }}
+                        >
+                          Edit
+                        </label>
+                        <li
+                          id="delete-click"
+                          className=" text-merah"
+                          onClick={() => handleDelete(item?.id_user)}
+                        >
+                          <a>Delete</a>
+                        </li>
+                      </ul>
+                    </div>
+                    {/* end option */}
                   </div>
-                  {/* end option */}
-                </div>
-              ))
+                ))
             )}
             ;
           </div>
