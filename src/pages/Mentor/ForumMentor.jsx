@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Swal from "sweetalert2";
 import { apiRequest } from "../../utils/apiRequest";
+import { useTitle } from "../../utils/useTitle";
 
 const ForumMentor = () => {
+  useTitle("Class Forum");
   const [dataForum, setDataForum] = useState([]);
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState("");
@@ -38,7 +40,6 @@ const ForumMentor = () => {
     apiRequest(`forum/${objSubmit.id_status}`, "post", body)
       .then((res) => {
         const data = res.message;
-        console.log(data);
       })
       .catch((err) => {
         alert(err.toString());

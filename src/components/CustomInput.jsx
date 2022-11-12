@@ -14,9 +14,10 @@ const CustomInput = ({
   const inputLibrary = {
     Login: "w-full pl-3 h-[3.4rem] bg-white rounded-[10px] text-black",
     Submit: "w-[300px] lg:w-96 md:w-80 pl-3 h-[3.4rem] rounded-[10px] bg-card",
-    Class: "w-full pl-3 h-[3.4rem] rounded-[10px] bg-card",
+    Class:
+      "w-full md:w-1/2 lg:w-full pl-3 lg:h-[3.4rem] h-[2.8rem] rounded-[10px] bg-card",
     Status:
-      "w-[250px] lg:w-[40rem] lg:h-[3.3rem] md:w-[400px] pl-3 h-[2.8rem] bg-card rounded-[10px] ",
+      "w-[250px] lg:w-[40rem] lg:h-[3.4rem] md:w-[400px] pl-3 h-[2.8rem] bg-card rounded-[10px] ",
     Comment:
       "w-[250px] lg:w-[500px] md:w-[400px] pl-3 h-[2.8rem] bg-card rounded-[10px] ",
   };
@@ -27,7 +28,7 @@ const CustomInput = ({
     <>
       <input
         className={
-          "border placeholder:text-gray-500 text-xs text-putih focus:outline-none focus:border-putih border-abu font-light" +
+          "border placeholder:text-gray-500 text-xs text-putih focus:outline-none focus:border-putih border-abu font-light " +
           `${widthClassName}`
         }
         type={type}

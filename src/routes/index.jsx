@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { useState, useMemo } from "react";
 import { handleAuth } from "../utils/reducers/reducer";
 import { useCookies } from "react-cookie";
-// import { useNavigate } from "react-router-dom";
 
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
@@ -25,14 +24,12 @@ import DetailTask from "../pages/Mentor/DetailTask";
 
 axios.defaults.baseURL = "https://ecommerce-alta.online/";
 
-const index = (props) => {
-  // const navigate = useNavigate();
+const index = () => {
   const dispatch = useDispatch();
   const [token, setToken] = useState(null);
   const [cookie, setCookie, removeCookie] = useCookies();
   const jwtToken = useMemo(() => ({ token, setToken }), [token]);
   const checkToken = cookie.token;
-
   const [role, setRole] = useState(null);
   const roleLogin = useMemo(() => ({ role, setRole }), [role]);
   const checkRole = cookie.role;

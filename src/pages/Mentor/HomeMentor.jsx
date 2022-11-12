@@ -7,15 +7,18 @@ import { Link } from "react-router-dom";
 import { apiRequest } from "../../utils/apiRequest";
 import { useCookies } from "react-cookie";
 import { WithRouter } from "../../utils/navigation";
-import toys1 from "../../assets/toys-1.png";
 import Swal from "sweetalert2";
-const HomeMentor = () => {
+import { useTitle } from "../../utils/useTitle";
+
+const HomeMentor = (props) => {
+  useTitle("Home");
   const [datas, setDatas] = useState({});
   const [dataTask, setDataTask] = useState([]);
   const [loading, setLoading] = useState(false);
   const [cookie, setCookie] = useCookies();
-  const [images, setImages] = useState(toys1);
+  const [images, setImages] = useState("");
   const id_user = cookie.id_user;
+
   useEffect(() => {
     fetchUser();
     fetchTaskMentor();
@@ -38,7 +41,6 @@ const HomeMentor = () => {
     apiRequest("mentors/tasks", "get")
       .then((res) => {
         setDataTask(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         const { data } = err.response;
@@ -52,14 +54,11 @@ const HomeMentor = () => {
   };
   const fullname = `${datas.name}`;
   const first = fullname.split(" ")[0];
-  // function sorting(a, b) {
-  //   return b.dataTask.id_task - a.dataTask.id_task;
-  // }
-  // const sorting = dataTask.sort((a, b) => b - a);
+
   return (
     <Layout>
-      <div className="pb-9">
-        <div className="flex justify-between">
+      <div className="pb-9 flex flex-col items-center">
+        <div className="flex justify-between w-[18rem] md:w-[32rem] lg:w-[52rem] ">
           <div className="md:space-y-2">
             <h1 className="text-putih text-lg md:text-3xl font-medium">
               Hello <span>{first}</span>
@@ -68,13 +67,13 @@ const HomeMentor = () => {
               Welcome back, you are doing great.
             </p>
           </div>
-          <div className="flex items-center ">
+          <div className="flex items-center text-right ">
             <Link to="/profilementor">
               <img
                 id="gbr-profile"
-                src={images}
+                src={toys3}
                 alt="avatar"
-                className="h-[1.5rem] w-[1.5rem]  md:h-[3rem] md:w-[3rem] rounded-full "
+                className="h-[1.5rem] w-[1.5rem] md:h-[3rem] md:w-[3rem] rounded-full "
               />
             </Link>
             <div className="pl-2 md:pl-4 space-y-0">
@@ -100,8 +99,8 @@ const HomeMentor = () => {
                 When nothing goes right, go left
               </h1>
               <p className="text-abu text-[6px] md:text-xs font-light mt-2  lg:mt-5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
-                ipsum dolor sit amet, consectetur adipiscing elit.
+                Let's create a ways to bring out the best your students with
+                special needs.
               </p>
             </div>
             <div className="relative bottom-9">
@@ -113,7 +112,7 @@ const HomeMentor = () => {
           <h1 className="text-putih text-lg font-medium mb-6">
             Your Created Task
           </h1>
-          <div className="flex justify-end text-putih hover:text-button font-normal cursor-pointer mb-2 text-xs mr-3 ">
+          <div className="w-[18rem] md:w-[32rem] lg:w-[52rem] flex justify-end text-putih hover:text-button font-normal cursor-pointer mb-2 text-xs mr-3 ">
             <Link to="/inputtask">
               <p id="view-task">View All Task</p>
             </Link>
@@ -124,11 +123,13 @@ const HomeMentor = () => {
               <p>loading..</p>
             ) : (
               dataTask
+                .sort((a, b) => b.id_task - a.id_task)
                 .slice(0, 2)
                 .map((item) => (
                   <CardTaskMentor
+                    key={item.id_task}
                     id_task={item.id_task}
-                    title={item.title}
+                    title={item?.title}
                     description={item.description}
                     images={item.images}
                     file={item.file}

@@ -6,8 +6,10 @@ import CustomButton from "../../components/CustomButton";
 import { ListClass } from "../../components/ListItems";
 import { apiRequest } from "../../utils/apiRequest";
 import Swal from "sweetalert2";
+import { useTitle } from "../../utils/useTitle";
 
 const InputClass = () => {
+  useTitle("List Members");
   const [className, setClassName] = useState("");
   const [datas, setDatas] = useState([]);
   const [loading, setLoading] = useState(false);

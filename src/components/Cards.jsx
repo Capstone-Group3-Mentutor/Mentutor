@@ -1,52 +1,55 @@
 import React, { useState } from "react";
-import toys1 from "../assets/toys-1.png";
 import toys3 from "../assets/toys-3.png";
 import toys4 from "../assets/toys-4.png";
-import { FiPaperclip, FiSend } from "react-icons/fi";
+import { FiSend } from "react-icons/fi";
 import { AiFillEdit } from "react-icons/ai";
 import { BiRightArrowAlt } from "react-icons/bi";
-import CustomButton from "./CustomButton";
+
 import CustomInput from "./CustomInput";
 import PDF from "../assets/PDF.svg";
 import EXCEL from "../assets/EXCEL.svg";
 import { useNavigate } from "react-router-dom";
 
-const CardTask = (props) => {
-  const currentDate = new Date();
-  let detailDate =
-    currentDate.getFullYear() +
-    "-" +
-    currentDate.getMonth() +
-    "-" +
-    currentDate.getDate() +
-    " " +
-    currentDate.getHours() +
-    ":" +
-    currentDate.getMinutes() +
-    " " +
-    "WIB";
+const currentDate = new Date();
+let detailDate =
+  currentDate.getFullYear() +
+  "-" +
+  currentDate.getMonth() +
+  "-" +
+  currentDate.getDate() +
+  " " +
+  currentDate.getHours() +
+  ":" +
+  currentDate.getMinutes() +
+  " " +
+  "UTC";
 
+const CardTask = (props) => {
   return (
     <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px] mb-8">
       <div className="flex justify-between items-center ">
-        <h1 className="text-putih text-sm md:text-2xl font-semibold">
+        <h1 className="text-putih text-sm md:text-2xl font-semibold break-words">
           {props.title}
         </h1>
         <p className="text-button text-[6px] md:text-xs ">
           Due date{" "}
-          <span className="text-red-500">
-            {props.due_date.replace("UTC", "WIB")}
+          <span
+            className={`${
+              detailDate > props.due_date ? "text-[#CC5D5D]" : "text-button"
+            }  `}
+          >
+            {props.due_date}
           </span>
         </p>
       </div>
-      <p className=" text-[10px] md:text-sm text-abu mt-3 font-light">
+      <p className=" text-[10px] md:text-sm text-abu mt-3 font-light break-words">
         {props.description}
       </p>
       {props.file ? (
         <a
           href={props.file}
           id="file-name"
-          className=" hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-gray-400 my-3"
+          className=" hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-gray-400 my-3 break-words"
         >
           {props.file.substring(props.file.lastIndexOf(".") + 1) == "pdf" ? (
             <img src={PDF} className="w-6 h-6" />
@@ -71,11 +74,19 @@ const CardTask = (props) => {
       )}
       <div className="flex justify-between mt-4  items-center">
         <p className="text-xs md:text-sm text-button ">
-          Point: <span className="text-white">{props.score}</span>
+          Point:{" "}
+          <span
+            className={`${
+              70 > props.score ? "text-[#CC5D5D]" : "text-[#4ad43d]"
+            }  `}
+          >
+            {props.score}
+          </span>
         </p>
 
         {props.status == "" && props.due_date > detailDate ? (
           <label
+            id="btn-submitTask"
             htmlFor="modal-submit-task"
             className="bg-task rounded-[5px]  py-1 px-3 md:py-2 md:px-4 text-blue-600 text-[8px] md:text-[10px] cursor-pointer"
             onClick={props.onClickSubmit}
@@ -83,11 +94,11 @@ const CardTask = (props) => {
             Submit your task
           </label>
         ) : props.due_date < detailDate ? (
-          <label className="bg-[#a7aaa7] rounded-[5px] text-black  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
+          <label className="bg-[#969696] rounded-[5px] text-black  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
             Submit your task
           </label>
         ) : (
-          <label className="bg-[#4ad43d] rounded-[5px] text-black  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
+          <label className="bg-[#60C577] rounded-[5px] text-white  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
             Done
           </label>
         )}
@@ -99,16 +110,31 @@ const CardTask = (props) => {
 const CardTaskMentor = (props) => {
   const navigate = useNavigate();
   return (
-    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px]">
-      <div className="flex justify-between items-center ">
-        <h1 className="text-putih text-sm md:text-2xl font-semibold">
-          {props.title}
-        </h1>
-        <p className="text-button text-[6px] md:text-xs ">
-          Due date {props.due_date}
-        </p>
+    <div className=" w-[18rem] md:w-[32rem] lg:w-[52rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 rounded-[10px] overflow-x-hidden">
+      <div className="flex justify-between items-start break-words ">
+        <div className="w-[65%]">
+          <h1
+            id="click-title"
+            onClick={() => navigate(`/detailtask/${props.id_task}`)}
+            className="text-putih text-sm md:text-2xl font-semibold cursor-pointer hover:text-button break-words"
+          >
+            {props.title}
+          </h1>
+        </div>
+        <div className=" w-[35%] text-right">
+          <p className="text-button text-[6px] md:text-xs ">
+            Due date{" "}
+            <span
+              className={`${
+                detailDate > props.due_date ? "text-[#CC5D5D]" : "text-button"
+              }  `}
+            >
+              {props.due_date}
+            </span>
+          </p>
+        </div>
       </div>
-      <p className=" text-[10px] md:text-sm text-abu mt-5 font-light">
+      <p className=" text-[10px] md:text-sm text-abu mt-5 font-light break-words">
         {props.description}
       </p>
 
@@ -116,7 +142,7 @@ const CardTaskMentor = (props) => {
         <a
           href={props.file}
           id="file-name"
-          className=" hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-gray-400 my-3"
+          className=" hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-gray-400 my-3 break-words"
         >
           {props.file.substring(props.file.lastIndexOf(".") + 1) == "pdf" ? (
             <img src={PDF} className="w-6 h-6" />
@@ -139,10 +165,10 @@ const CardTaskMentor = (props) => {
       ) : (
         ""
       )}
-      <div className="flex justify-between mt-7 items-center">
-        <p className="text-xs md:text-sm text-button ">Point: 0</p>
-        <div className="flex flex-row space-x-1 cursor-pointer hover:underline ">
+      <div className="text-right mt-7 items-center">
+        <div className="flex flex-row justify-end space-x-1 cursor-pointer hover:underline ">
           <p
+            id="click-submittedtask"
             onClick={() => navigate(`/detailtask/${props.id_task}`)}
             className="text-[7px] md:text-sm text-putih "
           >
@@ -263,7 +289,7 @@ const CardProfile = (props) => {
   return (
     <div className="flex flex-col lg:flex-row  justify-center items-center sm:flex-auto">
       <img
-        src={props.images}
+        src={toys3}
         alt="avatar"
         className="h-[8rem] w-[8rem] md:h-[12rem] md:w-[12rem] rounded-full mr-9"
       />
@@ -284,7 +310,7 @@ const CardProfile = (props) => {
           </div>
           <label
             htmlFor="modal-edit-profile"
-            className="h-8 w-8 md:h-10 md:w-10 bg-card shadow-md text-putih flex items-center justify-center rounded-[5px]"
+            className="h-8 w-8 md:h-10 md:w-10 bg-card shadow-md text-putih flex items-center justify-center rounded-[5px] cursor-pointer"
             onClick={props.onClickEdit}
           >
             <AiFillEdit />
