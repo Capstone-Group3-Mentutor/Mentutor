@@ -10,6 +10,7 @@ import * as yup from "yup";
 import Swal from "sweetalert2";
 import girl from "../assets/girl.png";
 import CustomInput from "../components/CustomInput";
+import { useTitle } from "../utils/useTitle";
 
 const schema = yup.object().shape({
   email: yup.string().required("Email is required"),
@@ -27,6 +28,7 @@ const schema = yup.object().shape({
 });
 
 const Login = () => {
+  useTitle("Mentutor");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["token"], ["role"]);

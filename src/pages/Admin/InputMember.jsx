@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTitle } from "../../utils/useTitle";
 
 const schema = yup.object().shape({
   email: yup
@@ -39,6 +40,7 @@ const schema = yup.object().shape({
 });
 
 const InputMember = () => {
+  useTitle("List Members");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("Role");

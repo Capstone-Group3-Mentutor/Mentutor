@@ -24,13 +24,12 @@ import DetailTask from "../pages/Mentor/DetailTask";
 
 axios.defaults.baseURL = "https://ecommerce-alta.online/";
 
-const index = (props) => {
+const index = () => {
   const dispatch = useDispatch();
   const [token, setToken] = useState(null);
   const [cookie, setCookie, removeCookie] = useCookies();
   const jwtToken = useMemo(() => ({ token, setToken }), [token]);
   const checkToken = cookie.token;
-
   const [role, setRole] = useState(null);
   const roleLogin = useMemo(() => ({ role, setRole }), [role]);
   const checkRole = cookie.role;

@@ -9,11 +9,13 @@ import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import PDF from "../../assets/PDF.svg";
 import EXCEL from "../../assets/EXCEL.svg";
+import { useTitle } from "../../utils/useTitle";
 
 const DetailTask = (props) => {
   const [detailTask, setDetailTask] = useState([]);
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState("");
+  useTitle(`Task - ${detailTask.title}`);
 
   useEffect(() => {
     getDetailTasks();
@@ -40,6 +42,16 @@ const DetailTask = (props) => {
 
   const submitScoreTask = async (e) => {
     e.preventDefault();
+    if (objSubmit.score <= -1 || objSubmit.score > 101) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Point must be between 1 and 100",
+        showConfirmButton: true,
+      });
+      return;
+    }
+
     const body = {
       score: parseInt(objSubmit.score),
       id_task: parseInt(objSubmit.id_task),
@@ -49,7 +61,7 @@ const DetailTask = (props) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Succes Created",
+          title: "Succes Submitted",
           showConfirmButton: true,
         });
       })
@@ -66,6 +78,20 @@ const DetailTask = (props) => {
       });
   };
 
+  const currentDate = new Date();
+  let detailDate =
+    currentDate.getFullYear() +
+    "-" +
+    currentDate.getMonth() +
+    "-" +
+    currentDate.getDate() +
+    " " +
+    currentDate.getHours() +
+    ":" +
+    currentDate.getMinutes() +
+    " " +
+    "UTC";
+
   return (
     <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-1">
@@ -78,8 +104,17 @@ const DetailTask = (props) => {
             {detailTask.title}
           </h1>
           <div className="flex gap-5">
-            <p className="text-red-500 text-[6px] md:text-xs ">
-              Due Date {detailTask.due_date}
+            <p className="text-button text-[6px] md:text-xs ">
+              Due date{" "}
+              <span
+                className={`${
+                  detailDate > detailTask.due_date
+                    ? "text-[#CC5D5D]"
+                    : "text-button"
+                }  `}
+              >
+                {detailTask.due_date}
+              </span>
             </p>
           </div>
         </div>
@@ -127,24 +162,26 @@ const DetailTask = (props) => {
           <p className="w-[2%] text-center"></p>
         </div>
         {!detailTask.submission ? (
-          <div className="text-putih mt-3 text-center">No Submission </div>
+          <div className="text-gray-400 mt-3 text-center">No Submission </div>
         ) : (
-          detailTask.submission?.map((item, index) => (
-            <ListTask
-              index={index}
-              key={item.id_submission}
-              file={item.file}
-              name={item.name}
-              score={item.score}
-              onClickEdit={() => {
-                setObjSubmit({
-                  id_submission: item.id_submission,
-                  score: item.score,
-                  id_task: detailTask.id_task,
-                });
-              }}
-            />
-          ))
+          detailTask.submission
+            ?.sort((a, b) => b.id_submission - a.id_submission)
+            .map((item, index) => (
+              <ListTask
+                index={index}
+                key={item.id_submission}
+                file={item.file}
+                name={item.name}
+                score={item.score}
+                onClickEdit={() => {
+                  setObjSubmit({
+                    id_submission: item.id_submission,
+                    score: item.score,
+                    id_task: detailTask.id_task,
+                  });
+                }}
+              />
+            ))
         )}
       </div>
       <input type="checkbox" id="modal-edit-points" className="modal-toggle" />
@@ -155,6 +192,7 @@ const DetailTask = (props) => {
               Edit Points
             </h1>
             <label
+              id="btn-close"
               htmlFor="modal-edit-points"
               className="cursor-pointer btn-sm text-putih border-white"
             >

@@ -8,6 +8,8 @@ import CustomButton from "../../components/CustomButton";
 import { useCookies } from "react-cookie";
 import { CardProfile } from "../../components/Cards";
 import { apiRequest } from "../../utils/apiRequest";
+import { useTitle } from "../../utils/useTitle";
+
 const ProfileMentee = () => {
   const [dataProfile, setDataProfile] = useState({});
   const [loading, setLoading] = useState(false);
@@ -15,6 +17,7 @@ const ProfileMentee = () => {
   const [cookie, setCookie] = useCookies();
   const [images, setImages] = useState(toys2);
   const id_user = cookie.id_user;
+  useTitle(`Mentee - ${dataProfile.name}`);
 
   useEffect(() => {
     fetchUser();

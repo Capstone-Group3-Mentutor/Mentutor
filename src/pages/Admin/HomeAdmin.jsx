@@ -9,8 +9,11 @@ import CustomButton from "../../components/CustomButton";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { handleAuth } from "../../utils/reducers/reducer";
+import { useNavigate } from "react-router-dom";
+import { useTitle } from "../../utils/useTitle";
 
 const HomeAdmin = () => {
+  useTitle("Home");
   const [dataUser, setDataUser] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dataClass, setDataClass] = useState([]);
@@ -52,7 +55,7 @@ const HomeAdmin = () => {
   const handleDelete = async (id_user) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "Are You Sure to Delete Class",
+      text: "Are You Sure to Delete Member?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -63,7 +66,7 @@ const HomeAdmin = () => {
         if (result.isConfirmed) {
           apiRequest(`admin/users/${id_user}`, "delete");
           Swal.fire({
-            text: "Class Successfully Deleted",
+            text: "Member Success Deleted",
             icon: "success",
             showCancelButton: false,
             confirmButtonColor: "#3085d6",

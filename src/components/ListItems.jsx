@@ -89,7 +89,13 @@ const ListTask = ({ score, name, file, index, onClickEdit }) => {
             {file.substring(file.lastIndexOf("/") + 1)}
           </a>
         </div>
-        <p className="w-[15%] text-center">{score}</p>
+        <p
+          className={`w-[15%] text-center ${
+            70 > score ? "text-[#CC5D5D]" : "text-[#4ad43d]"
+          }  `}
+        >
+          {score}
+        </p>
         {/* option */}
         <label
           htmlFor="modal-edit-points"

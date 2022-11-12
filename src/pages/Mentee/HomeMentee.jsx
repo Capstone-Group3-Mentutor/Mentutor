@@ -8,12 +8,15 @@ import CustomButton from "../../components/CustomButton";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { apiRequest } from "../../utils/apiRequest";
 import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
+import CustomInput from "../../components/CustomInput";
+import { useTitle } from "../../utils/useTitle";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { handleAuth } from "../../utils/reducers/reducer";
-import Swal from "sweetalert2";
 
 const HomeMentee = () => {
+  useTitle("Home");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [datas, setDatas] = useState({});
@@ -21,6 +24,9 @@ const HomeMentee = () => {
   const [loading, setLoading] = useState(false);
   const [cookie, setCookie, removeCookie] = useCookies();
   const [images, setImages] = useState(toys2);
+  const [title, setTitle] = useState("");
+  const [file, setFile] = useState("");
+  const [id_task, setIdTask] = useState(0);
   const id_user = cookie.id_user;
 
   useEffect(() => {
@@ -65,6 +71,40 @@ const HomeMentee = () => {
         });
       })
       .finally(() => setLoading(false));
+  };
+
+  const submitTask = async (e) => {
+    e.preventDefault();
+    const body = {
+      title,
+      file,
+    };
+
+    apiRequest(
+      `mentees/submission/${id_task}`,
+      "post",
+      body,
+      "multipart/form-data"
+    )
+      .then((res) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Success Submitted",
+          showConfirmButton: true,
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Invalid Input From Client",
+          showConfirmButton: true,
+        });
+      })
+      .finally(() => {
+        fetchTaskMentor();
+      });
   };
 
   const fullname = `${datas.name}`;
@@ -142,7 +182,7 @@ const HomeMentee = () => {
               .slice(0, 2)
               .map((item) => (
                 <CardTask
-                  id_task={item.id_task}
+                  key={item.id_task}
                   file={item.file}
                   images={item.images}
                   score={item.score}
@@ -150,6 +190,10 @@ const HomeMentee = () => {
                   due_date={item.due_date}
                   title={item.title}
                   description={item.description}
+                  onClickSubmit={() => {
+                    setIdTask(item.id_task);
+                    setTitle(item.title);
+                  }}
                 />
               ))}
           </div>
@@ -167,22 +211,41 @@ const HomeMentee = () => {
               >
                 ✕
               </label>
-              <form className="flex flex-col md:p-9 lg:p-9 ">
+              <form
+                onSubmit={submitTask}
+                className="flex flex-col md:p-9 lg:p-9 "
+              >
                 <h3 className="font-medium text-lg text-putih mb-1">
                   Submit your task
                 </h3>
-                <div className="w-[15rem] h-[3rem] bg-abu mt-4 text-xs flex items-center rounded-sm px-2">
-                  untuk file
-                </div>
-                <div className="flex justify-between mt-[2rem]">
-                  <span id="Upload-file" className="cursor-pointer text-putih">
-                    <HiOutlineDocumentText className="text-2xl" />
-                  </span>
-                  <CustomButton
-                    id="btn-submitMentee"
-                    label="Submit"
-                    color="Primary"
+                <CustomInput
+                  id="input-title"
+                  placeholder="Title"
+                  category="Submit"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <div className="flex flex-col space-y-2 my-2">
+                  <input
+                    hidden
+                    id="upload-btn"
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    defaultValue={file}
                   />
+                  <label
+                    className="bg-[#38486A] w-40 lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu p-3 cursor-pointer"
+                    htmlFor="upload-btn"
+                  >
+                    <HiOutlineDocumentText className="text-xl mr-2" />
+                    Choose a File
+                  </label>
+                  <div className="text-right">
+                    <CustomButton
+                      id="btn-submitTask"
+                      label="Submit"
+                      color="Primary"
+                    />
+                  </div>
                 </div>
               </form>
             </div>

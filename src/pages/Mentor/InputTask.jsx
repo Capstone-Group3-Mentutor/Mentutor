@@ -1,6 +1,5 @@
 import CustomInput from "../../components/CustomInput";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Layout from "../../components/Layout";
 import CustomButton from "../../components/CustomButton";
 import { HiOutlineDocumentText } from "react-icons/hi";
@@ -13,8 +12,10 @@ Swal;
 import { WithRouter } from "../../utils/navigation";
 import PDF from "../../assets/PDF.svg";
 import EXCEL from "../../assets/EXCEL.svg";
+import { useTitle } from "../../utils/useTitle";
 
 const InputTask = (props) => {
+  useTitle("My Tasks");
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
@@ -24,6 +25,7 @@ const InputTask = (props) => {
   const [due_date, setDue_date] = useState("");
   const [id_task, setIdTask] = useState(0);
   const [objSubmit, setObjSubmit] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,7 +37,6 @@ const InputTask = (props) => {
       .then((res) => {
         const results = res.data;
         setTasks(results);
-        console.log(res.data);
       })
       .catch((err) => {
         const { data } = err.response;
@@ -151,9 +152,23 @@ const InputTask = (props) => {
       });
   };
 
+  const currentDate = new Date();
+  let detailDate =
+    currentDate.getFullYear() +
+    "-" +
+    currentDate.getMonth() +
+    "-" +
+    currentDate.getDate() +
+    " " +
+    currentDate.getHours() +
+    ":" +
+    currentDate.getMinutes() +
+    " " +
+    "UTC";
+
   return (
     <Layout>
-      <div>
+      <div className="mb-9">
         <h1 className="text-putih text-lg lg:text-2xl font-medium mb-1">
           Create Task
         </h1>
@@ -163,8 +178,10 @@ const InputTask = (props) => {
           onSubmit={(e) => createTask(e)}
         >
           <div className="flex flex-col">
-            <div className="space-y-2">
-              <p className="text-putih font-normal text-base">Title</p>
+            <div className="space-y-2 w-full">
+              <p className="text-putih font-normal text-base break-words">
+                Title
+              </p>
               <CustomInput
                 id="input-title"
                 placeholder="task title"
@@ -176,21 +193,22 @@ const InputTask = (props) => {
             </div>
             <div className="space-y-2 mt-6">
               <p className="text-putih font-normal text-base">Description</p>
-              <CustomInput
+              <textarea
                 id="input-desc"
                 placeholder="task description"
-                category="Status"
                 onChange={(e) => {
                   handleChange(e.target.value, "description");
                 }}
-              />
+                rows="1"
+                className="p-2.5 text-sm w-[250px] lg:w-[40rem] lg:h-[3.4rem] md:w-[400px] pl-3 h-[2.8rem] bg-card rounded-[10px] border placeholder:text-gray-500 text-putih focus:outline-none focus:border-putih border-abu font-light"
+              ></textarea>
             </div>
-            <div className="flex flex-col lg:flex-row space-x-6">
+            <div className="flex flex-col lg:flex-row lg:space-x-6">
               <div className="lg:space-y-2 mt-6">
                 <p className="text-putih font-normal text-base">Due Date</p>
                 <CustomInput
                   id="input-date"
-                  placeholder="date"
+                  placeholder="2022-12-24"
                   category="Class"
                   onChange={(e) => {
                     handleChange(e.target.value, "due_date");
@@ -199,45 +217,44 @@ const InputTask = (props) => {
               </div>
               <div className="lg:space-y-2 mt-6">
                 <p className="text-putih font-normal text-base">Attachment</p>
+                <label
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                  htmlFor="uploadfile-btn"
+                />
                 <input
-                  hidden
+                  className="block p-2.5 text-sm lg:h-[3.4rem] w-full md:w-1/2 lg:w-full h-[2.8rem] bg-card rounded-[10px] border placeholder:text-gray-500 text-putih focus:outline-none focus:border-putih border-abu font-light"
                   id="uploadfile-btn"
                   type="file"
+                  accept="application/pdf, application/vnd.ms-excel, application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword "
                   onChange={(e) => {
                     handleChange(e.target.files[0], "file");
                   }}
                 />
-                <label
-                  className="bg-[#38486A]  w-40 lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu p-3 cursor-pointer"
-                  htmlFor="uploadfile-btn"
-                >
-                  <HiOutlineDocumentText
-                    className="text-xl mr-2"
-                    id="btn-logoupload"
-                  />
-                  Choose a File
-                </label>
               </div>
-              <div className="lg:space-y-2 mt-6">
-                <p className="text-putih font-normal text-base">Images</p>
-                <input
-                  hidden
-                  type="file"
-                  id="uploadimage-btn"
-                  accept="image/png, image/jpg"
-                  onChange={(e) => {
-                    setImages(URL.createObjectURL(e.target.files[0]));
-                    handleChange(e.target.files[0], "images");
-                  }}
+            </div>
+            <div className="lg:space-y-2 mt-6">
+              <p className="text-putih font-normal text-base">Images</p>
+              <label
+                className="block mb-2 text-sm font-medium text-gray-900"
+                htmlFor="uploadimage-btn"
+              />
+              <input
+                className="block p-2.5 text-sm lg:h-[3.3rem] w-full md:w-1/2  pl-3 h-[2.8rem] bg-card rounded-[10px] border placeholder:text-gray-500 text-putih focus:outline-none focus:border-putih border-abu font-light"
+                id="uploadimage-btn"
+                type="file"
+                accept="image/png, image/jpg"
+                onChange={(e) => {
+                  setImages(URL.createObjectURL(e.target.files[0]));
+                  handleChange(e.target.files[0], "images");
+                }}
+              />
+              {images ? (
+                <img
+                  className="w-[4rem] h-[4rem] md:w-[10rem] mt-4  md:h-[10rem] rounded-sm object-cover"
+                  src={images}
+                  alt="img"
                 />
-                <label
-                  className="bg-[#38486A] w-40 lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu p-3 cursor-pointer"
-                  htmlFor="uploadimage-btn"
-                >
-                  <HiOutlineDocumentText className="text-xl mr-2" />
-                  Choose an Image
-                </label>
-              </div>
+              ) : null}
             </div>
           </div>
 
@@ -248,103 +265,122 @@ const InputTask = (props) => {
       </div>
 
       {/* -------bgian task---- */}
-      {tasks?.map((item) => (
-        <form
-          className=" w-[18rem] md:w-[32rem] lg:w-[45rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 mt-8 rounded-[10px]"
-          key={item.id_task}
-        >
-          <div className="flex justify-between items-center ">
-            <h1
-              onClick={() => navigate(`/detailtask/${item.id_task}`)}
-              className="text-putih text-sm md:text-2xl font-semibold cursor-pointer hover:text-red-500"
-            >
-              {item.title}
-            </h1>
-            <div className="flex gap-5">
-              <p className="text-red-500 text-[6px] md:text-xs ">
-                Due date {item.due_date.replace("UTC", " ")}
-              </p>
-              {/* ---kebab menu--- */}
-              <div className="dropdown dropdown-bottom dropdown-end">
-                <label
-                  id="icon-options"
-                  tabIndex={0}
-                  className="cursor-pointer  text-putih"
+      {tasks
+        ?.sort((a, b) => b.id_task - a.id_task)
+        .map((item) => (
+          <form
+            className=" w-[18rem] md:w-[32rem] lg:w-[45rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 mt-8 rounded-[10px]"
+            key={item.id_task}
+          >
+            <div className="flex justify-between items-start break-words ">
+              <div className="w-[65%]">
+                <h1
+                  id="click-title"
+                  onClick={() => navigate(`/detailtask/${item.id_task}`)}
+                  className="text-putih text-sm md:text-2xl font-semibold cursor-pointer hover:text-button break-words"
                 >
-                  <SlOptionsVertical />
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm  text-abu"
-                >
-                  <label
-                    htmlFor="modal-edit-task"
-                    className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
-                    onClick={() => {
-                      setIdTask(item.id_task);
-                      setTitle(item.title);
-                      setDescription(item.description);
-                      setDue_date(item.due_date);
-                      setFile(item.file);
-                      setImages(item.images);
-                    }}
-                  >
-                    Edit
-                  </label>
-                  <li
-                    id="delete-click"
-                    className=" text-[#CC5D5D]"
-                    onClick={() => deleteTask(item?.id_task)}
-                  >
-                    <a>Delete</a>
-                  </li>
-                </ul>
+                  {item.title}
+                </h1>
               </div>
-              {/*  end kebab menu */}
+              <div className="flex justify-between w-[35%]">
+                <p className="text-button text-[6px] md:text-xs ">
+                  Due date{" "}
+                  <span
+                    className={`${
+                      detailDate > item.due_date
+                        ? "text-[#CC5D5D]"
+                        : "text-button"
+                    }  `}
+                  >
+                    {item.due_date}
+                  </span>
+                </p>
+                {/* ---kebab menu--- */}
+                <div className="dropdown dropdown-bottom dropdown-end">
+                  <label
+                    id="icon-options"
+                    tabIndex={0}
+                    className="cursor-pointer  text-putih"
+                  >
+                    <SlOptionsVertical />
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm  text-abu"
+                  >
+                    <label
+                      htmlFor="modal-edit-task"
+                      className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
+                      onClick={() => {
+                        setIdTask(item.id_task);
+                        setTitle(item.title);
+                        setDescription(item.description);
+                        setDue_date(item.due_date.slice(0, 10));
+                        setFile(item.file);
+                        setImages(item.images);
+                      }}
+                    >
+                      Edit
+                    </label>
+                    <li
+                      id="delete-click"
+                      className=" text-[#CC5D5D]"
+                      onClick={() => deleteTask(item?.id_task)}
+                    >
+                      <a>Delete</a>
+                    </li>
+                  </ul>
+                </div>
+                {/*  end kebab menu */}
+              </div>
             </div>
-          </div>
-          <p className=" text-[10px] md:text-sm text-abu mt-3 font-light">
-            {item.description}
-          </p>
-          {item.file ? (
-            <a
-              href={item.file}
-              id="file-name"
-              className="hover:underline h-[2rem] w-[23rem] mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-abu my-3"
-            >
-              {item.file.substring(item.file.lastIndexOf(".") + 1) == "pdf" ? (
-                <img src={PDF} className="w-6 h-6" />
-              ) : item.file.substring(item.file.lastIndexOf(".") + 1) ==
-                "xlsx" ? (
-                <img src={EXCEL} className="w-6 h-6" />
-              ) : (
-                ""
-              )}
-              <p>{item.file.substring(item.file.lastIndexOf("/") + 1)}</p>
-            </a>
-          ) : (
-            ""
-          )}
-          {item.images ? (
-            <img
-              className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-2 text-gray-400 rounded-sm object-cover"
-              src={item.images}
-            />
-          ) : (
-            ""
-          )}
-          <div className=" flex justify-end mt-5 gap-1 text-putih ">
-            <p
-              id="submit-click"
-              onClick={() => navigate(`/detailtask/${item.id_task}`)}
-              className="text-[7px] md:text-xs font-medium cursor-pointer hover:underline flex flex-row items-center space-x-2"
-            >
-              See the Submitted Task by Mentees
-              <FiArrowRight />
+            <p className=" text-[10px] md:text-sm text-abu mt-3 font-light break-words">
+              {item.description}
             </p>
-          </div>
-        </form>
-      ))}
+            {item.file ? (
+              <a
+                href={item.file}
+                id="file-name"
+                className="hover:underline h-[2rem] w-full mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-abu my-3 break-words"
+              >
+                {item.file.substring(item.file.lastIndexOf(".") + 1) ==
+                "pdf" ? (
+                  <img src={PDF} className="w-6 h-6" />
+                ) : item.file.substring(item.file.lastIndexOf(".") + 1) ==
+                  "xlsx" ? (
+                  <img src={EXCEL} className="w-6 h-6" />
+                ) : (
+                  ""
+                )}
+                <p className="break-words">
+                  {item.file.substring(item.file.lastIndexOf("/") + 1)}
+                </p>
+              </a>
+            ) : (
+              ""
+            )}
+            {item.images ? (
+              <a href={item.images} id="images-name" className=" w-10">
+                <img
+                  className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-2 text-gray-400 rounded-sm object-cover cursor-pointer"
+                  src={item.images}
+                />
+              </a>
+            ) : (
+              ""
+            )}
+            <div className=" flex justify-end mt-5 gap-1 text-putih ">
+              <p
+                id="submit-click"
+                onClick={() => navigate(`/detailtask/${item.id_task}`)}
+                className="text-[7px] md:text-xs font-medium cursor-pointer hover:underline flex flex-row items-center space-x-2"
+              >
+                See the Submitted Task by Mentees
+                <FiArrowRight />
+              </p>
+            </div>
+          </form>
+        ))}
 
       {/* ---modal--- */}
       <input type="checkbox" id="modal-edit-task" className="modal-toggle" />
@@ -401,22 +437,6 @@ const InputTask = (props) => {
                 <HiOutlineDocumentText className="text-xl mr-2" />
                 Choose a File
               </label>
-              {/* <input
-                hidden
-                id="upload-btn"
-                type="file"
-                onChange={(e) => {
-                  setImages(URL.createObjectURL(e.target.files[0]));
-                  handleChange(e.target.files[0], "images");
-                }}
-              />
-              <label
-                className="bg-[#38486A]  w-40 lg:w-40 md:w-28 flex items-center h-[2.8rem] rounded-[10px] text-xs text-abu p-3 cursor-pointer"
-                htmlFor="upload-btn"
-              >
-                <HiOutlineDocumentText className="text-xl mr-2" />
-                Choose an Image
-              </label> */}
               <div>
                 <CustomButton
                   id="btn-submitTask"

@@ -8,8 +8,10 @@ import toys2 from "../../assets/toys-2.png";
 import { BsImageFill } from "react-icons/bs";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
+import { useTitle } from "../../utils/useTitle";
 
 const ForumMentee = () => {
+  useTitle("Class Forum");
   const [dataForum, setDataForum] = useState([]);
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState("");

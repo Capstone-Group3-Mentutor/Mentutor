@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
-import toys1 from "../../assets/toys-1.png";
+import toys3 from "../../assets/toys-3.png";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import Swal from "sweetalert2";
 import { BsImageFill } from "react-icons/bs";
-
 import { useCookies } from "react-cookie";
 import { CardProfile } from "../../components/Cards";
 import { apiRequest } from "../../utils/apiRequest";
+import { useTitle } from "../../utils/useTitle";
 
 const ProfileMentor = () => {
   const [dataProfile, setDataProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState({});
   const [cookie, setCookie] = useCookies();
-  const [images, setImages] = useState(toys1);
+  const [images, setImages] = useState("");
   const id_user = cookie.id_user;
+  useTitle(`Mentor - ${dataProfile.name}`);
 
   useEffect(() => {
     fetchUser();
   }, []);
+
   const fetchUser = () => {
     setLoading(true);
     apiRequest(`admin/users/${id_user}`, "get")
@@ -69,10 +71,10 @@ const ProfileMentor = () => {
   return (
     <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-2">
-        Profile
+        My Profile
       </h1>
       <p className="text-abu font-light text-[8px] md:text-sm">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Update your personal information
       </p>
       <div className="mt-[3rem]">
         <CardProfile
@@ -110,14 +112,14 @@ const ProfileMentor = () => {
             <div className="flex flex-row  items-center justify-between">
               <div className=" flex flex-col justify-center items-center gap-3 space-y-3">
                 <img
-                  src={images}
+                  src={toys3}
                   alt="avatar"
                   className="h-[5rem] w-[5rem] md:h-[12rem] md:w-[12rem] rounded-full "
                 />
                 <label
                   id="btn-upload-gbr"
                   className="cursor-pointer flex h-[2.3rem] w-[8rem] text-putih text-sm bg-button  items-center justify-center rounded-[5px]"
-                  for="btn-gbr"
+                  htmlFor="btn-gbr"
                 >
                   <BsImageFill className="text-putih pr-2 text-xl" /> Upload
                   <input

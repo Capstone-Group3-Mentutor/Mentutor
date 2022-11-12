@@ -6,8 +6,10 @@ import { HiOutlineDocumentText } from "react-icons/hi";
 import { apiRequest } from "../../utils/apiRequest";
 import Swal from "sweetalert2";
 import CustomInput from "../../components/CustomInput";
+import { useTitle } from "../../utils/useTitle";
 
 const Task = () => {
+  useTitle("My Tasks");
   const [myTasks, setMyTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
@@ -53,7 +55,7 @@ const Task = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Task Created",
+          title: "Success Submitted",
           showConfirmButton: true,
         });
       })
@@ -93,6 +95,7 @@ const Task = () => {
               due_date={item?.due_date}
               onClickSubmit={() => {
                 setIdTask(item?.id_task);
+                setTitle(item?.title);
               }}
             />
           ))}
