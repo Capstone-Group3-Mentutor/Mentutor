@@ -19,7 +19,6 @@ const ProfileMentee = () => {
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState({});
   const [images, setImages] = useState(toys2);
-  const [cookie, setCookie] = useCookies();
 
   const id_user = cookie.id_user;
   const navigate = useNavigate();
@@ -92,10 +91,9 @@ const ProfileMentee = () => {
           name={dataProfile.name}
           class={dataProfile.class_name}
           role={dataProfile.role}
-          images={toys2}
+          images={images}
           onClickEdit={() => {
             setObjSubmit({
-              image: dataProfile.images,
               name: dataProfile.name,
               email: dataProfile.email,
               password: dataProfile.password,
@@ -124,7 +122,7 @@ const ProfileMentee = () => {
             <div className="flex flex-row  items-center justify-between">
               <div className=" flex flex-col justify-center items-center gap-3 space-y-3git ">
                 <img
-                  src={toys2}
+                  src={images}
                   alt="avatar"
                   className="h-[5rem] w-[5rem] md:h-[12rem] md:w-[12rem] rounded-full "
                 />
