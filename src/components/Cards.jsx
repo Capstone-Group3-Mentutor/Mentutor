@@ -284,11 +284,18 @@ const CardForum = (props) => {
 const CardProfile = (props) => {
   return (
     <div className="flex flex-col lg:flex-row  justify-center items-center sm:flex-auto">
-      <img
-        src={props.images}
-        alt="avatar"
-        className="h-[8rem] w-[8rem] md:h-[12rem] md:w-[12rem] rounded-full mr-9"
-      />
+      {props.role === "mentee" ? (
+        <img
+          src={props.images}
+          className="h-[8rem] w-[8rem] md:h-[12rem] md:w-[12rem] rounded-full mr-9"
+        />
+      ) : (
+        <img
+          src={props.images}
+          className="h-[8rem] w-[8rem] md:h-[12rem] md:w-[12rem] rounded-full mr-9"
+        />
+      )}
+
       <div className="w-[18rem] md:w-[30rem] lg:w-[40rem] h-auto bg-card  mt-8 py-5 px-8 rounded-[10px]">
         <div className="flex justify-between">
           <div className="text-lg text-button font-medium space-y-3 ">

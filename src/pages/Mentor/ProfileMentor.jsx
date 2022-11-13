@@ -18,7 +18,7 @@ const ProfileMentor = () => {
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState({});
   const [cookie, setCookie, removeCookie] = useCookies();
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState(toys3);
   const id_user = cookie.id_user;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -124,7 +124,7 @@ const ProfileMentor = () => {
             <div className="flex flex-row  items-center justify-between">
               <div className=" flex flex-col justify-center items-center gap-3 space-y-3">
                 <img
-                  src={toys3}
+                  src={images}
                   alt="avatar"
                   className="h-[5rem] w-[5rem] md:h-[12rem] md:w-[12rem] rounded-full "
                 />
