@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import Layout from "../../components/Layout";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
@@ -10,6 +9,9 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTitle } from "../../utils/useTitle";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { handleAuth } from "../../utils/reducers/reducer";
 
 const schema = yup.object().shape({
   email: yup
@@ -47,9 +49,11 @@ const InputMember = () => {
   const [datas, setDatas] = useState([]);
   const [className, setClassName] = useState("Class");
   const [password, setPassword] = useState("");
+  const [cookie, setCookie, removeCookie] = useCookies();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (fullName && email && role && className && password) {
@@ -70,10 +74,13 @@ const InputMember = () => {
         setDatas(results);
       })
       .catch((err) => {
-        Swal.fire({
-          icon: "error",
-          text: "Sometings Error in Server",
-        });
+        const data = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .then(() => {
         setLoading(false);

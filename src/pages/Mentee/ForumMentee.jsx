@@ -3,15 +3,18 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Swal from "sweetalert2";
 import { apiRequest } from "../../utils/apiRequest";
-import toys1 from "../../assets/toys-1.png";
 import toys2 from "../../assets/toys-2.png";
 import { BsImageFill } from "react-icons/bs";
 import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { useTitle } from "../../utils/useTitle";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useCookies } from "react-cookie";
 const ForumMentee = () => {
   useTitle("Class Forum");
+
   const [dataForum, setDataForum] = useState([]);
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState("");
@@ -19,6 +22,9 @@ const ForumMentee = () => {
   const [captions, setCaptions] = useState("");
   const [image, setImage] = useState("");
   const [images, setImages] = useState(toys2);
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchForum();
@@ -29,15 +35,15 @@ const ForumMentee = () => {
     apiRequest("forum", "get")
       .then((res) => {
         setDataForum(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         const data = err.response;
-        Swal.fire({
-          title: "Failed",
-          text: data.message,
-          showCancelButton: false,
-        });
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => setLoading(false));
   };

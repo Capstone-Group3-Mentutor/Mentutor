@@ -9,14 +9,19 @@ import { useCookies } from "react-cookie";
 import { CardProfile } from "../../components/Cards";
 import { apiRequest } from "../../utils/apiRequest";
 import { useTitle } from "../../utils/useTitle";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { handleAuth } from "../../utils/reducers/reducer";
 
 const ProfileMentee = () => {
+  const [cookie, setCookie, removeCookie] = useCookies();
   const [dataProfile, setDataProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState({});
-  const [cookie, setCookie] = useCookies();
   const [images, setImages] = useState(toys2);
   const id_user = cookie.id_user;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useTitle(`Mentee - ${dataProfile.name}`);
 
   useEffect(() => {
@@ -29,7 +34,13 @@ const ProfileMentee = () => {
         setDataProfile(res.data);
       })
       .catch((err) => {
-        alert(err.toString());
+        const data = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => setLoading(false));
   };
@@ -82,6 +93,7 @@ const ProfileMentee = () => {
           images={images}
           onClickEdit={() => {
             setObjSubmit({
+              image: dataProfile.images,
               name: dataProfile.name,
               email: dataProfile.email,
               password: dataProfile.password,
