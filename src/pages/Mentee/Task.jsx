@@ -12,7 +12,6 @@ const Task = () => {
   useTitle("My Tasks");
   const [myTasks, setMyTasks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
   const [id_task, setIdTask] = useState(0);
 
@@ -41,7 +40,6 @@ const Task = () => {
   const submitTask = async (e) => {
     e.preventDefault();
     const body = {
-      title,
       file,
     };
 
@@ -96,7 +94,6 @@ const Task = () => {
               due_date={item?.due_date}
               onClickSubmit={() => {
                 setIdTask(item?.id_task);
-                setTitle(item?.title);
               }}
             />
           ))}
@@ -116,12 +113,6 @@ const Task = () => {
             <h3 className="font-medium text-lg text-putih mb-3">
               Submit your task
             </h3>
-            <CustomInput
-              id="input-title"
-              placeholder="Title"
-              category="Submit"
-              onChange={(e) => setTitle(e.target.value)}
-            />
             <div className="flex flex-col space-y-2 my-2">
               <label
                 className="block mb-2 text-sm font-medium text-gray-900"

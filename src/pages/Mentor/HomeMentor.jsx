@@ -120,7 +120,7 @@ const HomeMentor = (props) => {
 
           <div className="space-y-6">
             {loading ? (
-              <p>loading..</p>
+              <p>Loading..</p>
             ) : (
               dataTask
                 .sort((a, b) => b.id_task - a.id_task)

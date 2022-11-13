@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  class_name: yup
+  classname: yup
     .string()
     .required("class is required")
     .min(5, "class must be 5 characters"),
@@ -42,19 +42,7 @@ const InputClass = () => {
     resolver: yupResolver(schema),
   });
 
-  const registerClass = async (e) => {
-    e.preventDefault();
-
-    if (className.length == 0) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Data cannot be empty !",
-        showConfirmButton: true,
-      });
-      return;
-    }
-
+  const registerClass = async (data) => {
     const body = {
       class_name: className,
     };
@@ -194,7 +182,7 @@ const InputClass = () => {
         </div>
         <form
           className="w-full h-[10rem] md:h-[13rem] bg-card rounded-xl md:rounded-[20px] text-xs md:text-lg mb-9 px-3 md:px-7 py-3"
-          onSubmit={(e) => registerClass(e)}
+          onSubmit={handleSubmit(registerClass)}
         >
           <div className="flex flex-col space-y-2 w-1/2">
             <p className="text-putih text-md md:text-lg">Class</p>
@@ -205,7 +193,9 @@ const InputClass = () => {
               placeholder="Class Name"
               onChange={(e) => setClassName(e.target.value)}
               value={className}
-              error={errors.class?.message}
+              register={register}
+              error={errors.classname?.message}
+              name="classname"
             />
           </div>
           <div className="text-start md:mt-7 mt-3">
