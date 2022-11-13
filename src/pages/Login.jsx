@@ -88,9 +88,10 @@ const Login = () => {
           navigate("/homeadmin");
         } else if (res.data.role === "mentor") {
           navigate("/homementor");
+        } else if (res.data.role === "mentee" && res.data.auth_gmail === "") {
+          navigate("/homementee");
         } else {
           navigate(res.data.auth_gmail);
-          // navigate("/homementee");
         }
         reset();
       })
