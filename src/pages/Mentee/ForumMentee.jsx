@@ -160,25 +160,27 @@ const ForumMentee = () => {
         </div>
         <div className="space-y-8">
           {loading ? (
-            <p>loading</p>
+            <p>Loading...</p>
           ) : (
-            dataForum?.map((item) => (
-              <CardForum
-                key={item.id_status}
-                names={item.name}
-                img={item.images}
-                captions={item.caption}
-                comments={item.comments}
-                onSubmitComment={(e) => handleComment(e)}
-                onChangeComment={(e) => setComment(e.target.value)}
-                valueComment={objSubmit.comment}
-                onClickComment={() => {
-                  setObjSubmit({
-                    id_status: item?.id_status,
-                  });
-                }}
-              />
-            ))
+            dataForum
+              ?.sort((a, b) => b.id_status - a.id_status)
+              .map((item) => (
+                <CardForum
+                  key={item.id_status}
+                  names={item.name}
+                  img={item.images}
+                  captions={item.caption}
+                  comments={item.comments}
+                  onSubmitComment={(e) => handleComment(e)}
+                  onChangeComment={(e) => setComment(e.target.value)}
+                  valueComment={objSubmit.comment}
+                  onClickComment={() => {
+                    setObjSubmit({
+                      id_status: item?.id_status,
+                    });
+                  }}
+                />
+              ))
           )}
         </div>
       </div>

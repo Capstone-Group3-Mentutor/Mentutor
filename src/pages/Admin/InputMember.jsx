@@ -29,7 +29,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
-    .min(8, "Password must be at least 6 characters")
+    .min(8, "Password must be at least 8 characters")
     .max(30, "Password must not exceed 30 characters")
     .matches(/^(?=.*[A-Z])/, "Password must contain one uppercase")
     .matches(/^(?=.*[0-9])/, "Password must contain one number")
@@ -163,7 +163,7 @@ const InputMember = () => {
         </div>
 
         <form
-          className="w-full lg:w-[35rem] h-[30rem] md:h-[35rem] lg:h-[35rem] bg-card rounded-[20px] text-xs md:text-lg p-5 md:p-10 "
+          className="w-full lg:w-[35rem] h-auto  bg-card rounded-[20px] text-xs md:text-lg p-5 md:p-10 "
           onSubmit={handleSubmit(handleRegister)}
         >
           <div className="flex flex-col space-y-4">
@@ -252,12 +252,7 @@ const InputMember = () => {
             </div>
           </div>
           <div className="text-end mt-5">
-            <CustomButton
-              id="btn-addMember"
-              color="Primary"
-              label="Add"
-              // loading={disabled || loading}
-            />
+            <CustomButton id="btn-addMember" color="Primary" label="Add" />
           </div>
         </form>
       </div>

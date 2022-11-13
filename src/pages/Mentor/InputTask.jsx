@@ -161,7 +161,7 @@ const InputTask = (props) => {
   let detailDate =
     currentDate.getFullYear() +
     "-" +
-    currentDate.getMonth() +
+    (currentDate.getMonth() < 12 ? currentDate.getMonth() + 1 : 1) +
     "-" +
     currentDate.getDate() +
     " " +

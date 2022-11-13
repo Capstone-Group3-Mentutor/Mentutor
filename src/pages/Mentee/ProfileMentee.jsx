@@ -19,6 +19,8 @@ const ProfileMentee = () => {
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState({});
   const [images, setImages] = useState(toys2);
+  const [cookie, setCookie] = useCookies();
+
   const id_user = cookie.id_user;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -80,17 +82,17 @@ const ProfileMentee = () => {
   return (
     <Layout>
       <h1 className="text-putih text-lg lg:text-2xl font-medium mb-2">
-        Profile
+        My Profile
       </h1>
       <p className="text-abu font-light text-[8px] md:text-sm">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Update your personal information
       </p>
       <div className="mt-[3rem]">
         <CardProfile
           name={dataProfile.name}
           class={dataProfile.class_name}
           role={dataProfile.role}
-          images={images}
+          images={toys2}
           onClickEdit={() => {
             setObjSubmit({
               image: dataProfile.images,
@@ -122,7 +124,7 @@ const ProfileMentee = () => {
             <div className="flex flex-row  items-center justify-between">
               <div className=" flex flex-col justify-center items-center gap-3 space-y-3git ">
                 <img
-                  src={images}
+                  src={toys2}
                   alt="avatar"
                   className="h-[5rem] w-[5rem] md:h-[12rem] md:w-[12rem] rounded-full "
                 />
