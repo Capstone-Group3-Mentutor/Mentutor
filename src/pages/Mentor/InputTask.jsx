@@ -2,17 +2,20 @@ import CustomInput from "../../components/CustomInput";
 import React, { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import CustomButton from "../../components/CustomButton";
+import PDF from "../../assets/PDF.svg";
+import EXCEL from "../../assets/EXCEL.svg";
+import Swal from "sweetalert2";
+
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { SlOptionsVertical } from "react-icons/sl";
 import { FiArrowRight } from "react-icons/fi";
 import { apiRequest } from "../../utils/apiRequest";
-import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { WithRouter } from "../../utils/navigation";
-import PDF from "../../assets/PDF.svg";
-import EXCEL from "../../assets/EXCEL.svg";
 import { useTitle } from "../../utils/useTitle";
-
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
 const InputTask = (props) => {
   useTitle("My Tasks");
   const [loading, setLoading] = useState(false);
@@ -24,7 +27,9 @@ const InputTask = (props) => {
   const [due_date, setDue_date] = useState("");
   const [id_task, setIdTask] = useState(0);
   const [objSubmit, setObjSubmit] = useState("");
+  const [cookie, setCookie, removeCookie] = useCookies();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getAllTasks();
@@ -38,10 +43,12 @@ const InputTask = (props) => {
       })
       .catch((err) => {
         const { data } = err.response;
-        Swal.fire({
-          icon: "error",
-          text: data.message,
-        });
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => {
         setLoading(false);

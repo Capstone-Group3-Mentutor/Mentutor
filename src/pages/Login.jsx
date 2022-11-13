@@ -6,11 +6,11 @@ import { useDispatch } from "react-redux";
 import { handleAuth, handleUser } from "../utils/reducers/reducer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useTitle } from "../utils/useTitle";
 import * as yup from "yup";
 import Swal from "sweetalert2";
 import girl from "../assets/girl.png";
 import CustomInput from "../components/CustomInput";
-import { useTitle } from "../utils/useTitle";
 
 const schema = yup.object().shape({
   email: yup.string().required("Email is required"),
@@ -88,8 +88,10 @@ const Login = () => {
           navigate("/homeadmin");
         } else if (res.data.role === "mentor") {
           navigate("/homementor");
-        } else {
+        } else if (res.data.role === "mentee" && res.data.auth_gmail === "") {
           navigate("/homementee");
+        } else {
+          navigate(res.data.auth_gmail);
         }
         reset();
       })

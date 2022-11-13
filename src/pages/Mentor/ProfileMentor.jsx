@@ -9,14 +9,20 @@ import { useCookies } from "react-cookie";
 import { CardProfile } from "../../components/Cards";
 import { apiRequest } from "../../utils/apiRequest";
 import { useTitle } from "../../utils/useTitle";
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ProfileMentor = () => {
   const [dataProfile, setDataProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState({});
-  const [cookie, setCookie] = useCookies();
-  const [images, setImages] = useState("");
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const [images, setImages] = useState(toys3);
   const id_user = cookie.id_user;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useTitle(`Mentor - ${dataProfile.name}`);
 
   useEffect(() => {
@@ -30,7 +36,13 @@ const ProfileMentor = () => {
         setDataProfile(res.data);
       })
       .catch((err) => {
-        alert(err.toString());
+        const { data } = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => setLoading(false));
   };
@@ -112,7 +124,7 @@ const ProfileMentor = () => {
             <div className="flex flex-row  items-center justify-between">
               <div className=" flex flex-col justify-center items-center gap-3 space-y-3">
                 <img
-                  src={toys3}
+                  src={images}
                   alt="avatar"
                   className="h-[5rem] w-[5rem] md:h-[12rem] md:w-[12rem] rounded-full "
                 />

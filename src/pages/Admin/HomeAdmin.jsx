@@ -18,7 +18,9 @@ const HomeAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [dataClass, setDataClass] = useState([]);
   const [objSubmit, setObjSubmit] = useState({});
-
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     fetchUser();
     fetchClass();
@@ -31,12 +33,13 @@ const HomeAdmin = () => {
         setDataUser(res.data);
       })
       .catch((err) => {
-        const { data } = err.response;
-        Swal.fire({
-          title: "Failed",
-          text: data.message,
-          showCancelButton: false,
-        });
+        const data = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => setLoading(false));
   };
@@ -45,9 +48,6 @@ const HomeAdmin = () => {
     apiRequest("admin/classes", "get")
       .then((res) => {
         setDataClass(res.data);
-      })
-      .catch((err) => {
-        alert(err.toString());
       })
       .finally(() => setLoading(false));
   };

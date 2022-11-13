@@ -4,13 +4,19 @@ import Layout from "../../components/Layout";
 import Swal from "sweetalert2";
 import { apiRequest } from "../../utils/apiRequest";
 import { useTitle } from "../../utils/useTitle";
-
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 const ForumMentor = () => {
   useTitle("Class Forum");
+  const [cookie, setCookie, removeCookie] = useCookies();
   const [dataForum, setDataForum] = useState([]);
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState("");
   const [objSubmit, setObjSubmit] = useState({});
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     fetchForum();
   }, []);
@@ -23,11 +29,12 @@ const ForumMentor = () => {
       })
       .catch((err) => {
         const { data } = err.response;
-        Swal.fire({
-          title: "Failed",
-          text: data.message,
-          showCancelButton: false,
-        });
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert(data.message + "" + "Please re-login !");
       })
       .finally(() => setLoading(false));
   };
@@ -58,23 +65,25 @@ const ForumMentor = () => {
           {loading ? (
             <p>loading...</p>
           ) : (
-            dataForum?.map((item) => (
-              <CardForum
-                key={item.id_status}
-                names={item.name}
-                img={item.images}
-                captions={item.caption}
-                comments={item.comments}
-                onSubmitComment={(e) => handleComment(e)}
-                onChangeComment={(e) => setComment(e.target.value)}
-                valueComment={objSubmit.comment}
-                onClickComment={() => {
-                  setObjSubmit({
-                    id_status: item?.id_status,
-                  });
-                }}
-              />
-            ))
+            dataForum
+              ?.sort((a, b) => b.id_status - a.id_status)
+              .map((item) => (
+                <CardForum
+                  key={item.id_status}
+                  names={item.name}
+                  img={item.images}
+                  captions={item.caption}
+                  comments={item.comments}
+                  onSubmitComment={(e) => handleComment(e)}
+                  onChangeComment={(e) => setComment(e.target.value)}
+                  valueComment={objSubmit.comment}
+                  onClickComment={() => {
+                    setObjSubmit({
+                      id_status: item?.id_status,
+                    });
+                  }}
+                />
+              ))
           )}
         </div>
       </div>

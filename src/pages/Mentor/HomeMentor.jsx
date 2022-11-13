@@ -7,18 +7,20 @@ import { Link } from "react-router-dom";
 import { apiRequest } from "../../utils/apiRequest";
 import { useCookies } from "react-cookie";
 import { WithRouter } from "../../utils/navigation";
-import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import { useTitle } from "../../utils/useTitle";
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useDispatch } from "react-redux";
 
-const HomeMentor = (props) => {
+const HomeMentor = () => {
   useTitle("Home");
   const [datas, setDatas] = useState({});
   const [dataTask, setDataTask] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [cookie, setCookie] = useCookies();
-  const [images, setImages] = useState("");
+  const [cookie, setCookie, removeCookie] = useCookies();
   const id_user = cookie.id_user;
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     fetchUser();
     fetchTaskMentor();
@@ -31,7 +33,13 @@ const HomeMentor = (props) => {
         setDatas(res.data);
       })
       .catch((err) => {
-        alert(err.toString());
+        const { data } = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => setLoading(false));
   };
@@ -41,14 +49,6 @@ const HomeMentor = (props) => {
     apiRequest("mentors/tasks", "get")
       .then((res) => {
         setDataTask(res.data);
-      })
-      .catch((err) => {
-        const { data } = err.response;
-        Swal.fire({
-          title: "Failed",
-          text: data.message,
-          showCancelButton: false,
-        });
       })
       .finally(() => setLoading(false));
   };
@@ -67,7 +67,7 @@ const HomeMentor = (props) => {
               Welcome back, you are doing great.
             </p>
           </div>
-          <div className="flex items-center text-right ">
+          <div className="flex items-center ">
             <Link to="/profilementor">
               <img
                 id="gbr-profile"
