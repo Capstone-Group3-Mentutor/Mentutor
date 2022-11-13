@@ -4,17 +4,23 @@ import { apiRequest } from "../../utils/apiRequest";
 import { WithRouter } from "../../utils/navigation";
 import { ListTask } from "../../components/ListItems";
 import Swal from "sweetalert2";
-Swal;
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
 import PDF from "../../assets/PDF.svg";
 import EXCEL from "../../assets/EXCEL.svg";
 import { useTitle } from "../../utils/useTitle";
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const DetailTask = (props) => {
+  const [cookie, setCookie, removeCookie] = useCookies();
   const [detailTask, setDetailTask] = useState([]);
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useTitle(`Task - ${detailTask.title}`);
 
   useEffect(() => {
@@ -30,10 +36,12 @@ const DetailTask = (props) => {
       })
       .catch((err) => {
         const { data } = err.response;
-        Swal.fire({
-          icon: "error",
-          text: data.message,
-        });
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => {
         setLoading(false);

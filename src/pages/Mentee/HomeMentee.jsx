@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import toys2 from "../../assets/toys-2.png";
 import hero from "../../assets/hero.png";
-import { CardTask } from "../../components/Cards";
 import Layout from "../../components/Layout";
-import { Link } from "react-router-dom";
 import CustomButton from "../../components/CustomButton";
+import CustomInput from "../../components/CustomInput";
+import { CardTask } from "../../components/Cards";
+import { HiOutlineDocumentText } from "react-icons/hi";
 import { apiRequest } from "../../utils/apiRequest";
 import { useCookies } from "react-cookie";
-import Swal from "sweetalert2";
-import CustomInput from "../../components/CustomInput";
+import { Link } from "react-router-dom";
 import { useTitle } from "../../utils/useTitle";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { handleAuth } from "../../utils/reducers/reducer";
+import Swal from "sweetalert2";
 
 const HomeMentee = () => {
   useTitle("Home");
@@ -39,20 +40,6 @@ const HomeMentee = () => {
       .then((res) => {
         setDatas(res.data);
       })
-      .catch(() => {
-        Swal.fire({
-          icon: "error",
-          title: "Failed",
-          text: "Please re-login",
-          confirmButtonText: "Ok",
-        }).catch((err) => {
-          if (err.isConfirmed) {
-            removeCookie("token");
-            dispatch(handleAuth(false));
-            navigate("/");
-          }
-        });
-      })
       .finally(() => setLoading(false));
   };
 
@@ -63,11 +50,13 @@ const HomeMentee = () => {
         setDataTask(res.data);
       })
       .catch((err) => {
-        Swal.fire({
-          title: "Failed",
-          text: "Please re-login",
-          showCancelButton: false,
-        });
+        const { data } = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => setLoading(false));
   };

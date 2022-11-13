@@ -46,8 +46,6 @@ const index = () => {
         [401, 403].includes(data.code)
       ) {
         removeCookie("token");
-        dispatch(handleAuth(false));
-        window.location.href = "/";
       }
 
       return Promise.reject(error);

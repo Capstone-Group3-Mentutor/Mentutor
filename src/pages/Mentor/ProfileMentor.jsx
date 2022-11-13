@@ -9,14 +9,20 @@ import { useCookies } from "react-cookie";
 import { CardProfile } from "../../components/Cards";
 import { apiRequest } from "../../utils/apiRequest";
 import { useTitle } from "../../utils/useTitle";
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ProfileMentor = () => {
   const [dataProfile, setDataProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [objSubmit, setObjSubmit] = useState({});
-  const [cookie, setCookie] = useCookies();
+  const [cookie, setCookie, removeCookie] = useCookies();
   const [images, setImages] = useState("");
   const id_user = cookie.id_user;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useTitle(`Mentor - ${dataProfile.name}`);
 
   useEffect(() => {
@@ -30,7 +36,13 @@ const ProfileMentor = () => {
         setDataProfile(res.data);
       })
       .catch((err) => {
-        alert(err.toString());
+        const { data } = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => setLoading(false));
   };

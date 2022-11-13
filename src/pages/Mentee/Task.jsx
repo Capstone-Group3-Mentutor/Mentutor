@@ -7,7 +7,10 @@ import { apiRequest } from "../../utils/apiRequest";
 import Swal from "sweetalert2";
 import CustomInput from "../../components/CustomInput";
 import { useTitle } from "../../utils/useTitle";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useCookies } from "react-cookie";
 const Task = () => {
   useTitle("My Tasks");
   const [myTasks, setMyTasks] = useState([]);
@@ -15,7 +18,9 @@ const Task = () => {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState("");
   const [id_task, setIdTask] = useState(0);
-
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     getMyTask();
   }, []);
@@ -27,11 +32,13 @@ const Task = () => {
         setMyTasks(results);
       })
       .catch((err) => {
-        const { data } = err.response;
-        Swal.fire({
-          icon: "error",
-          text: data.message,
-        });
+        const data = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
+        }
+        alert("Please re-login !");
       })
       .finally(() => {
         setLoading(false);

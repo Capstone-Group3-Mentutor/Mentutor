@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import CustomInput from "../../components/CustomInput";
 import CustomButton from "../../components/CustomButton";
+import Swal from "sweetalert2";
 import { ListClass } from "../../components/ListItems";
 import { apiRequest } from "../../utils/apiRequest";
-import Swal from "sweetalert2";
 import { useTitle } from "../../utils/useTitle";
+import { useCookies } from "react-cookie";
+import { useDispatch } from "react-redux";
+import { handleAuth } from "../../utils/reducers/reducer";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -17,6 +21,7 @@ const schema = yup.object().shape({
     .min(5, "class must be 5 characters"),
 });
 
+
 const InputClass = () => {
   useTitle("List Members");
   const [className, setClassName] = useState("");
@@ -24,7 +29,9 @@ const InputClass = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [objSubmit, setObjSubmit] = useState({});
-
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     if (className) {
       setDisabled(true);
@@ -92,17 +99,13 @@ const InputClass = () => {
         setDatas(results);
       })
       .catch((err) => {
-        if (err.response?.status === 400) {
-          Swal.fire({
-            icon: "error",
-            text: "An invalid client request",
-          });
-        } else if (err.response?.status === 500) {
-          Swal.fire({
-            icon: "error",
-            text: "There is problem on server.",
-          });
+        const data = err.response;
+        if (err.response?.status === 401) {
+          removeCookie("token");
+          dispatch(handleAuth(false));
+          navigate("/");
         }
+        alert("Please re-login !");
       })
       .finally(() => {
         setLoading(false);
