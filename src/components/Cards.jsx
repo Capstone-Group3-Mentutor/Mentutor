@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import toys3 from "../assets/toys-3.png";
-import toys4 from "../assets/toys-4.png";
 import { FiSend } from "react-icons/fi";
 import toys2 from "../assets/toys-2.png";
 import { AiFillEdit } from "react-icons/ai";
@@ -118,7 +117,7 @@ const CardTaskMentor = (props) => {
             onClick={() => navigate(`/detailtask/${props.id_task}`)}
             className="text-putih text-sm md:text-2xl font-semibold cursor-pointer hover:text-button break-words"
           >
-            {props.title}
+            {props.title?.slice(0, -4)}
           </h1>
         </div>
         <div className=" w-[35%] text-right">

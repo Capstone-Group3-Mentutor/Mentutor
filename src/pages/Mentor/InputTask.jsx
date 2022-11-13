@@ -124,6 +124,7 @@ const InputTask = (props) => {
   };
 
   const deleteTask = async (id_task) => {
+    setLoading(true);
     Swal.fire({
       title: "Are you sure?",
       text: "Do You Want to Delete This Task?",
@@ -192,7 +193,7 @@ const InputTask = (props) => {
                 placeholder="task title"
                 category="Status"
                 onChange={(e) => {
-                  handleChange(e.target.value, "title");
+                  handleChange(e.target.value + id_user, `title`);
                 }}
               />
             </div>
@@ -270,122 +271,126 @@ const InputTask = (props) => {
       </div>
 
       {/* -------bgian task---- */}
-      {tasks
-        ?.sort((a, b) => b.id_task - a.id_task)
-        .map((item) => (
-          <form
-            className=" w-[18rem] md:w-[32rem] lg:w-[45rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 mt-8 rounded-[10px]"
-            key={item.id_task}
-          >
-            <div className="flex justify-between items-start break-words ">
-              <div className="w-[65%]">
-                <h1
-                  id="click-title"
-                  onClick={() => navigate(`/detailtask/${item.id_task}`)}
-                  className="text-putih text-sm md:text-2xl font-semibold cursor-pointer hover:text-button break-words"
-                >
-                  {item.title}
-                </h1>
-              </div>
-              <div className="flex justify-between w-[35%]">
-                <p className="text-button text-[6px] md:text-xs ">
-                  Due date{" "}
-                  <span
-                    className={`${
-                      detailDate > item.due_date
-                        ? "text-[#CC5D5D]"
-                        : "text-button"
-                    }  `}
+      {loading ? (
+        <p className="text-white">Loading...</p>
+      ) : (
+        tasks
+          ?.sort((a, b) => b.id_task - a.id_task)
+          .map((item) => (
+            <form
+              className=" w-[18rem] md:w-[32rem] lg:w-[45rem] h-auto bg-card p-5 md:py-5 md:px-8 lg:p-10 mt-8 rounded-[10px] pb-9"
+              key={item.id_task}
+            >
+              <div className="flex justify-between items-start break-words ">
+                <div className="w-[65%]">
+                  <h1
+                    id="click-title"
+                    onClick={() => navigate(`/detailtask/${item.id_task}`)}
+                    className="text-putih text-sm md:text-2xl font-semibold cursor-pointer hover:text-button break-words"
                   >
-                    {item.due_date}
-                  </span>
-                </p>
-                {/* ---kebab menu--- */}
-                <div className="dropdown dropdown-bottom dropdown-end">
-                  <label
-                    id="icon-options"
-                    tabIndex={0}
-                    className="cursor-pointer  text-putih"
-                  >
-                    <SlOptionsVertical />
-                  </label>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm  text-abu"
-                  >
-                    <label
-                      htmlFor="modal-edit-task"
-                      className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
-                      onClick={() => {
-                        setIdTask(item.id_task);
-                        setTitle(item.title);
-                        setDescription(item.description);
-                        setDue_date(item.due_date.slice(0, 10));
-                        setFile(item.file);
-                        setImages(item.images);
-                      }}
-                    >
-                      Edit
-                    </label>
-                    <li
-                      id="delete-click"
-                      className=" text-[#CC5D5D]"
-                      onClick={() => deleteTask(item?.id_task)}
-                    >
-                      <a>Delete</a>
-                    </li>
-                  </ul>
+                    {item.title}
+                  </h1>
                 </div>
-                {/*  end kebab menu */}
+                <div className="flex justify-between w-[35%]">
+                  <p className="text-button text-[6px] md:text-xs ">
+                    Due date{" "}
+                    <span
+                      className={`${
+                        detailDate > item.due_date
+                          ? "text-[#CC5D5D]"
+                          : "text-button"
+                      }  `}
+                    >
+                      {item.due_date}
+                    </span>
+                  </p>
+                  {/* ---kebab menu--- */}
+                  <div className="dropdown dropdown-bottom dropdown-end">
+                    <label
+                      id="icon-options"
+                      tabIndex={0}
+                      className="cursor-pointer  text-putih"
+                    >
+                      <SlOptionsVertical />
+                    </label>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu p-1 shadow-md bg-card rounded-[10px] w-[6rem] text-sm  text-abu"
+                    >
+                      <label
+                        htmlFor="modal-edit-task"
+                        className="hover:text-button px-4 pt-2 text-sm text-abu cursor-pointer"
+                        onClick={() => {
+                          setIdTask(item.id_task);
+                          setTitle(item.title);
+                          setDescription(item.description);
+                          setDue_date(item.due_date.slice(0, 10));
+                          setFile(item.file);
+                          setImages(item.images);
+                        }}
+                      >
+                        Edit
+                      </label>
+                      <li
+                        id="delete-click"
+                        className=" text-[#CC5D5D]"
+                        onClick={() => deleteTask(item?.id_task)}
+                      >
+                        <a>Delete</a>
+                      </li>
+                    </ul>
+                  </div>
+                  {/*  end kebab menu */}
+                </div>
               </div>
-            </div>
-            <p className=" text-[10px] md:text-sm text-abu mt-3 font-light break-words">
-              {item.description}
-            </p>
-            {item.file ? (
-              <a
-                href={item.file}
-                id="file-name"
-                className="hover:underline h-[2rem] w-full mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-abu my-3 break-words"
-              >
-                {item.file.substring(item.file.lastIndexOf(".") + 1) ==
-                "pdf" ? (
-                  <img src={PDF} className="w-6 h-6" />
-                ) : item.file.substring(item.file.lastIndexOf(".") + 1) ==
-                  "xlsx" ? (
-                  <img src={EXCEL} className="w-6 h-6" />
-                ) : (
-                  ""
-                )}
-                <p className="break-words">
-                  {item.file.substring(item.file.lastIndexOf("/") + 1)}
-                </p>
-              </a>
-            ) : (
-              ""
-            )}
-            {item.images ? (
-              <a href={item.images} id="images-name" className=" w-10">
-                <img
-                  className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-2 text-gray-400 rounded-sm object-cover cursor-pointer"
-                  src={item.images}
-                />
-              </a>
-            ) : (
-              ""
-            )}
-            <div className=" flex justify-end mt-5 gap-1 text-putih ">
-              <p
-                id="submit-click"
-                onClick={() => navigate(`/detailtask/${item.id_task}`)}
-                className="text-[7px] md:text-xs font-medium cursor-pointer hover:underline flex flex-row items-center space-x-2"
-              >
-                See the Submitted Task by Mentees
-                <FiArrowRight />
+              <p className=" text-[10px] md:text-sm text-abu mt-3 font-light break-words">
+                {item.description}
               </p>
-            </div>
-          </form>
-        ))}
+              {item.file ? (
+                <a
+                  href={item.file}
+                  id="file-name"
+                  className="hover:underline h-[2rem] w-full mt-8 text-[8px] md:text-xs flex items-center rounded-sm space-x-2 text-abu my-3 break-words"
+                >
+                  {item.file.substring(item.file.lastIndexOf(".") + 1) ==
+                  "pdf" ? (
+                    <img src={PDF} className="w-6 h-6" />
+                  ) : item.file.substring(item.file.lastIndexOf(".") + 1) ==
+                    "xlsx" ? (
+                    <img src={EXCEL} className="w-6 h-6" />
+                  ) : (
+                    ""
+                  )}
+                  <p className="break-words">
+                    {item.file.substring(item.file.lastIndexOf("/") + 1)}
+                  </p>
+                </a>
+              ) : (
+                ""
+              )}
+              {item.images ? (
+                <a href={item.images} id="images-name" className=" w-10">
+                  <img
+                    className="w-[4.5rem] h-[4.5rem] md:w-[12rem] md:h-[7rem] mt-2 text-gray-400 rounded-sm object-cover cursor-pointer"
+                    src={item.images}
+                  />
+                </a>
+              ) : (
+                ""
+              )}
+              <div className=" flex justify-end mt-5 gap-1 text-putih ">
+                <p
+                  id="submit-click"
+                  onClick={() => navigate(`/detailtask/${item.id_task}`)}
+                  className="text-[7px] md:text-xs font-medium cursor-pointer hover:underline flex flex-row items-center space-x-2"
+                >
+                  See the Submitted Task by Mentees
+                  <FiArrowRight />
+                </p>
+              </div>
+            </form>
+          ))
+      )}
 
       {/* ---modal--- */}
       <input type="checkbox" id="modal-edit-task" className="modal-toggle" />

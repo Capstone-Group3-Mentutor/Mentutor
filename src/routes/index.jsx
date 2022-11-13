@@ -41,10 +41,7 @@ const index = () => {
 
     function (error) {
       const { data } = error.response;
-      if (
-        data === "Missing or malformed JWT" ||
-        [401, 403].includes(data.code)
-      ) {
+      if (data === "invalid or expired jwt" || [401, 403].includes(data.code)) {
         removeCookie("token");
       }
 

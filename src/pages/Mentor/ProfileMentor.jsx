@@ -93,7 +93,7 @@ const ProfileMentor = () => {
           name={dataProfile.name}
           class={dataProfile.class_name}
           role={dataProfile.role}
-          images={images}
+          images={toys3}
           onClickEdit={() => {
             setObjSubmit({
               name: dataProfile.name,
