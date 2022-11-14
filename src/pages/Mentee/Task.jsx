@@ -88,23 +88,27 @@ const Task = () => {
           Don't forget to submit your assignment!
         </p>
 
-        {myTasks
-          ?.sort((a, b) => b.id_task - a.id_task)
-          .map((item) => (
-            <CardTask
-              key={item?.id_task}
-              title={item?.title}
-              description={item?.description}
-              images={item?.images}
-              status={item.status}
-              file={item?.file}
-              score={item?.score}
-              due_date={item?.due_date}
-              onClickSubmit={() => {
-                setIdTask(item?.id_task);
-              }}
-            />
-          ))}
+        {!myTasks ? (
+          <p className="text-gray-300">No tasks yet</p>
+        ) : (
+          myTasks
+            ?.sort((a, b) => b.id_task - a.id_task)
+            .map((item) => (
+              <CardTask
+                key={item?.id_task}
+                title={item?.title}
+                description={item?.description}
+                images={item?.images}
+                status={item.status}
+                file={item?.file}
+                score={item?.score}
+                due_date={item?.due_date}
+                onClickSubmit={() => {
+                  setIdTask(item?.id_task);
+                }}
+              />
+            ))
+        )}
       </div>
       {/* modal submit task */}
       <input type="checkbox" id="modal-submit-task" className="modal-toggle" />

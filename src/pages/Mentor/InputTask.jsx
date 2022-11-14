@@ -193,7 +193,7 @@ const InputTask = (props) => {
                 placeholder="task title"
                 category="Status"
                 onChange={(e) => {
-                  handleChange(e.target.value + id_user, `title`);
+                  handleChange(e.target.value, `title`);
                 }}
               />
             </div>
