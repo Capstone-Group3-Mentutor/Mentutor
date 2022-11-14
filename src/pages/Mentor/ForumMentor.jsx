@@ -59,7 +59,7 @@ const ForumMentor = () => {
           Forum Class
         </h1>
         <p className="text-abu font-light text-[8px] md:text-sm">
-          Lorem ipsum dolor sit amet
+          Sharing and discussing with your classmates
         </p>
         <div className="mt-[3rem] mb-[2rem] space-y-6">
           {loading ? (

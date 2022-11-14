@@ -29,6 +29,7 @@ const Task = () => {
       .then((res) => {
         const results = res.data;
         setMyTasks(results);
+        console.log(results);
       })
       .catch((err) => {
         const data = err.response;
@@ -68,7 +69,7 @@ const Task = () => {
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Invalid Input From Client",
+          title: "You have already submitted",
           showConfirmButton: true,
         });
       })

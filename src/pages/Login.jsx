@@ -78,12 +78,6 @@ const Login = () => {
         dispatch(handleAuth(true));
         dispatch(handleUser(res.data));
 
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Login Successful !",
-          showConfirmButton: true,
-        });
         if (res.data.role === "admin") {
           navigate("/homeadmin");
         } else if (res.data.role === "mentor") {
@@ -91,8 +85,14 @@ const Login = () => {
         } else if (res.data.role === "mentee" && res.data.auth_gmail === "") {
           navigate("/homementee");
         } else {
-          navigate(res.data.auth_gmail);
+          window.location.href = res.data.auth_gmail.toString();
         }
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Login Successful !",
+          showConfirmButton: true,
+        });
         reset();
       })
       .catch((err) => {
