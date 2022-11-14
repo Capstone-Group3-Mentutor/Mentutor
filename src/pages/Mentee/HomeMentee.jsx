@@ -3,7 +3,6 @@ import toys2 from "../../assets/toys-2.png";
 import hero from "../../assets/hero.png";
 import Layout from "../../components/Layout";
 import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput";
 import { CardTask } from "../../components/Cards";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import { apiRequest } from "../../utils/apiRequest";
@@ -86,7 +85,7 @@ const HomeMentee = () => {
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Invalid Input From Client",
+          title: "You have already submitted",
           showConfirmButton: true,
         });
       })
@@ -206,12 +205,6 @@ const HomeMentee = () => {
                 <h3 className="font-medium text-lg text-putih mb-1">
                   Submit your task
                 </h3>
-                <CustomInput
-                  id="input-title"
-                  placeholder="Title"
-                  category="Submit"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
                 <div className="flex flex-col space-y-2 my-2">
                   <label
                     className="block mb-2 text-sm font-medium text-gray-900"
