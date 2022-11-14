@@ -33,6 +33,7 @@ const DetailTask = (props) => {
       .then((res) => {
         const results = res.data;
         setDetailTask(results);
+        console.log(results);
       })
       .catch((err) => {
         const { data } = err.response;
@@ -69,7 +70,7 @@ const DetailTask = (props) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Succes Submitted",
+          title: "Success Submitted",
           showConfirmButton: true,
         });
       })

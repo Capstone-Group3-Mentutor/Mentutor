@@ -83,7 +83,7 @@ const CardTask = (props) => {
           </span>
         </p>
 
-        {props.status == "" && props.due_date > detailDate ? (
+        {props.due_date > detailDate ? (
           <label
             id="btn-submitTask"
             htmlFor="modal-submit-task"
@@ -97,9 +97,12 @@ const CardTask = (props) => {
             Submit your task
           </label>
         ) : (
-          <label className="bg-[#60C577] rounded-[5px] text-white  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
-            Done
-          </label>
+          // : props.status == "done" ? (
+          //   <label className="bg-[#60C577] rounded-[5px] text-white  py-1 px-3 md:py-2 md:px-4 text-[8px] md:text-[10px]">
+          //     Done
+          //   </label>
+          // )
+          ""
         )}
       </div>
     </div>
@@ -264,12 +267,14 @@ const CardForum = (props) => {
         ))}
       <div className="flex justify-between w-[13rem] md:w-[20rem] lg:w-[30rem] mt-3 ">
         <p
+          id="btn-showcomments"
           onClick={toggleShowMore}
           className=" text-xs font-normal text-button capitalize cursor-pointer px-5 md:px-9"
         >
           Load More Comments
         </p>
         <p
+          id="btn-hidecomments"
           onClick={toggleHideComment}
           className="text-xs font-normal text-gray-500 capitalize cursor-pointer "
         >
