@@ -1,15 +1,11 @@
 <div align="center">
 <img src="src\assets\LogoMentutor.png"alt="Logo">
 
-![issue](https://img.shields.io/github/issues/{username}/{repo-name}.svg)
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
- <p align="center">
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
-  </p>
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -22,7 +18,7 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
-    <li><a href="#deployment">Deployment</a></li>
+    <li><a href="#demo">Demo</a></li>
     <li><a href="#prototype">Prototype</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -31,27 +27,21 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#feature">Feature</a></li>
-    <li><a href="#colaboration">Collaboration</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#collaboration">Collaboration</a></li>
     <li><a href="#backend">Backend </a></li>
     <li><a href="#quality-engineer">Quality Engineer</a></li>
-    <li><a href="#contact">Author</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#author">Author</a></li>
   </ol>
 </details>
 <br>
 
-## 📃 About The Project
+## 📃About The Project
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Mentutor are present as a forum for teachers to monitor their students both from collection and by practicing with students through the provided forum.
 
-Here's why:
 
-- Your time should be focused on creating something amazing. A project that solves a problem and helps others
-- You shouldn't be doing the same tasks over and over like creating a README from scratch
-- You should implement DRY principles to the rest of your life :smile:
-
-### 🛠️ Build With
+### 🛠️Built With
 
 <br>
 
@@ -66,15 +56,18 @@ Here's why:
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 <img src="https://img.shields.io/badge/Sweet Alert-7D4698?style=for-the-badge&logo=Sweet-Alert&logoColor=white" />
 
-## 🌎 Demo
+## 🌎Demo
 
 Here is a working live demo - [Vercel](https://mentutor.vercel.app/)
 
-## 🎨 Prototype
+## 🎨Prototype
+![MacBook_Pro_16-removebg-preview](https://user-images.githubusercontent.com/59137289/201837528-700ce87b-3b70-42bb-9c93-d979a46bc7fe.png)
+
+Here is the link for the UI design : [Figma](https://www.figma.com/file/UtlMuFvJy2Uhm0RTQqlTYz/Design-Mentutor-App?node-id=11%3A2&t=abhpR6FTzmKOhHWQ-1)
 
 <br/>
 <br/>
-<br/>
+
 
 ## Getting Started
 
@@ -107,7 +100,7 @@ npm run dev
 
 <br/>
 
-## 💫 Features
+## 💫Features
 
 - Sign in
 - Logout
@@ -134,21 +127,21 @@ npm run dev
 - Edit profile
 - Can see a collection of tasks from mentors
 
-## 🤝 Collaboration
+## 🤝Collaboration
 
-- [GitHub (Version Control System Platform)](https://github.com/SyaifulGhifari/LesGoo)
+- [GitHub (Version Control System Platform)](https://github.com/Capstone-Group3-Mentutor)
 - [Discord](https://discord.com/)
 
-### 🧰 Backend
+### 🧰Backend
 
-- [Github Repository for the Backend team](https://github.com/Capstone-Group3-Mentutor/Back_Endd)
+- [Github Repository for the Backend team](https://github.com/Capstone-Group3-Mentutor/Back_End)
 - [Swagger OpenAPI](https://app.swaggerhub.com/apis-docs/NURFATUROHMAN28/Mentutor/1.0.0#/Mentor)
 
-### 🔎 Quality Engineer
+### 🔎Quality Engineer
 
 - [Github Repository for the QE team](https://github.com/Capstone-Group3-Mentutor/QE-UI)
 
-## 🤖 Author
+## 🤖Author
 
 - Annisa Rahmadani :
 
@@ -157,3 +150,12 @@ npm run dev
 - Dwi Fakhri Chusaini:
 
   [![GitHub](https://img.shields.io/badge/-Fakhri-black?style=for-the-badge&logo=github&logoColor=white)]([https://github.com/Dwifakhri) [![LinkedIn](https://img.shields.io/badge/-Fakhri-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dwi-fakhri-chusaini-5a114518a/)
+
+[contributors-shield]: https://img.shields.io/github/contributors/Capstone-Group3-Mentutor/Front-End.svg?style=for-the-badge
+[contributors-url]: https://github.com/Capstone-Group3-Mentutor/Front-End/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Capstone-Group3-Mentutor/Front-End.svg?style=for-the-badge
+[forks-url]: https://github.com/Capstone-Group3-Mentutor/Front-End/network/members
+[stars-shield]: https://img.shields.io/github/stars/Capstone-Group3-Mentutor/Front-End.svg?style=for-the-badge
+[stars-url]: https://github.com/Capstone-Group3-Mentutor/Front-End/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Capstone-Group3-Mentutor/Front-End.svg?style=for-the-badge
+[issues-url]: https://github.com/Capstone-Group3-Mentutor/Front-End/issues
