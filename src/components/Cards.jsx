@@ -120,7 +120,7 @@ const CardTaskMentor = (props) => {
             onClick={() => navigate(`/detailtask/${props.id_task}`)}
             className="text-putih text-sm md:text-2xl font-semibold cursor-pointer hover:text-button break-words"
           >
-            {props.title?.slice(0, -4)}
+            {props.title}
           </h1>
         </div>
         <div className=" w-[35%] text-right">
