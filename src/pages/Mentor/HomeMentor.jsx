@@ -123,7 +123,7 @@ const HomeMentor = () => {
               <p>Loading..</p>
             ) : (
               dataTask
-                .sort((a, b) => b.id_task - a.id_task)
+                ?.sort((a, b) => b.id_task - a.id_task)
                 .slice(0, 2)
                 .map((item) => (
                   <CardTaskMentor
