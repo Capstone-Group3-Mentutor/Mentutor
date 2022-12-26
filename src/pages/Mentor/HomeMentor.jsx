@@ -19,6 +19,7 @@ const HomeMentor = () => {
   const [loading, setLoading] = useState(false);
   const [cookie, setCookie, removeCookie] = useCookies();
   const id_user = cookie.id_user;
+  const images = cookie.images;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -71,7 +72,7 @@ const HomeMentor = () => {
             <Link to="/profilementor">
               <img
                 id="gbr-profile"
-                src={toys3}
+                src={images}
                 alt="avatar"
                 className="h-[1.5rem] w-[1.5rem] md:h-[3rem] md:w-[3rem] rounded-full "
               />

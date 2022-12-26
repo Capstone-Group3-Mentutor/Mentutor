@@ -75,6 +75,7 @@ const Login = () => {
         setCookie("token", res.data.token, { path: "/" });
         setCookie("role", res.data.role, { path: "/" });
         setCookie("id_user", res.data.id_user, { path: "/" });
+        setCookie("images", res.data.images, { path: "/" });
         dispatch(handleAuth(true));
         dispatch(handleUser(res.data));
 

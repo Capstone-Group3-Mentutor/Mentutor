@@ -37,17 +37,17 @@ const schema = yup.object().shape({
       /^(?=.*[!@#\$%\^&\*])/,
       "Password must contain one special character"
     ),
-  role: yup.string().matches("Choose a role", "Role is required"),
-  classname: yup.string().matches("Choose a class", "Class is required"),
+  role: yup.string().required("Role is required"),
+  classname: yup.string().required("Class is required"),
 });
 
 const InputMember = () => {
   useTitle("List Members");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("Role");
+  const [role, setRole] = useState("");
   const [datas, setDatas] = useState([]);
-  const [className, setClassName] = useState("Class");
+  const [className, setClassName] = useState("");
   const [password, setPassword] = useState("");
   const [cookie, setCookie, removeCookie] = useCookies();
   const [loading, setLoading] = useState(false);
@@ -97,21 +97,6 @@ const InputMember = () => {
   });
 
   const handleRegister = async (data) => {
-    if (
-      fullName.length == 0 ||
-      email.length == 0 ||
-      role == "Role" ||
-      password.length == 0
-    ) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Data cannot be empty !",
-        showConfirmButton: true,
-      });
-      return;
-    }
-
     const body = {
       name: fullName,
       email,
@@ -203,9 +188,13 @@ const InputMember = () => {
                   id="dropdown-role"
                   className="capitalize border placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
                   onChange={(e) => setRole(e.target.value)}
+                  {...register("role", {
+                    onChange: (e) => setRole(e.target.value),
+                  })}
                   value={role}
+                  name="role"
                 >
-                  <option value="Role" disabled>
+                  <option value="" disabled>
                     Choose a role
                   </option>
                   <option value="mentor" id="mentor">
@@ -215,6 +204,9 @@ const InputMember = () => {
                     mentee
                   </option>
                 </select>
+                <p className="break-words mt-1 text-xs font-normal text-red-500">
+                  {errors.role?.message}
+                </p>
               </div>
               <div className="w-1/2 flex flex-col space-y-2 ">
                 <p className="text-putih text-md md:text-lg">Class</p>
@@ -223,17 +215,24 @@ const InputMember = () => {
                   id="dropdown-class"
                   className="border capitalize placeholder:text-abu text-xs text-putih focus:outline-none focus:border-putih border-abu font-light rounded-[10px] bg-card w-full pl-3 h-[3.4rem]"
                   onChange={(e) => setClassName(parseFloat(e.target.value))}
+                  {...register("classname", {
+                    onChange: (e) => setClassName(parseFloat(e.target.value)),
+                  })}
                   value={className}
+                  name="classname"
                 >
-                  <option value="Class" disabled>
+                  <option value="" disabled>
                     Choose a class
                   </option>
-                  {datas.map((data, index) => (
+                  {datas.map((data) => (
                     <option key={data.id_class} value={data.id_class}>
                       {data.class_name}
                     </option>
                   ))}
                 </select>
+                <p className="break-words mt-1 text-xs font-normal text-red-500">
+                  {errors.classname?.message}
+                </p>
               </div>
             </div>
             <div className="flex flex-col space-y-2 w-full">

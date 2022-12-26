@@ -33,7 +33,6 @@ const DetailTask = (props) => {
       .then((res) => {
         const results = res.data;
         setDetailTask(results);
-        console.log(results);
       })
       .catch((err) => {
         const { data } = err.response;
